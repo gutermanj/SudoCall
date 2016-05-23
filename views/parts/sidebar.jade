@@ -1,0 +1,389 @@
+.sidebar
+    .quickmenu
+        .quickmenu__cont
+            .quickmenu__list
+                .quickmenu__item(class=page!='Sent' && page!='Inbox' && page!='Compose' ? 'active' : '')
+                    .fa.fa-fw.fa-home
+                .quickmenu__item(class=page=='Sent' || page=='Inbox' || page=='Compose' ? 'active' : '')
+                    .fa.fa-fw.fa-envelope-o
+                .quickmenu__item.new
+                    .fa.fa-fw.fa-comments-o
+                .quickmenu__item
+                    .fa.fa-fw.fa-feed
+                .quickmenu__item
+                    .fa.fa-fw.fa-cog
+    .scrollable.scrollbar-macosx
+        .sidebar__cont
+            .sidebar__menu
+                .sidebar__title Pages
+                ul.nav.nav-menu
+                    li(class=page=='Dashboard' ? 'active' : '')
+                        a(href="./")
+                            .nav-menu__ico
+                                i.fa.fa-fw.fa-star
+                            .nav-menu__text
+                                span Dashboard
+                    li(class=page=='Products' ? 'active' : '')
+                        a(href="products.html")
+                            .nav-menu__ico
+                                i.fa.fa-fw.fa-cube
+                            .nav-menu__text
+                                span Products
+                    li(class=page=='Inbox' || page=='Sent' || page=='Compose' ? 'active opened' : '')
+                        a(href="#")
+                            .nav-menu__ico
+                                i.fa.fa-fw.fa-envelope
+                            .nav-menu__text
+                                span Mailbox
+                            .nav-menu__right
+                                i.fa.fa-fw.fa-angle-right.arrow
+                        ul.nav.nav-menu__second.collapse(class=page=='Inbox' || page=='Sent' || page=='Compose' ? 'in' : '')
+                            li(class=page == 'Inbox' ? 'active' : '')
+                                a(href="inbox.html") Inbox
+                            li(class=page == 'Sent' ? 'active' : '')
+                                a(href="sent.html") Sent
+                            li(class=page == 'Compose' ? 'active' : '')
+                                a(href="compose.html") Compose
+                    li(class=page=='Orders' ? 'active' : '')
+                        a(href="orders.html")
+                            .nav-menu__ico
+                                i.fa.fa-fw.fa-truck
+                            .nav-menu__text
+                                span Orders
+                            .nav-menu__right
+                                i.badge.badge-default 2
+                    li(class=page=='Users' ? 'active' : '')
+                        a(href="users.html")
+                            .nav-menu__ico
+                                i.fa.fa-fw.fa-user
+                            .nav-menu__text
+                                span Users
+                    li(class=page=='Blank' ? 'active opened' : '')
+                        a(href="#")
+                            .nav-menu__ico
+                                i.fa.fa-fw.fa-folder-o
+                            .nav-menu__text
+                                span Other
+                            .nav-menu__right
+                                i.fa.fa-fw.fa-angle-right.arrow
+                        ul.nav.nav-menu__second.collapse(class=page=='Blank' ? 'in' : '')
+                            li(class=page=='Blank' ? 'active' : '')
+                                a(href='blank.html') Blank
+                            li
+                                a(href='login.html') Login
+                .sidebar__title Template
+                ul.nav.nav-menu
+                    li(class=page=='General' || page == 'Panels' || page == 'Tabs' || page == 'Modals' || page == 'Buttons' ? 'active opened' : '')
+                        a(href="#")
+                            .nav-menu__ico
+                                i.fa.fa-fw.fa-th-large
+                            .nav-menu__text
+                                span UI Elements
+                            .nav-menu__right
+                                i.fa.fa-fw.fa-angle-right.arrow
+                        ul.nav.nav-menu__second.collapse(class=page=='General' || page == 'Panels' || page == 'Tabs' || page == 'Modals' || page == 'Buttons' ? 'in' : '')
+                            li(class=page=='General' ? 'active' : '')
+                                a(href='general.html') General
+                            li(class=page=='Panels' ? 'active' : '')
+                                a(href='panels.html') Panels
+                            li(class=page=='Tabs' ? 'active' : '')
+                                a(href='tabs.html') Tabs
+                            li(class=page=='Modals' ? 'active' : '')
+                                a(href='modals.html') Modals
+                            li(class=page=='Buttons' ? 'active' : '')
+                                a(href='buttons.html') Buttons
+                    li(class=page=='Controls' || page == 'Validation' || page == 'Texteditor' ? 'active opened' : '')
+                        a(href="#")
+                            .nav-menu__ico
+                                i.fa.fa-fw.fa-clone
+                            .nav-menu__text
+                                span Forms
+                            .nav-menu__right
+                                i.fa.fa-fw.fa-angle-right.arrow
+                        ul.nav.nav-menu__second.collapse(class=page=='Controls' || page == 'Validation' || page == 'Texteditor' ? 'in' : '')
+                            li(class=page=='Controls' ? 'active' : '')
+                                a(href='controls.html') Controls
+                            li(class=page=='Validation' ? 'active' : '')
+                                a(href='validation.html') Validation
+                            li(class=page=='Texteditor' ? 'active' : '')
+                                a(href='texteditor.html') Text Editor
+                    li(class=page=='Table Static' || page == 'Table Sortable' || page == 'DataTable' ? 'active opened' : '')
+                        a(href="#")
+                            .nav-menu__ico
+                                i.fa.fa-fw.fa-table
+                            .nav-menu__text
+                                span Tables
+                            .nav-menu__right
+                                i.fa.fa-fw.fa-angle-right.arrow
+                        ul.nav.nav-menu__second.collapse(class=page=='Table Static' || page == 'Table Sortable' || page == 'DataTable' ? 'in' : '')
+                            li(class=page=='Table Static' ? 'active' : '')
+                                a(href='table_static.html') Static
+                            li(class=page=='Table Sortable' ? 'active' : '')
+                                a(href='table_sortable.html') Sortable
+                            li(class=page=='DataTable' ? 'active' : '')
+                                a(href='table_data.html') DataTable
+                    li(class=page=='Charts' ? 'active' : '')
+                        a(href="charts.html")
+                            .nav-menu__ico
+                                i.fa.fa-fw.fa-pie-chart
+                            .nav-menu__text
+                                span Charts
+            .sidebar__menu
+                .sidebar__btn
+                    a.btn.btn-block.btn-default(href='compose.html') Compose Mail
+                .sidebar__title Mail
+                ul.nav.nav-menu
+                    li(class=page == 'Inbox' ? 'active' : '')
+                        a(href="inbox.html")
+                            .nav-menu__ico
+                                i.fa.fa-fw.fa-inbox
+                            .nav-menu__text
+                                span Inbox
+                            .nav-menu__right
+                                i.badge.badge-default <b>2</b> / 100
+                    li(class=page == 'Sent' ? 'active' : '')
+                        a(href="sent.html")
+                            .nav-menu__ico
+                                i.fa.fa-fw.fa-upload
+                            .nav-menu__text
+                                span Sent
+                            .nav-menu__right
+                                i.badge.badge-default 30
+                .sidebar__title Tags
+                .ul.nav.nav-menu
+                    li
+                        a(href="inbox.html")
+                            .nav-menu__ico.tag_clients
+                                i.fa.fa-fw.fa-tag
+                            .nav-menu__text
+                                span Clients
+                    li
+                        a(href="inbox.html")
+                            .nav-menu__ico.tag_social
+                                i.fa.fa-fw.fa-tag
+                            .nav-menu__text
+                                span Social
+                    li
+                        a(href="inbox.html")
+                            .nav-menu__ico.tag_support
+                                i.fa.fa-fw.fa-tag
+                            .nav-menu__text
+                                span Support
+            .sidebar__menu
+                .sidebar__title New Messages
+                .lm-widget
+                    .lm-widget__list
+                        .lm-widget__item.new
+                            .lm-widget__title
+                                i.fa.fa-fw.fa-tag.tag_support
+                                span Support
+                            .lm-widget__text
+                                | Duis ac nibh. Fusce lacus purus, aliquet at, feugiat non, pretium quis.
+                            a.lm-widget__link(href='inbox.html')
+                        .lm-widget__item.new
+                            .lm-widget__title
+                                i.fa.fa-fw.fa-tag.tag_clients
+                                span Stephen Olson
+                            .lm-widget__text
+                                | Nam ultrices, libero non mattis pulvinar, nulla pede ullamcorper augue.
+                            a.lm-widget__link(href='inbox.html')
+                .sidebar__title Recent list
+                .lm-widget
+                    .lm-widget__list
+                        .lm-widget__item
+                            .lm-widget__title
+                                i.fa.fa-fw.fa-tag.tag_social
+                                span Jesse Shaw
+                            .lm-widget__text
+                                | Nam ultrices, libero non mattis pulvinar.
+                            a.lm-widget__link(href='inbox.html')
+                        .lm-widget__item
+                            .lm-widget__title
+                                i.fa.fa-fw.fa-tag
+                                span Mary Payne
+                            .lm-widget__text
+                                | Vivamus tortor. Duis mattis egestas metus.
+                            a.lm-widget__link(href='inbox.html')
+                        .lm-widget__item
+                            .lm-widget__title
+                                i.fa.fa-fw.fa-tag
+                                span Bob Romero
+                            .lm-widget__text
+                                | Morbi porttitor lorem id ligula.
+                            a.lm-widget__link(href='inbox.html')
+                        .lm-widget__item
+                            .lm-widget__title
+                                i.fa.fa-fw.fa-tag.tag_social
+                                span Kevin Hosser
+                            .lm-widget__text
+                                | Libero non mattis pulvinar.
+                            a.lm-widget__link(href='inbox.html')
+                        .lm-widget__item
+                            .lm-widget__title
+                                i.fa.fa-fw.fa-tag.tag_clients
+                                span Perry Winter
+                            .lm-widget__text
+                                | Tortor. Duis mattis egestas metus.
+                            a.lm-widget__link(href='inbox.html')
+                        .lm-widget__item
+                            .lm-widget__title
+                                i.fa.fa-fw.fa-tag.tag_support
+                                span Ivan Nemirov
+                            .lm-widget__text
+                                | Portitor lorem id ligula.
+                            a.lm-widget__link(href='inbox.html')
+                        .lm-widget__item
+                            .lm-widget__title
+                                i.fa.fa-fw.fa-tag
+                                span Jonny Fount
+                            .lm-widget__text
+                                | Lorem id ligula morbi porttitor .
+                            a.lm-widget__link(href='inbox.html')
+                        .lm-widget__item
+                            .lm-widget__title
+                                i.fa.fa-fw.fa-tag
+                                span Hue Logan
+                            .lm-widget__text
+                                | Pulvinar libero non mattis.
+                            a.lm-widget__link(href='inbox.html')
+                        .lm-widget__item
+                            .lm-widget__title
+                                i.fa.fa-fw.fa-tag.tag_clients
+                                span Summer Gordon
+                            .lm-widget__text
+                                | Hattis tortor. Duis egestas metus.
+                            a.lm-widget__link(href='inbox.html')
+                        .lm-widget__item
+                            .lm-widget__title
+                                i.fa.fa-fw.fa-tag.tag_support
+                                span Sonya Blade
+                            .lm-widget__text
+                                | Itor lorem id ligula.
+                            a.lm-widget__link(href='inbox.html')
+            .sidebar__menu
+                .sidebar__title Recent activity
+                .ra-widget
+                    .ra-widget__cont
+                        .ra-widget__list
+                            .ra-widget__item.ra-widget__item_user
+                                .ra-widget__ico
+                                    i.fa.fa-fw
+                                .ra-widget__info
+                                    .ra-widget__text
+                                        | <a href='./'>Gary Long</a> has registered.
+                                        span.ra-widget__date 09:20
+                            .ra-widget__item.ra-widget__item_product
+                                .ra-widget__ico
+                                    i.fa.fa-fw
+                                .ra-widget__info
+                                    .ra-widget__text
+                                        | New product <a href='./'>Sony PlayStation 4</a>.
+                                        span.ra-widget__date 10:08
+                            .ra-widget__item.ra-widget__item_order
+                                .ra-widget__ico
+                                    i.fa.fa-fw
+                                .ra-widget__info
+                                    .ra-widget__text
+                                        | Order <a href='./'>#35108243</a>.
+                                        span.ra-widget__date Jan 28, 09:42
+                            .ra-widget__item.ra-widget__item_subscriber
+                                .ra-widget__ico
+                                    i.fa.fa-fw
+                                .ra-widget__info
+                                    .ra-widget__text
+                                        | <a href='./'>Julie Payne</a> subscribed to news.
+                                        span.ra-widget__date Jan 28, 18:06
+                            .ra-widget__item.ra-widget__item_mail
+                                .ra-widget__ico
+                                    i.fa.fa-fw
+                                .ra-widget__info
+                                    .ra-widget__text
+                                        | 30 letters was sent.
+                                        span.ra-widget__date Jan 27, 03:08
+                            .ra-widget__item.ra-widget__item_order
+                                .ra-widget__ico
+                                    i.fa.fa-fw
+                                .ra-widget__info
+                                    .ra-widget__text
+                                        | Order <a href='./'>#35597433</a>.
+                                        span.ra-widget__date Jan 26, 19:02
+                            .ra-widget__item.ra-widget__item_payment
+                                .ra-widget__ico
+                                    i.fa.fa-fw
+                                .ra-widget__info
+                                    .ra-widget__text
+                                        | $385 incoming payment.
+                                        span.ra-widget__date Jan 26, 18:06
+                            .ra-widget__item.ra-widget__item_payment
+                                .ra-widget__ico
+                                    i.fa.fa-fw
+                                .ra-widget__info
+                                    .ra-widget__text
+                                        | $2824 incoming payment.
+                                        span.ra-widget__date Jan 26, 09:11
+                            .ra-widget__item.ra-widget__item_subscriber
+                                .ra-widget__ico
+                                    i.fa.fa-fw
+                                .ra-widget__info
+                                    .ra-widget__text
+                                        | <a href='./'>Greg Bush</a> subscribed to news.
+                                        span.ra-widget__date Jan 26, 05:36
+                            .ra-widget__item.ra-widget__item_product
+                                .ra-widget__ico
+                                    i.fa.fa-fw
+                                .ra-widget__info
+                                    .ra-widget__text
+                                        | New product <a href='./'>Shoober</a>.
+                                        span.ra-widget__date Jan 25, 23:19
+                            .ra-widget__item.ra-widget__item_order
+                                .ra-widget__ico
+                                    i.fa.fa-fw
+                                .ra-widget__info
+                                    .ra-widget__text
+                                        | Order <a href='./'>#31248769</a>.
+                                        span.ra-widget__date Jan 25, 16:51
+                            .ra-widget__item.ra-widget__item_payment
+                                .ra-widget__ico
+                                    i.fa.fa-fw
+                                .ra-widget__info
+                                    .ra-widget__text
+                                        | $3205 incoming payment.
+                                        span.ra-widget__date Jan 25, 10:44
+            .sidebar__menu
+                .sidebar__title Settings
+                .ss-widget
+                    .ss-widget__cont
+                        .ss-widget__row
+                            .ss-widget__cell Site
+                            .ss-widget__cell
+                                input.bs-switch(type='checkbox', checked='checked', data-size="micro", data-on-color="success", data-off-color="danger")
+                        .ss-widget__row
+                            .ss-widget__cell Mailing
+                            .ss-widget__cell
+                                input.bs-switch(type='checkbox', data-size="micro", data-on-color="success", data-off-color="danger")
+                        .ss-widget__item
+                            .ss-widget__label Limit
+                            .ss-widget__value
+                                input.settings-slider(type="text", name="", value="", data-grid="false", data-min='0', data-max='2000', data-from='600', data-step='200')
+                        .ss-widget__row
+                            .ss-widget__cell Timeout
+                            .ss-widget__cell
+                                input.form-control.input-sm(type='number', min="5", max='50', step="5", value='15')
+                .sidestat
+                    .sidestat__cont
+                        .sidestat__item
+                            .sidestat__value 1,760
+                            .sidestat__text visits of your site
+                            .sidestat__chart.sparkline.bar 1699,1686,8368,9011,6129,3837,0997,2034,0483,1457,2950,8946,0866,6247,8222,5727,0020,6883,3410,5224,2034,0483,1457,2950,5946,0866
+                        .sidestat__item
+                            .sidestat__value 2,034
+                            .sidestat__text views of your products
+                            .sidestat__chart.sparkline.area 5696,6514,9647,6326,6028,8869,8251,9146,6137,8997,6892,9544,7011,6556,7737,8348,7011,6558,7556
+                        .sidestat__item
+                            .sidestat__value $2,950
+                            .sidestat__text average day earning
+                            .sidestat__chart.sparkline.bar_thin 6658,8005,9033,8360,3385,9018,9089,7804,5574,7556,6910,4327,7500,6563,0649,2584,8757,6815,8368,9011,6129,3837,0997,2034,0483,1457,2950,8946,0866,6247,3385,9018,9089,7804,5574,7556,6910,4327,7500,7804,5574,7556,6910,4327,7500,6563,0649,2584
+                        .sidestat__item
+                            .sidestat__value 290
+                            .sidestat__text month orders
+                            .sidestat__chart.sparkline.line 075,487,581,520,075,630,350,631,794,666,466,322,833,471,721,703,042,328,844,996,099,342,841,599
