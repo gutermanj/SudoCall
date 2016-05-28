@@ -46,7 +46,7 @@ module.exports = function(app) {
         // This should be the publicly accessible URL for your application
         // Here, we just use the host for the application making the request,
         // but you can hard code it or use something different if need be
-        var url = 'http://' + '127.0.0.1' + '/outbound';
+        var url = 'http://' + 'syscall.herokuapp.com' + '/outbound';
         
         // Place an outbound call to the user, using the TwiML instructions
         // from the /outbound route
