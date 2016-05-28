@@ -20,6 +20,11 @@
         // our server-generated capability token, which will be inserted by the
         // EJS template system:
         Twilio.Device.setup('<%= token %>');
+
+        /* Callback to let us know Twilio Client is ready */
+        Twilio.Device.ready(function (device) {
+          updateCallStatus("Ready");
+        });
  
         // Register an event handler to be called when there is an incoming
         // call:
