@@ -78,7 +78,7 @@ module.exports = function(app) {
 
     // Give the capability generator permission to accept incoming
     // calls to the ID "kevin"
-    capability.allowClientIncoming('kevin');
+    capability.allowClientIncoming('julian');
 
     // Render an HTML page which contains our capability token
     res.render('index.ejs', {
