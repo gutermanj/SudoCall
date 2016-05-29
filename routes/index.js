@@ -88,28 +88,6 @@ module.exports = function(app) {
             });
         });
 
-        app.get('/josh', function(req, res) {
-
-        // Create an object which will generate a capability token
-        // Replace these two arguments with your own account SID
-        // and auth token:
-        var capability = new twilio.Capability(
-            process.env.TWILIO_ACCOUNT_SID,
-            process.env.TWILIO_AUTH_TOKEN
-        );
-
-        // Give the capability generator permission to accept incoming
-        // calls to the ID "kevin"
-
-        capability.allowClientIncoming('josh');
-
-        res.locals.agent = 'Josh';
-        // Render an HTML page which contains our capability token
-        res.render('index.ejs', {
-            token:capability.generate()
-        });
-    });
-
 
 
     // Return TwiML instuctions for the outbound call
