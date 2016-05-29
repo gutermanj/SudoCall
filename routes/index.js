@@ -7,6 +7,20 @@ var config = require("../config");
 
 var client = twilio(config.accountSid, config.authToken);
 
+
+// ================== TO DO LIST =======================
+//
+// 1. Each agent has to have their own phone number (For now I'll deal with that until I figure out 1 number solution)
+// 2. Set conditions, if the user has certain values in their database account, call different capabilities in the route when
+//      they refresh the page!
+// 3. Set up internal call forwarding for one phone number, multiple agents!
+//
+//
+//
+//
+//
+// ================= END TO DO LIST ====================
+
 // Configure application routes
 module.exports = function(app) {
     // Set Jade as the default template engine
