@@ -68,6 +68,9 @@
             $('.call-status').html('Call in progress...');
 
             $('.js-hang-up').html('<button id="hangup" class="waves-effect waves-light btn red darken-2">Hang Up</button>');
+
+
+
         });
 
  
@@ -87,16 +90,16 @@
         });
 
 
-        // Make an outbound call to the number given in the text field:
-        $('#call').on('click', function() {
-            // The properties of this object will be sent as POST
-            // Parameters to URL which generates TwiML.
-            Twilio.Device.connect({
-                CallerId:'+14505556677', // Replace this value with a verified Twilio number:
-                                         // https://www.twilio.com/user/account/phone-numbers/verified
-                PhoneNumber:$('#number').val() //pass in the value of the text field
-            });
-        });
+        // // Make an outbound call to the number given in the text field:
+        // $('#call').on('click', function() {
+        //     // The properties of this object will be sent as POST
+        //     // Parameters to URL which generates TwiML.
+        //     Twilio.Device.connect({
+        //         CallerId:'+14505556677', // Replace this value with a verified Twilio number:
+        //                                  // https://www.twilio.com/user/account/phone-numbers/verified
+        //         PhoneNumber:$('#number').val() //pass in the value of the text field
+        //     });
+        // });
     </script>
      <!-- Compiled and minified JavaScript -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.6/js/materialize.min.js"></script>

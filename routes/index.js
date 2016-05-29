@@ -13,10 +13,10 @@ var client = twilio(config.accountSid, config.authToken);
 // 1. Each agent has to have their own phone number (For now I'll deal with that until I figure out 1 number solution)
 // 2. Set conditions, if the user has certain values in their database account, call different capabilities in the route when
 //      they refresh the page!
-// 3. Set up internal call forwarding for one phone number, multiple agents!
-//
-//
-//
+// 3. Set up internal call forwarding for one phone number, this allows multiple agents!
+// 4. For inbound call forwarding -TEST THIS- someone calls in, the view dials one of our random phone numbers and connects
+//      with on of our agents. I don't know if I have to conference this.
+// 5. Call Twilio to see whats up with the 2 sec difference on incoming calls
 //
 //
 // ================= END TO DO LIST ====================
@@ -55,30 +55,30 @@ module.exports = function(app) {
         res.render('inbox');
      });
 
-    // Handle an AJAX POST request to place an outbound call
-    app.post('/call', function(request, response) {
-        // This should be the publicly accessible URL for your application
-        // Here, we just use the host for the application making the request,
-        // but you can hard code it or use something different if need be
-        var url = 'http://' + 'syscall.herokuapp.com' + '/outbound';
+    // // Handle an AJAX POST request to place an outbound call
+    // app.post('/call', function(request, response) {
+    //     // This should be the publicly accessible URL for your application
+    //     // Here, we just use the host for the application making the request,
+    //     // but you can hard code it or use something different if need be
+    //     var url = 'http://' + 'syscall.herokuapp.com' + '/outbound';
         
-        // Place an outbound call to the user, using the TwiML instructions
-        // from the /outbound route
-        client.makeCall({
-            to: request.body.phoneNumber,
-            from: config.twilioNumber,
-            url: url
-        }, function(err, message) {
-            console.log(err);
-            if (err) {
-                response.status(500).send(err);
-            } else {
-                response.send({
-                    message: 'Thank you! We will be calling you shortly.'
-                });
-            }
-        });
-    });
+    //     // Place an outbound call to the user, using the TwiML instructions
+    //     // from the /outbound route
+    //     client.makeCall({
+    //         to: request.body.phoneNumber,
+    //         from: config.twilioNumber,
+    //         url: url
+    //     }, function(err, message) {
+    //         console.log(err);
+    //         if (err) {
+    //             response.status(500).send(err);
+    //         } else {
+    //             response.send({
+    //                 message: 'Thank you! We will be calling you shortly.'
+    //             });
+    //         }
+    //     });
+    // });
 
         app.get('/app', function(req, res) {
 
@@ -104,11 +104,11 @@ module.exports = function(app) {
 
 
 
-    // Return TwiML instuctions for the outbound call
-    app.post('/outbound', function(request, response) {
-        // We could use twilio.TwimlResponse, but Jade works too - here's how
-        // we would render a TwiML (XML) response using Jade
-        response.type('text/xml');
-        response.render('outbound');
-    });
+    // // Return TwiML instuctions for the outbound call
+    // app.post('/outbound', function(request, response) {
+    //     // We could use twilio.TwimlResponse, but Jade works too - here's how
+    //     // we would render a TwiML (XML) response using Jade
+    //     response.type('text/xml');
+    //     response.render('outbound');
+    // });
 };
