@@ -1,12 +1,34 @@
 <!doctype html>
 <html>
 <head>
-    <title>Twilio Client Test</title>
+    <title>GREPhub</title>
+    <!-- Compiled and minified CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.6/css/materialize.min.css">
+    <link rel="stylesheet" type="text/css" href="/stylesheets/appstyle.css">
 </head>
 <body>
+    <!-- NAV BAR -->
+    <nav class='teal'>
+        <div class="nav-wrapper">
+          <a class="brand-logo">GREPhub</a>
+          <ul id="nav-mobile" class="right hide-on-med-and-down">
+            <li><a href="/logout">Logout</a></li>
+          </ul>
+        </div>
+    </nav>
+    <!-- END NAV BAR -->
+
+    <div class='row main-call-status'>
+        <div class='col s12'>
+            <h4 class='call-status col s1'>Waiting...</h4>
+            <span><h5 class='current-agent col s1 push-s10'><%= agent %></h5></span>
+        </div>
+        <hr>
+    </div>
+
     <!-- display call status in this paragraph tag -->
-    <p>Awaiting incoming call...</p>
-    <button id="hangup">Hang Up</button>
+    
+    <button id="hangup" class='waves-effect waves-light btn red'>Hang Up</button>
  
     <!-- include the Twilio Client JavaScript SDK -->
     <script src="//static.twilio.com/libs/twiliojs/1.1/twilio.min.js"></script>
@@ -21,22 +43,19 @@
         // EJS template system:
         Twilio.Device.setup('<%= token %>');
 
-        // /* Callback to let us know Twilio Client is ready */
-        // Twilio.Device.ready(function (device) {
-        //   updateCallStatus("Ready");
-        // });
+        // $('.current-agent').html('<%= token.agent %>');
  
         // Register an event handler to be called when there is an incoming
         // call:
         Twilio.Device.incoming(function(connection) {
             //For demo purposed, automatically accept the call
             connection.accept();
-            $('p').html('Call in progress...');
+            $('.call-status').html('Call in progress...');
         });
  
         // Register an event handler for when a call ends for any reason
         Twilio.Device.disconnect(function(connection) {
-            $('p').html('Awaiting incoming call...');
+            $('.call-status').html('Waiting...');
         });
  
         // Add a click event for the button, which will hang up the current
@@ -44,6 +63,20 @@
         $('#hangup').click(function() {
             Twilio.Device.disconnectAll();
         });
+
+
+        // Make an outbound call to the number given in the text field:
+        $('#call').on('click', function() {
+            // The properties of this object will be sent as POST
+            // Parameters to URL which generates TwiML.
+            Twilio.Device.connect({
+                CallerId:'+14505556677', // Replace this value with a verified Twilio number:
+                                         // https://www.twilio.com/user/account/phone-numbers/verified
+                PhoneNumber:$('#number').val() //pass in the value of the text field
+            });
+        });
     </script>
+     <!-- Compiled and minified JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.6/js/materialize.min.js"></script>
 </body>
 </html>
