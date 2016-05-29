@@ -100,7 +100,7 @@ module.exports = function(app) {
 
         capability.allowClientIncoming('julian');
 
-        res.locals.agent = 'Julian';
+        res.locals.agent = req.session.agent;
         // Render an HTML page which contains our capability token
         res.render('index.ejs', {
             token:capability.generate()

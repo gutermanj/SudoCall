@@ -37,3 +37,17 @@
 	margin-top: .2%;
 	margin-left: -2%;
 }
+
+.current-call-main {
+	min-height: 425px;
+	max-height: 425px;
+}
+
+.caller-phone-number {
+	margin-left: 35%;
+}
+
+.caller-left-info {
+	margin-top: 2%;
+	font-size: 35px;
+}
