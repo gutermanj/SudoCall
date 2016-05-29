@@ -29,7 +29,7 @@ module.exports = function(app) {
         response.render('index');
     });
 
-    app.get('/app', function(req, res) {
+    app.get('/sdfsdf', function(req, res) {
     	res.render('home');
     });
 
@@ -66,7 +66,7 @@ module.exports = function(app) {
         });
     });
 
-    app.get('/julian', function(req, res) {
+    app.get('/app', function(req, res) {
 
     // Create an object which will generate a capability token
     // Replace these two arguments with your own account SID
