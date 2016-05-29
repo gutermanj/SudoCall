@@ -1,0 +1,56 @@
+<!doctype html>
+<html>
+	<head>
+		<title>GREPhub</title>
+	    <!-- Compiled and minified CSS -->
+	    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.6/css/materialize.min.css">
+	    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+	</head>
+
+	<body>
+		<!-- NAV BAR -->
+    <nav class='teal'>
+        <div class="nav-wrapper">
+          <a class="brand-logo" style='margin-left: 22px;'>GREPhub</a>
+        </div>
+    </nav>
+    <!-- END NAV BAR -->
+
+		<div class="col m6">
+            <h2 class="center-align">Login</h2>
+            <div class="row">
+                <form class="col s6 offset-s3" action='/login' method='POST'>
+                    <div class="row">
+                        <div class="input-field col s12">
+                            <input name="email" type="email" class="validate">
+                            <label for="email">Email</label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="input-field col s12">
+                            <input name="password" type="password" class="validate">
+                            <label for="password">Password</label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col s12">
+                            <p>
+                                <input type="checkbox" id="remember">
+                                <label for="remember">Remember me</label>
+                            </p>
+                        </div>
+                    </div>
+                    <div class="divider"></div>
+                    <div class="row">
+                        <div class="col m12">
+                            <p class="right-align">
+                                <button class="btn btn-large waves-effect waves-light" type="submit">Login</button>
+                            </p>
+                        </div>
+                    </div>
+                </form>
+            </div>
+	</body>
+	<script src="//code.jquery.com/jquery-1.9.1.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.6/js/materialize.min.js"></script>
+</html>

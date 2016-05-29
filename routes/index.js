@@ -2,11 +2,19 @@ var path = require('path');
 var express = require('express');
 var morgan = require('morgan');
 var bodyParser = require('body-parser');
+var cookieParser = require('cookie-parser');
 var twilio = require('twilio');
+var session = require('client-sessions');
+var bcrypt = require('bcryptjs');
 var config = require("../config");
-
 var client = twilio(config.accountSid, config.authToken);
+// Dependencies
 
+// Postgresql
+var pg = require('pg');
+pg.defaults.ssl = true;
+var connectionString = 'postgres://aczsxkfpgxdzhk:76QAcAJ0VVU2mbT35WYovAX1MT@ec2-54-83-5-43.compute-1.amazonaws.com:5432/d9v4u0oml89ej8';
+var client = new pg.Client(connectionString);
 
 // ================== TO DO LIST =======================
 //
@@ -35,6 +43,13 @@ module.exports = function(app) {
         extended: true
     }));
 
+    app.use(session({
+      cookieName: 'session',
+      secret: 'jewf08j283fewioujf082j3kfewj0fi2',
+      duration: 30 * 60 * 1000,
+      activeDuration: 5 * 60 * 1000,
+    }));
+
     // Use morgan for HTTP request logging
     app.use(morgan('dev'));
 
@@ -54,6 +69,166 @@ module.exports = function(app) {
      app.get('/mail', function(req, res) {
         res.render('inbox');
      });
+
+    // Require someone to be logged in
+    function requireLogin(req, res, next) {
+      if (!req.session.agent) {
+        res.render('applogin.ejs');
+      } else {
+        next();
+      }
+    }
+
+    function requireAdmin(req, res, next) {
+        if (req.session.agent.role !== 2) {
+            res.send('NOT OK');
+        }
+    }
+
+    app.get('/app', requireLogin, function(req, res) {
+
+        // Create an object which will generate a capability token
+        // Replace these two arguments with your own account SID
+        // and auth token:
+        var capability = new twilio.Capability(
+            process.env.TWILIO_ACCOUNT_SID,
+            process.env.TWILIO_AUTH_TOKEN
+        );
+
+        // Give the capability generator permission to accept incoming
+        // calls to the ID "kevin"
+
+        capability.allowClientIncoming('julian');
+
+        res.locals.agent = 'Julian';
+        // Render an HTML page which contains our capability token
+        res.render('index.ejs', {
+            token:capability.generate()
+        });
+    });
+
+    app.post('/login', function(req, res) {
+
+    var results = [];
+
+    // Get a Postgres client from the connection pool
+    pg.connect(connectionString, function(err, client, done) {
+        // Handle connection errors
+        if(err) {
+          done();
+          console.log(err);
+          return res.status(500).json({ success: false, data: err});
+        }
+
+        // SQL Query > Grab user input
+        var emailInput = req.body.email;
+        var passwordInput = req.body.password;
+
+        // See if the email exists
+        var query = client.query('SELECT * FROM agents WHERE email =' + '\'' + emailInput + '\'');
+
+        // Stream results back one row at a time
+        query.on('row', function(row) {
+            results.push(row);
+        });
+
+        // After all data is returned, close connection and return results
+        query.on('end', function() {
+            done(); // If the email doesn't exist - get out of here
+            if (results === null) {
+              res.render('applogin.ejs');
+            } else { // If it does exist
+                if (results[0] !== undefined) {
+                  var agent = results[0];
+                  // Check bcrypted password to see if they match
+                  if (bcrypt.compareSync(req.body.password, agent.password)) {
+                    req.session.agent = agent; // Set the session
+                    res.locals.agent = agent;
+                    console.log("LOGIN QUERY RESULTS: " + agent);
+                    res.redirect('/app');
+                  } else {
+
+                    // If they don't match
+                    res.redirect('/app');
+                  }
+                  } else {
+                  res.redirect('/app');
+                } // For some reason I have to check if it's undefined as well as 
+                  // null or SQL will yell at us
+          }
+        }); // query on end
+      }); //pg connect
+    });
+
+    app.get('/signup', function(req, res) {
+        res.render('appsignup.ejs');
+    });
+
+    app.post('/signup', requireAdmin, function(req, res, next) {
+  
+       // Turning that password into something funky
+        var hash = bcrypt.hashSync(req.body.password, bcrypt.genSaltSync(10));
+
+        var results = [];
+
+        // Grab data from http request
+        var data = {
+          first_name: req.body.first_name,
+          last_name: req.body.last_name,
+          email: req.body.email,
+          password: hash,
+          role: 0,
+          inbound: true,
+          outbound: true
+        };
+
+        // ROLES -----------------
+        // 0 = Phone Rep
+        // 1 = Manager
+        // 2 = Software Developer
+        // DataType is Integer!!
+
+        // Get a Postgres client from the connection pool
+        pg.connect(connectionString, function(err, client, done) {
+            // Handle connection errors
+            if(err) {
+              done();
+              console.log(err);
+              return res.status(500).json({ success: false, data: err});
+            }
+
+            // SQL Query > Create new row for an account
+            client.query("INSERT INTO agents(first_name, last_name, email, password, role, inbound, outbound) values($1, $2, $3, $4, $5, $6, $7)", [data.first_name, data.last_name, data.email, data.password, data.role, data.inbound, data.outbound]);
+
+
+            // SQL Query > Last account created
+            var query = client.query("SELECT * FROM agents");
+
+            // Stream results back one row at a time
+            query.on('row', function(row) {
+                results.push(row);
+            });
+
+            // After all data is returned, close connection and return results
+            query.on('end', function() {
+                done();
+                res.redirect('/app');
+            });
+
+
+        }); // pg connect
+
+    });
+
+    app.get('/logout', function(req, res) {
+        if (req.session.agent) {
+            req.session.destroy();
+            res.redirect('/app');
+        }
+    });
+
+    // -- END AGENT AUTHENTICATION
+
 
     // // Handle an AJAX POST request to place an outbound call
     // app.post('/call', function(request, response) {
@@ -79,30 +254,6 @@ module.exports = function(app) {
     //         }
     //     });
     // });
-
-        app.get('/app', function(req, res) {
-
-            // Create an object which will generate a capability token
-            // Replace these two arguments with your own account SID
-            // and auth token:
-            var capability = new twilio.Capability(
-                process.env.TWILIO_ACCOUNT_SID,
-                process.env.TWILIO_AUTH_TOKEN
-            );
-
-            // Give the capability generator permission to accept incoming
-            // calls to the ID "kevin"
-
-            capability.allowClientIncoming('julian');
-
-            res.locals.agent = 'Julian';
-            // Render an HTML page which contains our capability token
-            res.render('index.ejs', {
-                token:capability.generate()
-            });
-        });
-
-
 
     // // Return TwiML instuctions for the outbound call
     // app.post('/outbound', function(request, response) {
