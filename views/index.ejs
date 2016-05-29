@@ -65,14 +65,16 @@
         Twilio.Device.incoming(function(connection) {
             //For demo purposed, automatically accept the call
             connection.accept();
+
+            var caller = connection.parameters.From;
+
             $('.call-status').html('Call in progress...');
 
             $('.js-hang-up').html('<button id="hangup" class="waves-effect waves-light btn red darken-2">Hang Up</button>');
 
-
+            $('.current-call-main').html("<h4>" + caller + "</h4>");
 
         });
-
  
         // Register an event handler for when a call ends for any reason
         Twilio.Device.disconnect(function(connection) {

@@ -17,7 +17,7 @@ var client = twilio(config.accountSid, config.authToken);
 // 4. For inbound call forwarding -TEST THIS- someone calls in, the view dials one of our random phone numbers and connects
 //      with on of our agents. I don't know if I have to conference this.
 // 5. Call Twilio to see whats up with the 2 sec difference on incoming calls
-//
+// 6. FIXED PARAMETERS, IT WAS THE CAPITAL OF 'FROM'
 //
 // ================= END TO DO LIST ====================
 
