@@ -4,6 +4,7 @@
     <title>GREPhub</title>
     <!-- Compiled and minified CSS -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.6/css/materialize.min.css">
+     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="/stylesheets/appstyle.css">
 </head>
 <body>
@@ -20,15 +21,27 @@
 
     <div class='row main-call-status'>
         <div class='col s12'>
-            <h4 class='call-status col s1'>Waiting...</h4>
-            <span><h5 class='current-agent col s1 push-s10'><%= agent %></h5></span>
+            <h4 class='call-status col s3'>Waiting...</h4>
+            <span><h5 class='current-agent col s1 push-s8'><%= agent %></h5></span>
         </div>
         <hr>
     </div>
 
+    <div class='row'>
+        <div class='col s8 main-script'>
+            <i class='large material-icons waiting-phone'>settings_phone</i>
+            <div class='js-hang-up'>
+            </div>
+        </div>
+
+        <div class='col s4 main-info'>
+            
+        </div>
+
+    </div>
+
     <!-- display call status in this paragraph tag -->
-    
-    <button id="hangup" class='waves-effect waves-light btn red'>Hang Up</button>
+
  
     <!-- include the Twilio Client JavaScript SDK -->
     <script src="//static.twilio.com/libs/twiliojs/1.1/twilio.min.js"></script>
@@ -51,6 +64,8 @@
             //For demo purposed, automatically accept the call
             connection.accept();
             $('.call-status').html('Call in progress...');
+
+            $('.js-hang-up').html('<button id="hangup" class="waves-effect waves-light btn red darken-2">Hang Up</button>');
         });
  
         // Register an event handler for when a call ends for any reason
@@ -60,8 +75,10 @@
  
         // Add a click event for the button, which will hang up the current
         // call when clicked:
-        $('#hangup').click(function() {
+        $('.js-hang-up').click(function() {
             Twilio.Device.disconnectAll();
+
+            $('.js-hang-up').empty();
         });
 
 
