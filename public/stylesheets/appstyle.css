@@ -1,5 +1,6 @@
 .current-agent {
 	margin-top: 22px;
+	margin-left: 40px !important;
 }
 
 .brand-logo {
@@ -29,4 +30,10 @@
 
 .red-power {
 	color: #b71c1c;
+}
+
+.green-power {
+	color: #66bb6a;
+	margin-top: .2%;
+	margin-left: -2%;
 }

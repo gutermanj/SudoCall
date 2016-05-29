@@ -13,7 +13,6 @@
         <div class="nav-wrapper">
           <a class="brand-logo">GREPhub</a>
           <ul id="nav-mobile" class="right hide-on-med-and-down">
-            <!-- <li><i class='medium material-icons red-power'>power_settings_new</i></li> -->
             <li><a href="/logout">Logout</a></li>
           </ul>
         </div>
@@ -22,8 +21,9 @@
 
     <div class='row main-call-status'>
         <div class='col s12'>
-            <h4 class='call-status col s3'>Waiting...</h4>
-            <span><h5 class='current-agent col s1 push-s8'><%= agent %></h5></span>
+            <h4 class='call-status col s9'>Waiting...</h4>
+            <span><h5 class='current-agent col s1'><%= agent %></h5></span>
+            <div style='cursor: pointer;'><i class='medium material-icons green-power push-s8 js-main-power'>power_settings_new</i></div>
         </div>
         <hr>
     </div>
@@ -58,9 +58,6 @@
         // our server-generated capability token, which will be inserted by the
         // EJS template system:
         Twilio.Device.setup('<%= token %>');
-
-        // $('.current-agent').html('<%= token.agent %>');
-        
         // Register an event handler to be called when there is an incoming
         // call:
         Twilio.Device.incoming(function(connection) {
