@@ -9,8 +9,9 @@
 .main-script {
 	border-right-style: solid;
 	border-color: lightgray;
-	border-width: 2px;
+	border-width: 1px;
 	margin-bottom: 0%;
+	margin-top: -28px;
 }
 
 .waiting-phone {

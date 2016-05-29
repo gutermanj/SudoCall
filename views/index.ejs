@@ -29,7 +29,9 @@
 
     <div class='row'>
         <div class='col s8 main-script'>
-            <i class='large material-icons waiting-phone'>settings_phone</i>
+            <div class='current-call-main'>
+                <i class='large material-icons waiting-phone'>settings_phone</i>
+            </div>
             <div class='js-hang-up'>
             </div>
         </div>
@@ -57,7 +59,7 @@
         Twilio.Device.setup('<%= token %>');
 
         // $('.current-agent').html('<%= token.agent %>');
- 
+        
         // Register an event handler to be called when there is an incoming
         // call:
         Twilio.Device.incoming(function(connection) {
@@ -67,6 +69,7 @@
 
             $('.js-hang-up').html('<button id="hangup" class="waves-effect waves-light btn red darken-2">Hang Up</button>');
         });
+
  
         // Register an event handler for when a call ends for any reason
         Twilio.Device.disconnect(function(connection) {
@@ -79,6 +82,8 @@
             Twilio.Device.disconnectAll();
 
             $('.js-hang-up').empty();
+
+            $('.current-call-main').html('<i class="large material-icons waiting-phone">settings_phone</i>');
         });
 
 
