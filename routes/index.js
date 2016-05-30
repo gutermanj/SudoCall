@@ -101,6 +101,7 @@ module.exports = function(app) {
         // Give the capability generator permission to accept incoming
         // calls to the ID "kevin"
         capability.allowClientIncoming('julian');
+        capability.allowClientOutgoing('julian');
 
         res.locals.agent = req.session.agent;
         // Render an HTML page which contains our capability token
@@ -109,51 +110,12 @@ module.exports = function(app) {
         });
     });
 
-    // This is the endpoint your Twilio number's Voice Request URL should point at
-    app.post('/inbound', function(req, res, next) {
-      // conference name will be a random number between 0 and 10000
-      var conferenceName = Math.floor(Math.random() * 10000).toString();
 
-      // Create a call to your mobile and add the conference name as a parameter to
-      // the URL.
-      twilioClient.calls.create({
-        from: config.twilioNumber,
-        to: "+15613811223",
-        url: "/join_conference?id=" + conferenceName
-      });
 
-      // Now return TwiML to the caller to put them in the conference, using the
-      // same name.
-      var twiml = new twilio.TwimlResponse();
-      twiml.dial(function(node) {
-        node.conference(conferenceName, {
-          waitUrl: "http://twimlets.com/holdmusic?Bucket=com.twilio.music.rock",
-          startConferenceOnEnter: false
-        });
-      });
-      res.set('Content-Type', 'text/xml');
-      res.send(twiml.toString());
-    });
-
-    // This is the endpoint that Twilio will call when you answer the phone
-    app.post("/join_conference", function(req, res, next) {
-      var conferenceName = req.query.id;
-
-      // We return TwiML to enter the same conference
-      var twiml = new twilio.TwimlResponse();
-      twiml.dial(function(node) {
-        node.conference(conferenceName, {
-          startConferenceOnEnter: true
-        });
-      });
-      res.set('Content-Type', 'text/xml');
-      res.send(twiml.toString());
-    });
+    // ============ START USER AUTH =================
 
     app.post('/login', function(req, res) {
-
     var results = [];
-
     // Get a Postgres client from the connection pool
     pg.connect(connectionString, function(err, client, done) {
         // Handle connection errors
@@ -162,19 +124,15 @@ module.exports = function(app) {
           console.log(err);
           return res.status(500).json({ success: false, data: err});
         }
-
         // SQL Query > Grab user input
         var emailInput = req.body.email;
         var passwordInput = req.body.password;
-
         // See if the email exists
         var query = client.query('SELECT * FROM agents WHERE email =' + '\'' + emailInput + '\'');
-
         // Stream results back one row at a time
         query.on('row', function(row) {
             results.push(row);
         });
-
         // After all data is returned, close connection and return results
         query.on('end', function() {
             done(); // If the email doesn't exist - get out of here
@@ -189,7 +147,6 @@ module.exports = function(app) {
                     res.locals.agent = agent;
                     res.redirect('/app');
                   } else {
-
                     // If they don't match
                     res.redirect('/app');
                   }
@@ -201,18 +158,13 @@ module.exports = function(app) {
         }); // query on end
       }); //pg connect
     });
-
     app.get('/signup', function(req, res) {
         res.render('appsignup.ejs');
     });
-
     app.post('/signup', requireAdmin, function(req, res, next) {
-  
        // Turning that password into something funky
         var hash = bcrypt.hashSync(req.body.password, bcrypt.genSaltSync(10));
-
         var results = [];
-
         // Grab data from http request
         var data = {
           first_name: req.body.first_name,
@@ -223,13 +175,11 @@ module.exports = function(app) {
           inbound: true,
           outbound: true
         };
-
         // ROLES -----------------
         // 0 = Phone Rep
         // 1 = Manager
         // 2 = Software Developer
         // DataType is Integer!!
-
         // Get a Postgres client from the connection pool
         pg.connect(connectionString, function(err, client, done) {
             // Handle connection errors
@@ -238,37 +188,27 @@ module.exports = function(app) {
               console.log(err);
               return res.status(500).json({ success: false, data: err});
             }
-
             // SQL Query > Create new row for an account
             client.query("INSERT INTO agents(first_name, last_name, email, password, role, inbound, outbound) values($1, $2, $3, $4, $5, $6, $7)", [data.first_name, data.last_name, data.email, data.password, data.role, data.inbound, data.outbound]);
-
-
             // SQL Query > Last account created
             var query = client.query("SELECT * FROM agents");
-
             // Stream results back one row at a time
             query.on('row', function(row) {
                 results.push(row);
             });
-
             // After all data is returned, close connection and return results
             query.on('end', function() {
                 done();
                 res.redirect('/app');
             });
-
-
         }); // pg connect
-
     });
-
     app.get('/logout', function(req, res) {
         if (req.session.agent) {
             req.session.destroy();
             res.redirect('/app');
         }
     });
-
     // -- END AGENT AUTHENTICATION
 
 

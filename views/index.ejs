@@ -54,6 +54,8 @@
             </div>
             <div class='js-hang-up'>
             </div>
+            <div class='js-transfer'>
+            </div>
         </div>
         <div class='col s4 main-info'>
         </div>
@@ -120,6 +122,7 @@
             $('.call-status').html('Call in progress...');
             $('.waiting-phone').hide();
             $('.js-hang-up').html('<button id="hangup" class="waves-effect waves-light btn red darken-2">Hang Up</button>');
+            // $('.js-transfer').html('<button class="waves-effect waves-light btn green darken-2">Transfer</button>');
             $('.caller-phone-number').html(caller.From);
             $('.caller-first-name').html("Julian");
             $('.caller-last-name').html("Guterman");
@@ -141,6 +144,27 @@
             $('.call-status').html('Waiting...');
             $('.js-hang-up').empty();
             $('.waiting-phone').show();
+        });
+
+        $('.js-transfer').click(function() {
+            $.ajax({
+
+                type: 'POST',
+
+                url: '/conference',
+
+                success: function(response) {
+                    console.log("Transfer Started");
+                    console.log(response);
+                },
+
+                error: function() {
+                    console.log(error);
+                }
+
+            });
+
+            $('.js-transfer').addClass('disabled');
         });
 
         function emptyCallerInfo() {
