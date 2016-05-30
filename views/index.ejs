@@ -86,7 +86,6 @@
         $('.js-main-power').click(function() {
             power++;
             powerColorStatus();
-            console.log(power);
         });
 
         function powerColorStatus() {
@@ -99,7 +98,7 @@
                 $('.js-main-power').removeClass('green-power');
                 $('.js-main-power').addClass('red-power');
                 $('.call-status').html('Offline...');
-                powerOffAudio.play();
+                    powerOffAudio.play();
             }
         }
         // Register an event handler to be called when there is an incoming
