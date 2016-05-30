@@ -122,7 +122,7 @@ module.exports = function(app) {
       // the URL.
 
       twilioClient.calls.create({
-        url: "http://sudocall.herokuapp.com/join_conference?=" + conferenceName,
+        url: "http://sudocall.herokuapp.com/join_conference?conferenceId=" + conferenceName,
         from: config.inboundPhonenumber,
         to: config.twilioNumber,
         method: "POST"
@@ -143,7 +143,7 @@ module.exports = function(app) {
 
     // This is the endpoint that Twilio will call when you answer the phone
     app.post("/join_conference", function(req, res, next) {
-      var conferenceName = req.query.conferenceName;
+      var conferenceName = req.query.conferenceId;
 
       // We return TwiML to enter the same conference
       var twiml = new twilio.TwimlResponse();
