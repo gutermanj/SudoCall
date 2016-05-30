@@ -55,7 +55,7 @@ module.exports = function(app) {
 
     // Home Page with Click to Call 
     app.get('/', function(request, response) {
-        response.render('index');
+        response.render('landing.ejs');
     });
 
     app.get('/sdfsdf', function(req, res) {
