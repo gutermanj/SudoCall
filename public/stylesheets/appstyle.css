@@ -34,8 +34,11 @@
 
 .green-power {
 	color: #66bb6a;
-	margin-top: .2%;
-	margin-left: -2%;
+}
+
+.js-main-power {
+	margin-top: 10%;
+	margin-left: 5%;
 }
 
 .current-call-main {
