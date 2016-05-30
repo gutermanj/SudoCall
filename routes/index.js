@@ -134,7 +134,7 @@ module.exports = function(app) {
       twiml.dial(function(node) {
         node.conference(conferenceName, {
           waitUrl: "http://twimlets.com/holdmusic?Bucket=com.twilio.music.rock",
-          startConferenceOnEnter: false
+          startConferenceOnEnter: true
         });
       });
       res.set('Content-Type', 'text/xml');
