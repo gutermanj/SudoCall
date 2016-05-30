@@ -149,7 +149,8 @@ module.exports = function(app) {
       var twiml = new twilio.TwimlResponse();
       twiml.dial(function(node) {
         node.conference(conferenceName, {
-          startConferenceOnEnter: true
+          startConferenceOnEnter: true,
+          hangupOnStar: true
         });
       });
       twiml.gather("http://sudocall.herokuapp.com/join_conference?=conferenceId=" + conferenceName, numDigits=1)
@@ -169,7 +170,8 @@ module.exports = function(app) {
         var twiml = new twilio.TwimlResponse();
         twiml.dial(function(node) {
             node.conference(conferenceName, {
-                startConferenceOnEnter: false
+                startConferenceOnEnter: false,
+                hangupOnStar: true
             });
         });
         res.set('Content-Type', 'text/xml');
