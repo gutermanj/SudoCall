@@ -122,8 +122,9 @@
             $('.call-status').html('Call in progress...');
             $('.waiting-phone').hide();
             $('.js-hang-up').html('<button id="hangup" class="waves-effect waves-light btn red darken-2">Hang Up</button>');
-            // $('.js-transfer').html('<button class="waves-effect waves-light btn green darken-2">Transfer</button>');
+            $('.js-transfer').html('<button class="waves-effect waves-light btn green darken-2">Transfer</button>');
             $('.caller-phone-number').html(caller.From);
+            $('.caller-phone-number').attr("data-sid", caller.CallSid);
             $('.caller-first-name').html("Julian");
             $('.caller-last-name').html("Guterman");
         }
@@ -147,18 +148,24 @@
         });
 
         $('.js-transfer').click(function() {
+            var sid = $('.caller-phone-number').data("sid");
+            console.log(sid);
             $.ajax({
 
                 type: 'POST',
 
                 url: '/conference',
 
+                data: {
+                    callerSid: sid
+                },
+
                 success: function(response) {
                     console.log("Transfer Started");
                     console.log(response);
                 },
 
-                error: function() {
+                error: function(error) {
                     console.log(error);
                 }
 

@@ -9,7 +9,9 @@ module.exports = {
 
     // A Twilio number that you have purchased through the twilio.com web
     // interface or API
-    twilioNumber: process.env.TWILIO_NUMBER,
+    twilioNumber: process.env.TWILIO_PHONE_NUMBER,
+
+    inboundPhonenumber: process.env.TWILIO_INBOUND_PHONE_NUMBER,
 
     // The port your web application will run on
     port: process.env.PORT || 3000

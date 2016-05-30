@@ -101,13 +101,57 @@ module.exports = function(app) {
         // Give the capability generator permission to accept incoming
         // calls to the ID "kevin"
         capability.allowClientIncoming('julian');
-        capability.allowClientOutgoing('julian');
+        capability.allowClientOutgoing('APf798ecaf8671d85a146a7452a0dfe8f0');
 
         res.locals.agent = req.session.agent;
         // Render an HTML page which contains our capability token
         res.render('index.ejs', {
             token:capability.generate()
         });
+    });
+
+    // This is the endpoint your Twilio number's Voice Request URL should point at
+    app.post('/inbound', function(req, res, next) {
+      // conference name will be a random number between 0 and 10000
+      var conferenceName = req.body.callerSid;
+
+      // Create a call to your mobile and add the conference name as a parameter to
+      // the URL.
+
+      twilioClient.calls.create({
+        url: "/join_conference?=" + conferenceName,
+        from: config.inboundPhonenumber,
+        to: config.twilioNumber,
+        method: "POST"
+      });
+
+      // Now return TwiML to the caller to put them in the conference, using the
+      // same name.
+      var twiml = new twilio.TwimlResponse();
+      twiml.dial(function(node) {
+        node.conference(conferenceName, {
+          waitUrl: "http://twimlets.com/holdmusic?Bucket=com.twilio.music.rock",
+          startConferenceOnEnter: false
+        });
+      });
+      res.set('Content-Type', 'text/xml');
+      res.send(twiml.toString());
+      console.log(twiml.toString());
+    });
+
+    // This is the endpoint that Twilio will call when you answer the phone
+    app.post("/join_conference", function(req, res, next) {
+      var conferenceName = req.query.id;
+
+      // We return TwiML to enter the same conference
+      var twiml = new twilio.TwimlResponse();
+      twiml.dial(function(node) {
+        node.conference(conferenceName, {
+          startConferenceOnEnter: true
+        });
+      });
+      res.set('Content-Type', 'text/xml');
+      res.send(twiml.toString());
     });
 
 
