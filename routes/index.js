@@ -7,7 +7,7 @@ var twilio = require('twilio');
 var session = require('client-sessions');
 var bcrypt = require('bcryptjs');
 var config = require("../config");
-var client = twilio(config.accountSid, config.authToken);
+var twilioClient = twilio(config.accountSid, config.authToken);
 // Dependencies
 
 // Postgresql
@@ -87,6 +87,9 @@ module.exports = function(app) {
 
     app.get('/app', requireLogin, function(req, res) {
 
+        // SET SESSION TO SHORTER VARIABLE
+        var agent = req.session.agent;
+
         // Create an object which will generate a capability token
         // Replace these two arguments with your own account SID
         // and auth token:
@@ -97,7 +100,6 @@ module.exports = function(app) {
 
         // Give the capability generator permission to accept incoming
         // calls to the ID "kevin"
-
         capability.allowClientIncoming('julian');
 
         res.locals.agent = req.session.agent;
@@ -105,6 +107,47 @@ module.exports = function(app) {
         res.render('index.ejs', {
             token:capability.generate()
         });
+    });
+
+    // This is the endpoint your Twilio number's Voice Request URL should point at
+    app.post('/inbound', function(req, res, next) {
+      // conference name will be a random number between 0 and 10000
+      var conferenceName = Math.floor(Math.random() * 10000).toString();
+
+      // Create a call to your mobile and add the conference name as a parameter to
+      // the URL.
+      twilioClient.calls.create({
+        from: config.twilioNumber,
+        to: "+15613811223",
+        url: "/join_conference?id=" + conferenceName
+      });
+
+      // Now return TwiML to the caller to put them in the conference, using the
+      // same name.
+      var twiml = new twilio.TwimlResponse();
+      twiml.dial(function(node) {
+        node.conference(conferenceName, {
+          waitUrl: "http://twimlets.com/holdmusic?Bucket=com.twilio.music.rock",
+          startConferenceOnEnter: false
+        });
+      });
+      res.set('Content-Type', 'text/xml');
+      res.send(twiml.toString());
+    });
+
+    // This is the endpoint that Twilio will call when you answer the phone
+    app.post("/join_conference", function(req, res, next) {
+      var conferenceName = req.query.id;
+
+      // We return TwiML to enter the same conference
+      var twiml = new twilio.TwimlResponse();
+      twiml.dial(function(node) {
+        node.conference(conferenceName, {
+          startConferenceOnEnter: true
+        });
+      });
+      res.set('Content-Type', 'text/xml');
+      res.send(twiml.toString());
     });
 
     app.post('/login', function(req, res) {
