@@ -133,8 +133,7 @@ module.exports = function(app) {
       var twiml = new twilio.TwimlResponse();
       twiml.dial(function(node) {
         node.conference(conferenceName, {
-          waitUrl: "http://twimlets.com/holdmusic?Bucket=com.twilio.music.rock",
-          startConferenceOnEnter: true
+          startConferenceOnEnter: false
         });
       });
       res.set('Content-Type', 'text/xml');
@@ -143,7 +142,7 @@ module.exports = function(app) {
     });
 
     // This is the endpoint that Twilio will call when you answer the phone
-    app.post("/join_conference", function(req, res, next) {
+    app.post("/join_conference/:conferenceName", function(req, res, next) {
       var conferenceName = req.query.id;
 
       // We return TwiML to enter the same conference
