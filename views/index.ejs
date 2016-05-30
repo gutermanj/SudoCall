@@ -1,7 +1,7 @@
 <!doctype html>
 <html>
 <head>
-    <title>GREPhub</title>
+    <title>SudoCall</title>
     <!-- Compiled and minified CSS -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.6/css/materialize.min.css">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
@@ -19,7 +19,7 @@
     <!-- NAV BAR -->
     <nav class='teal'>
         <div class="nav-wrapper">
-          <a class="brand-logo">GREPhub</a>
+          <a class="brand-logo">SudoCall</a>
           <ul id="nav-mobile" class="right hide-on-med-and-down">
             <!-- Dropdown Trigger -->
             <li><a class="dropdown-button" href="#!" data-activates="dropdown1"><%= agent.first_name %><i class="material-icons right">arrow_drop_down</i></a></li>
@@ -71,12 +71,17 @@
  
     <!-- accept incoming calls to this client -->
     <script type="text/javascript">
+        var powerOnAudio = document.createElement('audio');
+        powerOnAudio.setAttribute('src', 'https://static.twilio.com/libs/twiliojs/refs/d682d91/sounds/outgoing.mp3');
+        var powerOffAudio = document.createElement('audio');
+        powerOffAudio.setAttribute('src', 'https://static.twilio.com/libs/twiliojs/refs/d682d91/sounds/incoming.mp3');
+        $.get();
 
         var power = 1;
         // Set up the Twilio "Device" (think of it as the browser's phone) with
         // our server-generated capability token, which will be inserted by the
         // EJS template system:
-        Twilio.Device.setup('<%= token %>');
+        Twilio.Device.setup('<%= token %>', { audioConstraints: true } );
 
         $('.js-main-power').click(function() {
             power++;
@@ -89,10 +94,12 @@
                 $('.js-main-power').removeClass('red-power');
                 $('.js-main-power').addClass('green-power');
                 $('.call-status').html('Waiting...');
+                    powerOnAudio.play();
             } else {
                 $('.js-main-power').removeClass('green-power');
                 $('.js-main-power').addClass('red-power');
                 $('.call-status').html('Offline...');
+                powerOffAudio.play();
             }
         }
         // Register an event handler to be called when there is an incoming
@@ -100,10 +107,11 @@
         Twilio.Device.incoming(function(connection) {
             //For demo purposed, automatically accept the call
             if (power % 2 === 0) {
-                connection.accept();  
+                connection.accept();
                 // Current Incoming Caller Info
                 var caller = connection.parameters;
                 changeCallStatus(caller);
+                console.log(connection.parameters);
             } else {
                 connection.ignore();
             }
@@ -114,8 +122,8 @@
             $('.waiting-phone').hide();
             $('.js-hang-up').html('<button id="hangup" class="waves-effect waves-light btn red darken-2">Hang Up</button>');
             $('.caller-phone-number').html(caller.From);
-            $('.caller-first-name').html("First");
-            $('.caller-last-name').html("Last");
+            $('.caller-first-name').html("Julian");
+            $('.caller-last-name').html("Guterman");
         }
  
         // Register an event handler for when a call ends for any reason

@@ -144,7 +144,6 @@ module.exports = function(app) {
                   if (bcrypt.compareSync(req.body.password, agent.password)) {
                     req.session.agent = agent; // Set the session
                     res.locals.agent = agent;
-                    console.log("LOGIN QUERY RESULTS: " + agent);
                     res.redirect('/app');
                   } else {
 
