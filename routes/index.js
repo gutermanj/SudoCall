@@ -143,7 +143,7 @@ module.exports = function(app) {
 
     // This is the endpoint that Twilio will call when you answer the phone
     app.post("/join_conference", function(req, res, next) {
-      var conferenceName = req.query.id;
+      var conferenceName = req.query.conferenceName;
 
       // We return TwiML to enter the same conference
       var twiml = new twilio.TwimlResponse();
