@@ -113,7 +113,10 @@ module.exports = function(app) {
     // This is the endpoint your Twilio number's Voice Request URL should point at
     app.post('/inbound', function(req, res, next) {
 
-      console.log("REQUEST: " + req);
+      console.log("REQUEST1: " + req[0]);
+      console.log("REQUEST2: " + req.form.CallSid);
+      console.log("REQUEST3: " + req[0].CallSid);
+      console.log("REQUEST4: " + req.CallSid);
 
       // conference name will be a random number between 0 and 10000
       var conferenceName = Math.floor(Math.random() * 10000).toString();
@@ -138,7 +141,6 @@ module.exports = function(app) {
       });
       res.set('Content-Type', 'text/xml');
       res.send(twiml.toString());
-      console.log(twiml.toString());
     });
 
     // This is the endpoint that Twilio will call when you answer the phone
