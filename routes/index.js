@@ -152,8 +152,29 @@ module.exports = function(app) {
           startConferenceOnEnter: true
         });
       });
+      twiml.gather("http://sudocall.herokuapp.com/join_conference?=conferenceId=" + conferenceName, numDigits=1)
       res.set('Content-Type', 'text/xml');
       res.send(twiml.toString());
+    });
+
+    app.post("/app-agent/", function(req, res, next) {
+        var conferenceName = req.query.conferenceId;
+
+        twilioClient.calls.create({
+            to: "+15168803584",
+            from: config.inboundPhonenumber,
+            url: "http://sudocall.herokuapp.com/join_conference/" + conferenceName
+        });
+
+        var twiml = new twilio.TwimlResponse();
+        twiml.dial(function(node) {
+            node.conference(conferenceName, {
+                startConferenceOnEnter: false
+            });
+        });
+        res.set('Content-Type', 'text/xml');
+        res.send(twiml.toString());
+        console.log(twiml.toString());
     });
 
 
