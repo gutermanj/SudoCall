@@ -153,12 +153,12 @@ module.exports = function(app) {
           hangupOnStar: true
         });
       });
-      twiml.gather("http://sudocall.herokuapp.com/join_conference?=conferenceId=" + conferenceName, numDigits=1)
+      twiml.gather("http://sudocall.herokuapp.com/add-agent?conferenceId=" + conferenceName, numDigits=1)
       res.set('Content-Type', 'text/xml');
       res.send(twiml.toString());
     });
 
-    app.post("/app-agent/", function(req, res, next) {
+    app.post("/add-agent/", function(req, res, next) {
         var conferenceName = req.query.conferenceId;
 
         twilioClient.calls.create({
