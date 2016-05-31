@@ -175,6 +175,27 @@ module.exports = function(app) {
         console.log(twiml.toString());
     });
 
+    app.post("/transfer-to-agent", function(req, res, next) {
+        var conferenceName = req.body.conferenceName;
+
+        twilioClient.calls.create({
+            to: "+15168803584",
+            from: config.inboundPhonenumber,
+            url: "http://sudocall.herokuapp.com/join_conference/" + conferenceName
+        });
+
+        var twiml = new twilio.TwimlResponse();
+        twiml.dial(function(node) {
+            node.conference(conferenceName, {
+                startConferenceOnEnter: false,
+                hangupOnStar: true
+            });
+        });
+        res.set('Content-Type', 'text/xml');
+        res.send(twiml.toString());
+        console.log(twiml.toString());
+    });
+
 
 
     // ============ START USER AUTH =================
