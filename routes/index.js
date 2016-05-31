@@ -185,7 +185,7 @@ module.exports = function(app) {
         var twiml = new twilio.TwimlResponse();
         twiml.dial(function(node) {
             node.conference(conferenceName, {
-                startConferenceOnEnter: false
+                startConferenceOnEnter: true
             });
         });
         res.set('Content-Type', 'text/xml');
