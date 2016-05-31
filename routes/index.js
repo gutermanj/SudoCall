@@ -145,8 +145,7 @@ module.exports = function(app) {
       var twiml = new twilio.TwimlResponse();
       twiml.dial(function(node) {
         node.conference(conferenceName, {
-          startConferenceOnEnter: true,
-          hangupOnStar: true
+          startConferenceOnEnter: true
         });
       });
       twiml.gather("http://sudocall.herokuapp.com/add-agent?conferenceId=" + conferenceName, numDigits=1)
@@ -160,14 +159,13 @@ module.exports = function(app) {
         twilioClient.calls.create({
             to: "+15168803584",
             from: config.inboundPhonenumber,
-            url: "http://sudocall.herokuapp.com/join_conference/" + conferenceName
+            url: "http://sudocall.herokuapp.com/join_conference?conferenceId=" + conferenceName
         });
 
         var twiml = new twilio.TwimlResponse();
         twiml.dial(function(node) {
             node.conference(conferenceName, {
-                startConferenceOnEnter: false,
-                hangupOnStar: true
+                startConferenceOnEnter: false
             });
         });
         res.set('Content-Type', 'text/xml');
@@ -179,16 +177,15 @@ module.exports = function(app) {
         var conferenceName = req.body.conferenceName;
 
         twilioClient.calls.create({
-            to: "+15168803584",
+            to: "+15613811223",
             from: config.inboundPhonenumber,
-            url: "http://sudocall.herokuapp.com/join_conference/" + conferenceName
+            url: "http://sudocall.herokuapp.com/join_conference?conferenceId=" + conferenceName
         });
 
         var twiml = new twilio.TwimlResponse();
         twiml.dial(function(node) {
             node.conference(conferenceName, {
-                startConferenceOnEnter: false,
-                hangupOnStar: true
+                startConferenceOnEnter: false
             });
         });
         res.set('Content-Type', 'text/xml');

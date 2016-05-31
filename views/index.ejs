@@ -41,7 +41,7 @@
     <div class='row'>
         <div class='col s8 main-script'>
             <div class='current-call-main'>
-                <i class='large material-icons waiting-phone'>settings_phone</i>
+                <!-- <i class='large material-icons waiting-phone'>settings_phone</i> -->
                 <div class='caller-left-info'>
                 <div class='col s7'>
                 <span class='caller-first-name'></span>
@@ -52,9 +52,11 @@
                 </div>
                 </div>
             </div>
-            <div class='js-hang-up'>
+            <div class='row main-buttons'>
+            <div class='js-hang-up col s9'>
             </div>
-            <div class='js-transfer'>
+            <div class='js-transfer col s3'>
+            </div>
             </div>
         </div>
         <div class='col s4 main-info'>
@@ -122,7 +124,7 @@
             $('.call-status').html('Call in progress...');
             $('.waiting-phone').hide();
             $('.js-hang-up').html('<button id="hangup" class="waves-effect waves-light btn red darken-2">Hang Up</button>');
-            $('.js-transfer').html('<button class="waves-effect waves-light btn green darken-2">Transfer</button>');
+            $('.js-transfer').html('<button class="waves-effect waves-light btn green darken-2 js-transfer-button">Transfer</button>');
             $('.caller-phone-number').html(caller.From);
             $('.caller-phone-number').attr("data-sid", caller.CallSid);
             $('.caller-first-name').html("Julian");
@@ -171,7 +173,7 @@
 
             });
 
-            $('.js-transfer').addClass('disabled');
+            $('.js-transfer-button').attr('disabled', true);
         });
 
         function emptyCallerInfo() {
