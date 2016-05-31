@@ -130,7 +130,7 @@ module.exports = function(app) {
       var twiml = new twilio.TwimlResponse();
       twiml.dial(function(node) {
         node.conference(conferenceName, {
-          startConferenceOnEnter: true
+          startConferenceOnEnter: 'true'
         });
       });
       res.set('Content-Type', 'text/xml');
@@ -145,7 +145,7 @@ module.exports = function(app) {
       var twiml = new twilio.TwimlResponse();
       twiml.dial(function(node) {
         node.conference(conferenceName, {
-          startConferenceOnEnter: true
+          startConferenceOnEnter: 'true'
         });
       });
       twiml.gather("http://sudocall.herokuapp.com/add-agent?conferenceId=" + conferenceName, numDigits=1)
@@ -165,7 +165,7 @@ module.exports = function(app) {
         var twiml = new twilio.TwimlResponse();
         twiml.dial(function(node) {
             node.conference(conferenceName, {
-                startConferenceOnEnter: true
+                startConferenceOnEnter: 'true'
             });
         });
         res.set('Content-Type', 'text/xml');
@@ -185,7 +185,7 @@ module.exports = function(app) {
         var twiml = new twilio.TwimlResponse();
         twiml.dial(function(node) {
             node.conference(conferenceName, {
-                startConferenceOnEnter: true
+                startConferenceOnEnter: 'true'
             });
         });
         res.set('Content-Type', 'text/xml');
