@@ -112,13 +112,8 @@ module.exports = function(app) {
 
     // This is the endpoint your Twilio number's Voice Request URL should point at
     app.post('/inbound', function(req, res, next) {
-
-      console.log("REQUEST4: " + req.CallSid);
-
-      for (var key in req) {
-          console.log(key);
-        }
-
+        console.log(req.params);
+        console.log(req.body);
       // conference name will be a random number between 0 and 10000
       var conferenceName = Math.floor(Math.random() * 10000).toString();
 
