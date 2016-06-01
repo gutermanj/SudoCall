@@ -123,6 +123,11 @@ module.exports = function(app) {
       req.session.currentCallSid = conferenceName;
       console.log("ConferenceName: " + conferenceName);
       console.log("session callsid: " + req.session.currentCallSid);
+      for (var key in req.session) {
+        console.log(key);
+        console.log("--------");
+        console.log(req.session.key);
+      }
 
       // Create a call to your mobile and add the conference name as a parameter to
       // the URL.
