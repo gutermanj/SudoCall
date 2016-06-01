@@ -160,7 +160,7 @@ module.exports = function(app) {
         var conferenceName = req.session.currentCallSid;
 
         twilioClient.calls.create({
-            to: "+12395713488",
+            // to: "+12395713488",
             from: config.inboundPhonenumber,
             url: "http://sudocall.herokuapp.com/join_conference?conferenceId=" + conferenceName
         });
@@ -178,9 +178,10 @@ module.exports = function(app) {
 
     app.post("/transfer-to-agent", function(req, res, next) {
         var conferenceName = req.session.currentCallSid;
+        console.log(req.session.currentCallSid);
 
         twilioClient.calls.create({
-            to: "+12395713488",
+            // to: "+12395713488",
             from: config.inboundPhonenumber,
             url: "http://sudocall.herokuapp.com/join_conference?conferenceId=" + conferenceName
         });
