@@ -123,14 +123,28 @@ module.exports = function(app) {
       req.session.currentCallSid = conferenceName;
       console.log("ConferenceName: " + conferenceName);
       console.log("session callsid: " + req.session.currentCallSid);
-      for (var key in req.session) {
-        console.log(key);
-        console.log("--------");
-        console.log(req.session.key);
-      }
+
+      // FIGURED OUT WHY SESSIONS AREN'T WORKING, THE SESSION ISN"T BEING SAVED ON THE USERS END BECAUSE
+      // INBOUND IS BEING HIT BY TWILIO, NOT BY MY USER!!!
+
+      // NEW PROCESS -----------------------------------------------------------------------------------------------------
+      // *****************************************************************************************************************
+      // node-persist -- using this for temp persistence of conference room name
+      // By default, storage data will automatically written in persistence in addition to memory!
+      
+      // User Object in mongoDB will hold their name, email (important), agent phoneNumber, and currentConference (important)
+
+      // storage.setItem(agent.email, agent.currentConference)
+      // Query database for all users, randomly pick one take inbound call, set to: agent.phonenumber....
+
+      // LATER when we need that conference name, we can do this :
+      // var conferenceName = storage.getItem(req.session.agent.email).conferenceName
+      // BOOM that's it!
 
       // Create a call to your mobile and add the conference name as a parameter to
       // the URL.
+      // ******************************************************************************************************************
+      // END NEW PROCESS --------------------------------------------------------------------------------------------------
 
       twilioClient.calls.create({
         url: "http://sudocall.herokuapp.com/join_conference?conferenceId=" + conferenceName,
