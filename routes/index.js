@@ -43,7 +43,7 @@ module.exports = function(app) {
         extended: true
     }));
 
-    app.use(express.cookieParser());
+    app.use(cookieParser());
 
     app.use(session({
       cookieName: 'session',
