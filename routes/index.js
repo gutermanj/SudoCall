@@ -160,6 +160,7 @@ module.exports = function(app) {
     app.post("/add-agent", function(req, res, next) {
         var conferenceName = req.session.currentCallSid;
 
+
         twilioClient.calls.create({
             // to: "+12395713488",
             from: config.inboundPhonenumber,
@@ -180,6 +181,9 @@ module.exports = function(app) {
     app.post("/transfer_to_agent", function(req, res, next) {
         var conferenceName = req.session.currentCallSid;
         console.log("TRANSFER SESSION SID: " + conferenceName);
+        for (var key in req.session) {
+          console.log(key)
+        }
 
         twilioClient.calls.create({
             // to: "+12395713488",
