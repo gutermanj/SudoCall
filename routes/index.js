@@ -178,7 +178,8 @@ module.exports = function(app) {
 
     app.post("/transfer-to-agent", function(req, res, next) {
         var conferenceName = req.session.currentCallSid;
-        console.log(req.session.currentCallSid);
+        console.log("BODY: " + req.body);
+        console.log("SESSION: " + req.session);
 
         twilioClient.calls.create({
             // to: "+12395713488",
