@@ -49,6 +49,7 @@ module.exports = function(app) {
       secret: 'jewf08j283fewioujf082j3kfewj0fi2',
       duration: 30 * 60 * 1000,
       activeDuration: 5 * 60 * 1000,
+      httpOnly: false,
     }));
 
     // Use morgan for HTTP request logging
@@ -117,7 +118,6 @@ module.exports = function(app) {
       // conference name is CallSid to simplfy the front and back end connection
       var conferenceName = req.body.CallSid;
       req.session.currentCallSid = conferenceName;
-      req.session.save()
       console.log("ConferenceName: " + conferenceName);
       console.log("session callsid: " + req.session.currentCallSid);
 
