@@ -122,7 +122,7 @@ module.exports = function(app) {
       // the URL.
 
       twilioClient.calls.create({
-        url: "http://sudocall.herokuapp.com/join_conference?conferenceId=" + req.session.currentCallSid,
+        url: "http://sudocall.herokuapp.com/join_conference?conferenceId=" + newConferenceName,
         from: config.inboundPhonenumber,
         to: config.twilioNumber,
         method: "POST"
