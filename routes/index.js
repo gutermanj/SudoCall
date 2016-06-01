@@ -44,7 +44,6 @@ module.exports = function(app) {
     }));
 
     app.use(cookieParser());
-
     app.use(session({
       cookieName: 'session',
       secret: 'jewf08j283fewioujf082j3kfewj0fi2',
@@ -162,7 +161,7 @@ module.exports = function(app) {
         var conferenceName = req.session.currentCallSid;
 
         twilioClient.calls.create({
-            to: "+12395713488",
+            // to: "+12395713488",
             from: config.inboundPhonenumber,
             url: "http://sudocall.herokuapp.com/join_conference?conferenceId=" + conferenceName
         });
@@ -178,12 +177,12 @@ module.exports = function(app) {
         console.log(twiml.toString());
     });
 
-    app.post("/transfer-to-agent", function(req, res, next) {
+    app.post("/transfer_to_agent", function(req, res, next) {
         var conferenceName = req.session.currentCallSid;
         console.log("TRANSFER SESSION SID: " + conferenceName);
 
         twilioClient.calls.create({
-            to: "+12395713488",
+            // to: "+12395713488",
             from: config.inboundPhonenumber,
             url: "http://sudocall.herokuapp.com/join_conference?conferenceId=" + conferenceName
         });
