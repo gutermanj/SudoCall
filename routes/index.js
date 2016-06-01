@@ -120,7 +120,7 @@ module.exports = function(app) {
       console.log("ConferenceName: " + conferenceName);
       console.log("session callsid: " + req.session.currentCallSid);
 
-      setConferenceId(req.body.CallSid);
+      setConferenceId(conferenceName, req);
       // Create a call to your mobile and add the conference name as a parameter to
       // the URL.
 
@@ -143,8 +143,8 @@ module.exports = function(app) {
       res.send(twiml.toString());
     });
 
-    function setConferenceId(CallSid) {
-      req.session.currentCallSid = CallSid;
+    function setConferenceId(conferenceName, req) {
+      req.session.currentCallSid = conferenceName;
     }
 
     // This is the endpoint that Twilio will call when you answer the phone
