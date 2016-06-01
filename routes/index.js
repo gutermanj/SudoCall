@@ -49,7 +49,9 @@ module.exports = function(app) {
       secret: 'jewf08j283fewioujf082j3kfewj0fi2',
       duration: 30 * 60 * 1000,
       activeDuration: 5 * 60 * 1000,
-      httpOnly: false,
+      cookie: {
+        httpOnly: false
+      }
     }));
 
     // Use morgan for HTTP request logging
