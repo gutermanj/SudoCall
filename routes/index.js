@@ -116,13 +116,11 @@ module.exports = function(app) {
       // conference name is CallSid to simplfy the front and back end connection
       var conferenceName = req.body.CallSid;
       req.session.currentCallSid = conferenceName;
-      var newConferenceName = req.session.currentCallSid;
-      console.log(req.body);
       // Create a call to your mobile and add the conference name as a parameter to
       // the URL.
 
       twilioClient.calls.create({
-        url: "http://sudocall.herokuapp.com/join_conference?conferenceId=" + newConferenceName,
+        url: "http://sudocall.herokuapp.com/join_conference?conferenceId=" + conferenceName,
         from: config.inboundPhonenumber,
         to: config.twilioNumber,
         method: "POST"
@@ -132,7 +130,7 @@ module.exports = function(app) {
       // same name.
       var twiml = new twilio.TwimlResponse();
       twiml.dial(function(node) {
-        node.conference(newConferenceName, {
+        node.conference(conferenceName, {
           startConferenceOnEnter: true
         });
       });
@@ -160,7 +158,7 @@ module.exports = function(app) {
         var conferenceName = req.session.currentCallSid;
 
         twilioClient.calls.create({
-            to: "+19548998586",
+            to: "+12395713488",
             from: config.inboundPhonenumber,
             url: "http://sudocall.herokuapp.com/join_conference?conferenceId=" + conferenceName
         });
@@ -180,7 +178,7 @@ module.exports = function(app) {
         var conferenceName = req.session.currentCallSid;
 
         twilioClient.calls.create({
-            to: "+19548998586",
+            to: "+12395713488",
             from: config.inboundPhonenumber,
             url: "http://sudocall.herokuapp.com/join_conference?conferenceId=" + conferenceName
         });
