@@ -121,7 +121,6 @@ module.exports = function(app) {
       // conference name is CallSid to simplfy the front and back end connection
       var conferenceName = req.body.CallSid;
       req.session.currentCallSid = conferenceName;
-      req.session.save();
       console.log("ConferenceName: " + conferenceName);
       console.log("session callsid: " + req.session.currentCallSid);
 
@@ -145,6 +144,7 @@ module.exports = function(app) {
       });
       res.set('Content-Type', 'text/xml');
       res.send(twiml.toString());
+      res.json(req.session);
     });
 
     // This is the endpoint that Twilio will call when you answer the phone
