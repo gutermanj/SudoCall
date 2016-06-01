@@ -44,6 +44,7 @@ module.exports = function(app) {
     }));
 
     app.use(cookieParser());
+
     app.use(session({
       cookieName: 'session',
       secret: 'jewf08j283fewioujf082j3kfewj0fi2',
@@ -120,6 +121,7 @@ module.exports = function(app) {
       // conference name is CallSid to simplfy the front and back end connection
       var conferenceName = req.body.CallSid;
       req.session.currentCallSid = conferenceName;
+      req.session.save();
       console.log("ConferenceName: " + conferenceName);
       console.log("session callsid: " + req.session.currentCallSid);
 
@@ -185,9 +187,6 @@ module.exports = function(app) {
     app.post("/transfer_to_agent", function(req, res, next) {
         var conferenceName = req.session.currentCallSid;
         console.log("TRANSFER SESSION SID: " + conferenceName);
-        for (var key in req.session) {
-          console.log(key)
-        }
 
         twilioClient.calls.create({
             // to: "+12395713488",
