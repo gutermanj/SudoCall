@@ -143,7 +143,7 @@ module.exports = function(app) {
         });
       });
       res.set('Content-Type', 'text/xml');
-      res.send(twiml.toString(), req.session.currentCallSid);
+      res.send(twiml.toString());
     });
 
     // This is the endpoint that Twilio will call when you answer the phone
