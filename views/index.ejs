@@ -133,6 +133,8 @@
         Twilio.Device.disconnect(function(connection) {
             $('.call-status').html('Waiting...');
             $('.js-hang-up').empty();
+            $('.js-transfer').empty();
+
             emptyCallerInfo();
             $('.waiting-phone').show();
         });
@@ -144,6 +146,7 @@
             // Top Left Call Status
             $('.call-status').html('Waiting...');
             $('.js-hang-up').empty();
+            $('.js-transfer').empty();
             $('.waiting-phone').show();
         });
 
