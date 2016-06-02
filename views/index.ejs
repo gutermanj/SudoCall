@@ -112,7 +112,7 @@
             if (power % 2 === 0) {
                 connection.accept();
                 // Current Incoming Caller Info
-                grapCallInfo();
+                grabCallInfo();
                 changeCallStatus(caller);
             } else {
                 connection.ignore();
@@ -181,7 +181,7 @@
             $('.caller-last-name').empty();
         }
 
-        function grabCallerInfo() {
+        function grabCallInfo() {
             $.ajax({
 
                 type: 'GET',
