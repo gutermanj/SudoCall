@@ -189,9 +189,16 @@
 
             // Add Info To Right Column (Main Call Info)
             $('.phone_number_field').val(caller.from);
+            $('.phone_number_field').addClass('active');
+
             $('.zip_code_field').val(caller.zipCode);
+            $('.zip_code_field').addClass('active');
+
             $('.city_field').val(caller.city);
+            $('.city_field').addClass('active');
+
             $('.state_field').val(caller.state);
+            $('.state').addClass('active');
 
 
         }
@@ -250,9 +257,16 @@
             $('.caller-last-name').empty();
 
             $('.phone_number_field').val("");
+            $('.phone_number_field').removeClass('active');
+
             $('.zip_code_field').val("");
+            $('.zip_code_field').removeClass('active');
+
             $('.city_field').val("");
+            $('.city_field').removeClass('active');
+
             $('.state_field').val("");
+            $('.state_field').removeClass('active');
         }
 
         function grabCallInfo() {
