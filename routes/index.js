@@ -120,8 +120,6 @@ module.exports = function(app) {
 
     // This is the endpoint your Twilio number's Voice Request URL should point at
     app.post('/inbound', function(req, res, next) {
-        
-      console.log(req.body);
 
       // conference name is CallSid to simplfy the front and back end connection
       var conferenceName = Math.floor(Math.random() * 10000).toString();
@@ -222,7 +220,7 @@ module.exports = function(app) {
 
     app.get('/currentCall', function(req, res, next) {
       var callInfo = storage.getItem(req.session.agent.email);
-      console.log(callInfo);
+      var openCallerInfo = JSON.stringify(callInfo);
       res.json(callInfo);
     });
 
