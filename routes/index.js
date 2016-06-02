@@ -11,6 +11,8 @@ var twilioClient = twilio(config.accountSid, config.authToken);
 var storage = require('node-persist');
 // Dependencies
 
+storage.initSync();
+
 // Postgresql
 var pg = require('pg');
 pg.defaults.ssl = true;
