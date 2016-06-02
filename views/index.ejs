@@ -85,7 +85,7 @@
                     </div>
                     <div class="input-field col s12">
                       <input type="date" class="datepicker dob-field">
-                      <label for="dob" class='dob_label active'>Date of Birth</label>
+                      <label for="dob" class='dob_label'>Date of Birth</label>
                     </div>
                     <div class="input-field col s12">
                       <input name="zip_code" type="text" class="validate zip_code_field">
@@ -271,6 +271,9 @@
 
             $('.state_field').val("");
             $('.state_label').removeClass('active');
+
+            $('.dob-field').val("");
+            $('.dob-label').removeClass('active');
         }
 
         function grabCallInfo() {
