@@ -8,6 +8,7 @@ var session = require('client-sessions');
 var bcrypt = require('bcryptjs');
 var config = require("../config");
 var twilioClient = twilio(config.accountSid, config.authToken);
+var storage = require('node-persist');
 // Dependencies
 
 // Postgresql
@@ -120,9 +121,10 @@ module.exports = function(app) {
         
       // conference name is CallSid to simplfy the front and back end connection
       var conferenceName = Math.floor(Math.random() * 10000).toString();
-      req.session.currentCallSid = conferenceName;
-      console.log("ConferenceName: " + conferenceName);
-      console.log("session callsid: " + req.session.currentCallSid);
+      storage.setItem('gutermanj@gmail.com', conferenceName);
+      console.log("TRANSFER TO AGENT CONFERENCE NAME: " + conferenceName);
+      // Here we will set the storage data with the conferenceName and the randomly selected agent to accept
+      //    the inbound call!
 
       // FIGURED OUT WHY SESSIONS AREN'T WORKING, THE SESSION ISN"T BEING SAVED ON THE USERS END BECAUSE
       // INBOUND IS BEING HIT BY TWILIO, NOT BY MY USER!!!
@@ -168,6 +170,7 @@ module.exports = function(app) {
     // This is the endpoint that Twilio will call when you answer the phone
     app.post("/join_conference", function(req, res, next) {
       var conferenceName = req.query.conferenceId;
+      // Dont change this
 
       // We return TwiML to enter the same conference
       var twiml = new twilio.TwimlResponse();
@@ -176,35 +179,37 @@ module.exports = function(app) {
           startConferenceOnEnter: true
         });
       });
-      twiml.gather("http://sudocall.herokuapp.com/add-agent?conferenceId=" + conferenceName, numDigits=1)
+      // twiml.gather("http://sudocall.herokuapp.com/add-agent?conferenceId=" + conferenceName, numDigits=1)
       res.set('Content-Type', 'text/xml');
       res.send(twiml.toString());
     });
 
-    app.post("/add-agent", function(req, res, next) {
-        var conferenceName = req.session.currentCallSid;
+    // app.post("/add-agent", function(req, res, next) {
+    //     var conferenceName = req.session.currentCallSid;
 
 
-        twilioClient.calls.create({
-            // to: "+12395713488",
-            from: config.inboundPhonenumber,
-            url: "http://sudocall.herokuapp.com/join_conference?conferenceId=" + conferenceName
-        });
+    //     twilioClient.calls.create({
+    //         // to: "+12395713488",
+    //         from: config.inboundPhonenumber,
+    //         url: "http://sudocall.herokuapp.com/join_conference?conferenceId=" + conferenceName
+    //     });
 
-        var twiml = new twilio.TwimlResponse();
-        twiml.dial(function(node) {
-            node.conference(conferenceName, {
-                startConferenceOnEnter: true
-            });
-        });
-        res.set('Content-Type', 'text/xml');
-        res.send(twiml.toString());
-        console.log(twiml.toString());
-    });
+    //     var twiml = new twilio.TwimlResponse();
+    //     twiml.dial(function(node) {
+    //         node.conference(conferenceName, {
+    //             startConferenceOnEnter: true
+    //         });
+    //     });
+    //     res.set('Content-Type', 'text/xml');
+    //     res.send(twiml.toString());
+    //     console.log(twiml.toString());
+    // });
+    // UNNECESSARY CODE FROM AN EXAMPLE, GOOD REFERENCE
 
     app.post("/transfer_to_agent", function(req, res, next) {
-        var conferenceName = req.session.currentCallSid;
-        console.log("TRANSFER SESSION SID: " + conferenceName);
+        var conferenceName = storage.getItem(req.session.agent.email).conferenceName;
+        console.log("TRANSFER TO AGENT CONFERENCE NAME: " + conferenceName);
+        // This will be changed to a getItem() from storage data
 
         twilioClient.calls.create({
             // to: "+12395713488",
