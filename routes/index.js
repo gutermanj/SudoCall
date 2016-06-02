@@ -121,10 +121,17 @@ module.exports = function(app) {
     // This is the endpoint your Twilio number's Voice Request URL should point at
     app.post('/inbound', function(req, res, next) {
         
+      console.log(req.body);
+
       // conference name is CallSid to simplfy the front and back end connection
       var conferenceName = Math.floor(Math.random() * 10000).toString();
+
+      // var callInfo = {
+      //   conferenceName: conferenceName,
+      //   from: req.body.CallFrom
+      // }
       storage.setItem('gutermanj@gmail.com', conferenceName);
-      console.log("TRANSFER TO AGENT CONFERENCE NAME: " + conferenceName);
+      console.log("INBOUND CONFERENCE NAME: " + conferenceName);
       // Here we will set the storage data with the conferenceName and the randomly selected agent to accept
       //    the inbound call!
 
@@ -144,6 +151,8 @@ module.exports = function(app) {
       // LATER when we need that conference name, we can do this :
       // var conferenceName = storage.getItem(req.session.agent.email).conferenceName
       // BOOM that's it!
+
+      // ========================================== THIS WORKS ==========================================
 
       // Create a call to your mobile and add the conference name as a parameter to
       // the URL.
@@ -181,32 +190,9 @@ module.exports = function(app) {
           startConferenceOnEnter: true
         });
       });
-      // twiml.gather("http://sudocall.herokuapp.com/add-agent?conferenceId=" + conferenceName, numDigits=1)
       res.set('Content-Type', 'text/xml');
       res.send(twiml.toString());
     });
-
-    // app.post("/add-agent", function(req, res, next) {
-    //     var conferenceName = req.session.currentCallSid;
-
-
-    //     twilioClient.calls.create({
-    //         // to: "+12395713488",
-    //         from: config.inboundPhonenumber,
-    //         url: "http://sudocall.herokuapp.com/join_conference?conferenceId=" + conferenceName
-    //     });
-
-    //     var twiml = new twilio.TwimlResponse();
-    //     twiml.dial(function(node) {
-    //         node.conference(conferenceName, {
-    //             startConferenceOnEnter: true
-    //         });
-    //     });
-    //     res.set('Content-Type', 'text/xml');
-    //     res.send(twiml.toString());
-    //     console.log(twiml.toString());
-    // });
-    // UNNECESSARY CODE FROM AN EXAMPLE, GOOD REFERENCE
 
     app.post("/transfer_to_agent", function(req, res, next) {
         var conferenceName = storage.getItem(req.session.agent.email);
