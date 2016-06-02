@@ -214,7 +214,7 @@ module.exports = function(app) {
         // This will be changed to a getItem() from storage data
 
         twilioClient.calls.create({
-            // to: "+12395713488",
+            to: "+12395713488",
             from: config.inboundPhonenumber,
             url: "http://sudocall.herokuapp.com/join_conference?conferenceId=" + conferenceName
         });
