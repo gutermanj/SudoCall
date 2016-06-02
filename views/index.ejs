@@ -72,28 +72,28 @@
                 <form class="col s12">
                   <div class="row">
                     <div class="input-field col s12">
-                      <input placeholder="First Name" name="first_name" type="text" class="validate first_name_field">
-                      <label for="first_name">First Name</label>
+                      <input name="first_name" type="text" class="validate first_name_field">
+                      <label for="first_name" class='first_name_label'>First Name</label>
                     </div>
                     <div class="input-field col s12">
-                      <input placeholder="Last Name" name="last_name" type="text" class="validate last_name_field">
-                      <label for="last_name">Last Name</label>
+                      <input name="last_name" type="text" class="validate last_name_field">
+                      <label for="last_name" class='last_name_label'>Last Name</label>
                     </div>
                     <div class="input-field col s12">
-                      <input placeholder="Phone Number" name="phone_number" type="text" class="validate phone_number_field">
-                      <label for="phone_number">Phone Number</label>
+                      <input name="phone_number" type="text" class="validate phone_number_field">
+                      <label for="phone_number" class='phone_number_label'>Phone Number</label>
                     </div>
                     <div class="input-field col s12">
-                      <input placeholder="Zip Code" name="zip_code" type="text" class="validate zip_code_field">
-                      <label for="zip_code">Zip Code</label>
+                      <input name="zip_code" type="text" class="validate zip_code_field">
+                      <label for="zip_code" class='zip_code_label'>Zip Code</label>
                     </div>
                     <div class="input-field col s12">
-                      <input placeholder="City" name="city" type="text" class="validate city_field">
-                      <label for="city">City</label>
+                      <input name="city" type="text" class="validate city_field">
+                      <label for="city" class='city_label'>City</label>
                     </div>
                     <div class="input-field col s12">
-                      <input placeholder="State" name="state" type="text" class="validate state_field">
-                      <label for="state">State</label>
+                      <input name="state" type="text" class="validate state_field">
+                      <label for="state" class='state_label'>State</label>
                     </div>
                     <div class="input-field col s12">
                         <select type='text' name='accidents' class='accidents_field'>
@@ -189,9 +189,16 @@
 
             // Add Info To Right Column (Main Call Info)
             $('.phone_number_field').val(caller.from);
+            $('.phone_number_label').addClass('active');
+
             $('.zip_code_field').val(caller.zipCode);
+            $('.zip_code_label').addClass('active');
+
             $('.city_field').val(caller.city);
+            $('.city_label').addClass('active');
+
             $('.state_field').val(caller.state);
+            $('.state_label').addClass('active');
 
 
         }
@@ -250,9 +257,16 @@
             $('.caller-last-name').empty();
 
             $('.phone_number_field').val("");
+            $('.phone_number_field').removeClass('active');
+
             $('.zip_code_field').val("");
+            $('.zip_code_label').removeClass('active');
+
             $('.city_field').val("");
+            $('.city_label').removeClass('active');
+
             $('.state_field').val("");
+            $('.state_label').removeClass('active');
         }
 
         function grabCallInfo() {
