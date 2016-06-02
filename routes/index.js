@@ -132,7 +132,10 @@ module.exports = function(app) {
         zipCode: req.body.CallerZip
       }
       storage.setItem('gutermanj@gmail.com', callInfo);
-      console.log("INBOUND CONFERENCE NAME: " + callInfo);
+      // Will replace 'gutermanj@gmail.com' with randomly chosen agent to accept the call
+
+
+      // console.log("INBOUND CONFERENCE NAME: " + callInfo);
       // Here we will set the storage data with the conferenceName and the randomly selected agent to accept
       //    the inbound call!
 
@@ -197,7 +200,6 @@ module.exports = function(app) {
 
     app.post("/transfer_to_agent", function(req, res, next) {
         var conferenceName = storage.getItem(req.session.agent.email);
-        console.log("TRANSFER TO AGENT CONFERENCE NAME: " + conferenceName);
         // This will be changed to a getItem() from storage data
 
         twilioClient.calls.create({
@@ -214,13 +216,12 @@ module.exports = function(app) {
         }); 
         res.set('Content-Type', 'text/xml');
         res.send(twiml.toString());
-        console.log(twiml.toString());
     });
 
 
+    // Sends Current Call Info Back To Frontend for agent to use
     app.get('/currentCall', function(req, res, next) {
       var callInfo = storage.getItem(req.session.agent.email);
-      var openCallerInfo = JSON.stringify(callInfo);
       res.json(callInfo);
     });
 
