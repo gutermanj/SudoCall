@@ -27,17 +27,25 @@
 	margin-top: 3%;
 }
 
-.red-power {
+/*.red-power {
 	color: #b71c1c;
 }
 
 .green-power {
 	color: #66bb6a;
-}
+}*/
 
 .js-main-power {
-	margin-top: 10%;
-	margin-left: 5%;
+
+}
+
+.css-main-power {
+	margin-top: 23px;
+	margin-left: -4% !important;
+}
+
+.switch label input[type=checkbox]:checked+.lever {
+    background-color: #212121;
 }
 
 .current-call-main {
@@ -53,3 +61,20 @@
 	margin-top: 2%;
 	font-size: 35px;
 }
+
+.main-info {
+	height: 450px;
+	overflow-y: auto;
+}
+
+.caller-info-label {
+	margin-left: 15%;
+}
+
+.notes-field {
+	margin-bottom: 20px;
+}
+
+
+
+
