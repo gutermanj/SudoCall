@@ -113,7 +113,7 @@
                 connection.accept();
                 // Current Incoming Caller Info
                 grabCallInfo();
-                // changeCallStatus(caller);
+                changeCallStatus(caller);
             } else {
                 connection.ignore();
             }
@@ -124,8 +124,8 @@
             $('.waiting-phone').hide();
             $('.js-hang-up').html('<button id="hangup" class="waves-effect waves-light btn red darken-2">Hang Up</button>');
             $('.js-transfer').html('<button class="waves-effect waves-light btn green darken-2 js-transfer-button">Transfer</button>');
-            $('.caller-phone-number').html(caller.From);
-            $('.caller-phone-number').attr("data-sid", caller.CallSid);
+            $('.caller-phone-number').html(caller.from);
+            $('.caller-phone-number').attr("data-sid", caller.from);
             $('.caller-first-name').html("Julian");
             $('.caller-last-name').html("Guterman");
         }
@@ -164,6 +164,7 @@
                 success: function(response) {
                     console.log("Transfer Started");
                     console.log(response);
+                    changeCallStatus(response);
                 },
 
                 error: function(error) {
