@@ -30,14 +30,15 @@
 
     <div class='row main-call-status'>
         <div class='col s12'>
-            <h4 class='call-status col s6'>Offline...</h4>
+            <h4 class='call-status col s2'>Offline...</h4>
+            <h4 class='main-timer col s4'>| <em class='minute'>0</em><em>:</em><em class='first_second'>0</em><em class='second_second'>0</em></h4>
             <div class='agent-info css-main-power col s6 right-align'>
                 <div class="switch">
                     <label>
-                      Off
+                      Offline
                       <input type="checkbox" class='js-main-power'>
                       <span class="lever"></span>
-                      On
+                      Online
                     </label>
                 </div>
             </div>
@@ -160,11 +161,15 @@
                 $('.js-main-power').addClass('green-power');
                 $('.call-status').html('Waiting...');
                     powerOnAudio.play();
+
+                startMainTimer();
             } else {
                 $('.js-main-power').removeClass('green-power');
                 $('.js-main-power').addClass('red-power');
                 $('.call-status').html('Offline...');
                     powerOffAudio.play();
+
+                stopMainTimer();
             }
         }
         // Register an event handler to be called when there is an incoming
@@ -175,6 +180,8 @@
                 connection.accept();
                 // Current Incoming Caller Info
                 grabCallInfo();
+                stopMainTimer()
+                startMainTimer();
             } else {
                 connection.ignore();
             }
@@ -214,6 +221,8 @@
             $('.js-transfer').empty();
 
             emptyCallerInfo();
+            stopMainTimer();
+            startMainTimer();
             $('.waiting-phone').show();
         });
 
@@ -293,6 +302,67 @@
                 }
 
             });
+        }
+
+        function startMainTimer() {
+
+            $('.minute').html(0);
+            $('.currentSecond').html(0);
+            $('.currentTenthSecond').html(0);
+
+            var currentMinute = $('.minute').text();
+            var currentSecond = $('.first_second').text();
+            var currentTenthSecond = $('.second_second').text();
+
+            currentTenthSecond++;
+            var newTenthSecond = currentTenthSecond;
+            $('.second_second').html(newTenthSecond);
+
+            timerInterval = setInterval(function() {
+
+
+                
+
+                if (currentTenthSecond % 9 === 0 && currentTenthSecond !== 0) {
+
+                    currentSecond++;
+                    var newSecond = currentSecond;
+                    var splitNewSecond = newSecond.toString().split(" ");
+                    currentTenthSecond = 0;
+                    console.log(splitNewSecond);
+                    $('.first_second').html(splitNewSecond[0]);
+                    $('.second_second').html(0);
+
+                } else {
+                    currentTenthSecond++;
+                    var newTenthSecond = currentTenthSecond;
+                    $('.second_second').html(newTenthSecond);
+                }
+
+                if (currentSecond === 6) {
+                    currentMinute++;
+                    var newMinute = currentMinute;
+                    $('.minute').html(newMinute);
+
+                    $('.first_second').html(0);
+                    $('.second_second').html(0);
+
+                    currentSecond = 0;
+                    currentTenthSecond = 0;
+                }
+
+            }, 1000);
+
+        }
+
+        function stopMainTimer() {
+
+            $('.minute').html(0);
+            $('.first_second').html(0);
+            $('.second_second').html(0);
+
+            clearInterval(timerInterval);
+
         }
 
 
