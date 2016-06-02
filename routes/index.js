@@ -126,12 +126,15 @@ module.exports = function(app) {
       // conference name is CallSid to simplfy the front and back end connection
       var conferenceName = Math.floor(Math.random() * 10000).toString();
 
-      // var callInfo = {
-      //   conferenceName: conferenceName,
-      //   from: req.body.CallFrom
-      // }
-      storage.setItem('gutermanj@gmail.com', conferenceName);
-      console.log("INBOUND CONFERENCE NAME: " + conferenceName);
+      var callInfo = {
+        conferenceName: conferenceName,
+        from: req.body.Caller,
+        city: req.body.CallerCity,
+        state: req.body.CallerState,
+        zipCode: req.body.CallerZip
+      }
+      storage.setItem('gutermanj@gmail.com', callInfo);
+      console.log("INBOUND CONFERENCE NAME: " + callInfo);
       // Here we will set the storage data with the conferenceName and the randomly selected agent to accept
       //    the inbound call!
 
@@ -200,7 +203,7 @@ module.exports = function(app) {
         // This will be changed to a getItem() from storage data
 
         twilioClient.calls.create({
-            to: "+12395713488",
+            // to: "+12395713488",
             from: config.inboundPhonenumber,
             url: "http://sudocall.herokuapp.com/join_conference?conferenceId=" + conferenceName
         });
@@ -214,6 +217,13 @@ module.exports = function(app) {
         res.set('Content-Type', 'text/xml');
         res.send(twiml.toString());
         console.log(twiml.toString());
+    });
+
+
+    app.get('/currentCall', function(req, res, next) {
+      var callInfo = storage.getItem(req.session.agent.email);
+      console.log(callInfo);
+      res.json(callInfo);
     });
 
 

@@ -112,9 +112,8 @@
             if (power % 2 === 0) {
                 connection.accept();
                 // Current Incoming Caller Info
-                var caller = connection.parameters;
+                grapCallInfo();
                 changeCallStatus(caller);
-                console.log(connection.parameters);
             } else {
                 connection.ignore();
             }
@@ -180,6 +179,24 @@
             $('.caller-phone-number').empty();
             $('.caller-first-name').empty();
             $('.caller-last-name').empty();
+        }
+
+        function grabCallInfo() {
+            $.ajax({
+
+                type: 'GET',
+
+                url: '/currentCall',
+
+                success: function(response) {
+                    console.log(response);
+                },
+
+                error: function(error) {
+                    console.log(error);
+                }
+
+            });
         }
 
 
