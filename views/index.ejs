@@ -84,6 +84,10 @@
                       <label for="phone_number" class='phone_number_label'>Phone Number</label>
                     </div>
                     <div class="input-field col s12">
+                      <input type="date" class="datepicker dob-field">
+                      <label for="dob" class='dob_label active'>Date of Birth</label>
+                    </div>
+                    <div class="input-field col s12">
                       <input name="zip_code" type="text" class="validate zip_code_field">
                       <label for="zip_code" class='zip_code_label'>Zip Code</label>
                     </div>
@@ -302,7 +306,14 @@
 
     $(document).ready(function() {
         $('select').material_select();
+
+        $('.datepicker').pickadate({
+            selectMonths: true, // Creates a dropdown to control month
+            selectYears: 216 // Creates a dropdown of 15 years to control year
+        });
     });
+
+
     </script>
      <!-- Compiled and minified JavaScript -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.6/js/materialize.min.js"></script>
