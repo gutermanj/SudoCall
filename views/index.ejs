@@ -6,13 +6,15 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.6/css/materialize.min.css">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="/stylesheets/appstyle.css">
+
 </head>
 
 <body>
     <!-- Dropdown Structure -->
     <ul id="dropdown1" class="dropdown-content">
-      <li><a href="#!">one</a></li>
-      <li><a href="#!">two</a></li>
+    <% if (agent.role > 0) { %>
+      <li><a href="/admin">Admin</a></li>
+    <% } %>
       <li class="divider"></li>
       <li><a href="/logout">Logout</a></li>
     </ul>
@@ -319,12 +321,7 @@
             $('.second_second').html(newTenthSecond);
 
             timerInterval = setInterval(function() {
-
-
-                
-
                 if (currentTenthSecond % 9 === 0 && currentTenthSecond !== 0) {
-
                     currentSecond++;
                     var newSecond = currentSecond;
                     var splitNewSecond = newSecond.toString().split(" ");
@@ -332,7 +329,6 @@
                     console.log(splitNewSecond);
                     $('.first_second').html(splitNewSecond[0]);
                     $('.second_second').html(0);
-
                 } else {
                     currentTenthSecond++;
                     var newTenthSecond = currentTenthSecond;
@@ -350,9 +346,7 @@
                     currentSecond = 0;
                     currentTenthSecond = 0;
                 }
-
             }, 1000);
-
         }
 
         function stopMainTimer() {
@@ -387,6 +381,11 @@
     });
 
 
+    </script>
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+        var socket = io();
     </script>
      <!-- Compiled and minified JavaScript -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.6/js/materialize.min.js"></script>

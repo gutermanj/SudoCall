@@ -38,9 +38,9 @@ $(document).ready(function() {
 			Morris.Donut({
 				element: $('.ld-widget-side__chart'),
 				data: [
-					{label: "Light", value: 30},
-					{label: "Pro", value: 20},
-					{label: "Free", value: 45}
+					{label: "Unavailable", value: 0},
+					{label: "Unavailable", value: 0},
+					{label: "Mortgage", value: 45}
 				],
 				colors: ['#ed4949', '#FED42A', '#20c05c', '#1e59d9'],
 				backgroundColor: '#30363c',

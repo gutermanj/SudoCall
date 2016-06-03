@@ -9,6 +9,12 @@ var bcrypt = require('bcryptjs');
 var config = require("../config");
 var twilioClient = twilio(config.accountSid, config.authToken);
 var storage = require('node-persist');
+
+var server = require("../server.js");
+var io = require('socket.io').listen(server);
+// NOT WORKING
+
+
 // Dependencies
 
 storage.initSync();
@@ -18,6 +24,14 @@ var pg = require('pg');
 pg.defaults.ssl = true;
 var connectionString = 'postgres://aczsxkfpgxdzhk:76QAcAJ0VVU2mbT35WYovAX1MT@ec2-54-83-5-43.compute-1.amazonaws.com:5432/d9v4u0oml89ej8';
 var client = new pg.Client(connectionString);
+
+
+
+
+
+
+
+
 
 // ================== TO DO LIST =======================
 //
@@ -34,6 +48,29 @@ var client = new pg.Client(connectionString);
 
 // Configure application routes
 module.exports = function(app) {
+    
+   
+
+    pg.connect(connectionString, function(err, client, done) {
+      if (err) {
+        return console.error('error fetching client from pool', err);
+      } else {
+        console.log("Successfully Connected to Postgresql - Ready For Connections");
+      }
+
+      // client.query('SELECT * FROM agents WHERE email = $1', ['gutermanj@gmail.com'], function(err, result) {
+      //   //call `done()` to release the client back to the pool 
+      //   done();
+     
+      //   if(err) {
+      //     return console.error('error running query', err);
+      //   }
+      //   console.log(result.rows[0]);
+      //   console.log("Success One!");
+      //   //output: 1 
+      // });
+      // EXAMPLE USING POOL -------------------------------------------------------------------------------------
+
     // Set Jade as the default template engine
     app.set('view engine', 'jade');
 
@@ -74,9 +111,9 @@ module.exports = function(app) {
     	res.render('login');
     });
 
-     app.get('/mail', function(req, res) {
-        res.render('inbox');
-     });
+     // app.get('/mail', function(req, res) {
+     //    res.render('inbox');
+     // });
 
     // Require someone to be logged in
     function requireLogin(req, res, next) {
@@ -88,34 +125,58 @@ module.exports = function(app) {
     }
 
     function requireAdmin(req, res, next) {
-        if (req.session.agent.role !== 2) {
-            res.send('NOT OK');
+        
+
+        if (!req.session.agent) {
+          res.render('applogin.ejs');
+        } else {
+          if (req.session.agent.role < 1) {
+            res.redirect('/app');
+          } else {
+            next();
+          }
         }
     }
 
+    io.on('connection', function(socket){
+            console.log('a user connected');
+    });
+
+    app.get('/admin', requireAdmin, function(req, res) {
+      if (req.session.agent) {
+        res.locals.agent = req.session.agent;
+      }
+
+      res.render('home');
+    });
+
+    
+
     app.get('/app', requireLogin, function(req, res) {
 
-        // SET SESSION TO SHORTER VARIABLE
-        var agent = req.session.agent;
+          // SET SESSION TO SHORTER VARIABLE
+          var agent = req.session.agent;
 
-        // Create an object which will generate a capability token
-        // Replace these two arguments with your own account SID
-        // and auth token:
-        var capability = new twilio.Capability(
-            process.env.TWILIO_ACCOUNT_SID,
-            process.env.TWILIO_AUTH_TOKEN
-        );
+          // Create an object which will generate a capability token
+          // Replace these two arguments with your own account SID
+          // and auth token:
+          var capability = new twilio.Capability(
+              process.env.TWILIO_ACCOUNT_SID,
+              process.env.TWILIO_AUTH_TOKEN
+          );
 
-        // Give the capability generator permission to accept incoming
-        // calls to the ID "kevin"
-        capability.allowClientIncoming('julian');
-        capability.allowClientOutgoing('APf798ecaf8671d85a146a7452a0dfe8f0');
+          // Give the capability generator permission to accept incoming
+          // calls to the ID "kevin"
+          capability.allowClientIncoming('julian');
+          capability.allowClientOutgoing('APf798ecaf8671d85a146a7452a0dfe8f0');
 
-        res.locals.agent = req.session.agent;
-        // Render an HTML page which contains our capability token
-        res.render('index.ejs', {
-            token:capability.generate()
-        });
+          res.locals.agent = req.session.agent;
+          // Render an HTML page which contains our capability token
+          res.render('index.ejs', {
+              token:capability.generate()
+          });
+
+
     });
 
     // This is the endpoint your Twilio number's Voice Request URL should point at
@@ -243,7 +304,7 @@ module.exports = function(app) {
         var emailInput = req.body.email;
         var passwordInput = req.body.password;
         // See if the email exists
-        var query = client.query('SELECT * FROM agents WHERE email =' + '\'' + emailInput + '\'');
+        var query = client.query('SELECT * FROM agents WHERE email = $1', [emailInput]);
         // Stream results back one row at a time
         query.on('row', function(row) {
             results.push(row);
@@ -260,13 +321,13 @@ module.exports = function(app) {
                   if (bcrypt.compareSync(req.body.password, agent.password)) {
                     req.session.agent = agent; // Set the session
                     res.locals.agent = agent;
-                    res.redirect('/app');
+                    res.redirect('/admin');
                   } else {
                     // If they don't match
-                    res.redirect('/app');
+                    res.redirect('/admin');
                   }
                   } else {
-                  res.redirect('/app');
+                  res.redirect('/admin');
                 } // For some reason I have to check if it's undefined as well as 
                   // null or SQL will yell at us
           }
@@ -294,6 +355,7 @@ module.exports = function(app) {
         // 0 = Phone Rep
         // 1 = Manager
         // 2 = Software Developer
+        // 3 = Agency
         // DataType is Integer!!
         // Get a Postgres client from the connection pool
         pg.connect(connectionString, function(err, client, done) {
@@ -359,4 +421,6 @@ module.exports = function(app) {
     //     response.type('text/xml');
     //     response.render('outbound');
     // });
+  });
 };
+
