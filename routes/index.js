@@ -78,7 +78,7 @@ var client = new pg.Client(connectionString);
     app.set('view engine', 'jade');
 
     // THIS NEEDS TO BE CHANGED TO STATIC PATH?!
-    app.set('views', '/Users/Julian/Desktop/projects/sudocall/views');
+    app.set('views', 'views');
 
     // Express static file middleware - serves up JS, CSS, and images from the
     // "public" directory where we started our webapp process
