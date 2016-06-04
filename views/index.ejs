@@ -146,7 +146,6 @@
         var socket = io();
 
         socket.on('message', function(msg){
-            $('.js-hang-up').append($('<li>').text(msg));
             console.log(msg);
         });
     </script>
