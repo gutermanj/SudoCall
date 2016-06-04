@@ -1,5 +1,10 @@
 var path = require('path');
 var express = require('express');
+var app = require('express')();
+
+var http = require('http').Server(app);
+var io = require('socket.io')(http);
+
 var morgan = require('morgan');
 var bodyParser = require('body-parser');
 var cookieParser = require('cookie-parser');
@@ -10,9 +15,6 @@ var config = require("../config");
 var twilioClient = twilio(config.accountSid, config.authToken);
 var storage = require('node-persist');
 
-var server = require("../server.js");
-var io = require('socket.io').listen(server);
-// NOT WORKING
 
 
 // Dependencies
@@ -47,7 +49,8 @@ var client = new pg.Client(connectionString);
 // ================= END TO DO LIST ====================
 
 // Configure application routes
-module.exports = function(app) {
+
+// module.exports = function(app) {
     
    
 
@@ -74,9 +77,12 @@ module.exports = function(app) {
     // Set Jade as the default template engine
     app.set('view engine', 'jade');
 
+    // THIS NEEDS TO BE CHANGED TO STATIC PATH?!
+    app.set('views', '/Users/Julian/Desktop/projects/sudocall/views');
+
     // Express static file middleware - serves up JS, CSS, and images from the
     // "public" directory where we started our webapp process
-    app.use(express.static(path.join(process.cwd(), 'public')));
+    app.use(express.static(path.join(process.cwd(), '/public')));
 
     // Parse incoming request bodies as form-encoded
     app.use(bodyParser.urlencoded({
@@ -108,7 +114,7 @@ module.exports = function(app) {
     });
 
      app.get('/login', function(req, res) {
-    	res.render('login');
+    	res.render('applogin.ejs');
     });
 
      // app.get('/mail', function(req, res) {
@@ -118,7 +124,7 @@ module.exports = function(app) {
     // Require someone to be logged in
     function requireLogin(req, res, next) {
       if (!req.session.agent) {
-        res.render('applogin.ejs');
+        res.redirect('/login');
       } else {
         next();
       }
@@ -138,9 +144,6 @@ module.exports = function(app) {
         }
     }
 
-    io.on('connection', function(socket){
-            console.log('a user connected');
-    });
 
     app.get('/admin', requireAdmin, function(req, res) {
       if (req.session.agent) {
@@ -150,7 +153,24 @@ module.exports = function(app) {
       res.render('home');
     });
 
-    
+    // io.on('connection', function(socket){
+    //   console.log('an agent connected');
+
+    //   socket.on('disconnect', function(){
+    //     console.log('agent disconnected');
+    //   });
+    // });
+
+    io.on('connection', function(socket){
+        socket.emit('message', 'BRUH');
+    });
+
+    setInterval(function() {
+    io.clients(function(error, clients){
+      if (error) throw error;
+      console.log(clients); // => [PZDoMHjiu8PYfRiKAAAF, Anw2LatarvGVVXEIAAAD]
+    });
+    }, 4000);
 
     app.get('/app', requireLogin, function(req, res) {
 
@@ -422,5 +442,80 @@ module.exports = function(app) {
     //     response.render('outbound');
     // });
   });
-};
+// };
+
+var port = normalizePort(process.env.PORT || '3000');
+app.set('port', port);
+
+http.listen(3000, function() {
+  console.log("Listening on port: " + port)
+});
+var debug = require('debug')('sudo-call:server');
+
+/**
+ * Listen on provided port, on all network interfaces.
+ */
+
+// server.listen(port);
+// server.on('error', onError);
+// server.on('listening', onListening);
+
+function normalizePort(val) {
+  var port = parseInt(val, 10);
+
+  if (isNaN(port)) {
+    // named pipe
+    return val;
+  }
+
+  if (port >= 0) {
+    // port number
+    return port;
+  }
+
+  return false;
+}
+
+/**
+ * Event listener for HTTP server "error" event.
+ */
+
+function onError(error) {
+  if (error.syscall !== 'listen') {
+    throw error;
+  }
+
+  var bind = typeof port === 'string'
+    ? 'Pipe ' + port
+    : 'Port ' + port;
+
+  // handle specific listen errors with friendly messages
+  switch (error.code) {
+    case 'EACCES':
+      console.error(bind + ' requires elevated privileges');
+      process.exit(1);
+      break;
+    case 'EADDRINUSE':
+      console.error(bind + ' is already in use');
+      process.exit(1);
+      break;
+    default:
+      throw error;
+  }
+}
+
+/**
+ * Event listener for HTTP server "listening" event.
+ */
+
+function onListening() {
+  var addr = server.address();
+  var bind = typeof addr === 'string'
+    ? 'pipe ' + addr
+    : 'port ' + addr.port;
+  debug('Listening on ' + bind);
+}
+
+
+
 

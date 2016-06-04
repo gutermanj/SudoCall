@@ -2,10 +2,10 @@
   "name": "clicktocall-node",
   "version": "1.0.0",
   "description": "Virtual Call Center",
-  "main": "app.js",
+  "main": "index.js",
   "scripts": {
     "test": "node test | faucet",
-    "start": "node app.js"
+    "start": "node routes/index.js"
   },
   "keywords": [
     "twilio",
