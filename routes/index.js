@@ -163,16 +163,16 @@ var client = new pg.Client(connectionString);
     //   });
     // });
 
-    io.on('connection', function(socket){
-        socket.emit('message', 'BRUH');
-    });
+    // io.on('connection', function(socket){
+    //     socket.emit('message', 'BRUH');
+    // });
 
-    setInterval(function() {
-    io.clients(function(error, clients){
-      if (error) throw error;
-      console.log(clients); // => [PZDoMHjiu8PYfRiKAAAF, Anw2LatarvGVVXEIAAAD]
-    });
-    }, 4000);
+    // setInterval(function() {
+    // io.clients(function(error, clients){
+    //   if (error) throw error;
+    //   console.log(clients); // => [PZDoMHjiu8PYfRiKAAAF, Anw2LatarvGVVXEIAAAD]
+    // });
+    // }, 4000);
 
     app.get('/app', requireLogin, function(req, res) {
 
@@ -232,6 +232,7 @@ var client = new pg.Client(connectionString);
 
       
       var theChosenOne = availableAgents[Math.floor(Math.random()*availableAgents.length)];
+      // Randomly choose an agent that's available from the array
 
       var agent = [];
 
@@ -240,14 +241,13 @@ var client = new pg.Client(connectionString);
             console.log(err);
           } else {
               agent.push(result.rows[0]);
-
+              // Push said agent to scoped array, initiate the call to that agent
               initiateCall();
-              console.log(agent);
           }
       });
 
       function initiateCall() {
-        // conference name is CallSid to simplfy the front and back end connection
+        // conference name is random number between 1 and 10000 -- stored in app memory
         var conferenceName = Math.floor(Math.random() * 10000).toString();
 
         var callInfo = {
@@ -257,7 +257,7 @@ var client = new pg.Client(connectionString);
           state: req.body.CallerState,
           zipCode: req.body.CallerZip
         }
-        storage.setItem(theChosenOne, callInfo);
+        storage.setItem(agent[0].email, callInfo);
         // Will replace 'gutermanj@gmail.com' with randomly chosen agent to accept the call
 
 
@@ -332,6 +332,7 @@ var client = new pg.Client(connectionString);
 
         twilioClient.calls.create({
             // to: "+12395713488",
+            // THIS IS WHERE THE AGENCY'S PHONE NUMBER WILL GO WHEN OUR AGENT TRANSFERS
             from: config.inboundPhonenumber,
             url: "http://sudocall.herokuapp.com/join_conference?conferenceId=" + conferenceName
         });
