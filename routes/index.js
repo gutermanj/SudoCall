@@ -444,7 +444,7 @@ var client = new pg.Client(connectionString);
   });
 // };
 
-var port = normalizePort(process.env.PORT || '3000');
+var port = normalizePort(config.port || '3000');
 app.set('port', port);
 
 http.listen(3000, function() {
