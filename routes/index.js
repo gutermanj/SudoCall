@@ -242,7 +242,7 @@ var client = new pg.Client(connectionString);
               agent.push(result[0]);
 
               initiateCall();
-              console.log()
+              console.log(agent);
           }
       });
 
