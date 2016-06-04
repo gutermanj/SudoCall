@@ -239,7 +239,7 @@ var client = new pg.Client(connectionString);
           if (err) {
             console.log(err);
           } else {
-              agent.push(result);
+              agent.push(result.rows[0]);
 
               initiateCall();
               console.log(agent);
