@@ -327,8 +327,7 @@ var client = new pg.Client(connectionString);
     });
 
     app.post("/transfer_to_agent", function(req, res, next) {
-        var conferenceName = storage.getItem(req.session.agent.email);
-        console.log(conferenceName);
+        var conferenceName = storage.getItem(req.session.agent.email).conferenceName;
         // This will be changed to a getItem() from storage data
 
         twilioClient.calls.create({
