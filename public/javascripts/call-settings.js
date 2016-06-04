@@ -19,6 +19,8 @@
         }
 
         var token = params.vartoken;
+        var agent = params.varagent;
+        console.log(agent);
         // SET UP PARAMS FROM HTML ( i.e. <%= token %> ) ------------------------------------------------------------
     
         var powerOnAudio = document.createElement('audio');
@@ -42,16 +44,17 @@
                 $('.js-main-power').removeClass('red-power');
                 $('.js-main-power').addClass('green-power');
                 $('.call-status').html('Waiting...');
-                    powerOnAudio.play();
-
+                powerOnAudio.play();
                 startMainTimer();
+                addAvailability();
+
             } else {
                 $('.js-main-power').removeClass('green-power');
                 $('.js-main-power').addClass('red-power');
                 $('.call-status').html('Offline...');
-                    powerOffAudio.play();
-
+                powerOffAudio.play();
                 stopMainTimer();
+                removeAvailability();
             }
         }
         // Register an event handler to be called when there is an incoming
@@ -236,6 +239,57 @@
             $('.second_second').html(0);
 
             clearInterval(timerInterval);
+
+        }
+
+
+        function addAvailability() {
+
+            $.ajax({
+
+                type: 'POST',
+
+                url: 'add-available',
+
+                data: {
+                    email: agent
+                },
+
+                success: function(response) {
+                    console.log("OK");
+                    console.log(response);
+                },
+
+                error: function(error) {
+                    console.log("NOT OK");
+                }
+
+            });
+
+        }
+
+        function removeAvailability() {
+
+            $.ajax({
+
+                type: 'POST',
+
+                url: 'remove-available',
+
+                data: {
+                    email: agent
+                },
+
+                success: function(response) {
+                    console.log("OK");
+                    console.log(response);
+                },
+
+                error: function(error) {
+                    console.log("NOT OK");
+                }
+
+            });
 
         }
 

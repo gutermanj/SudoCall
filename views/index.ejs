@@ -126,7 +126,6 @@
                 </form>
               </div>
         </div>
-
     </div>
 
     <!-- display call status in this paragraph tag -->
@@ -139,7 +138,7 @@
     <script src="//code.jquery.com/jquery-1.9.1.min.js"></script>
  
     <!-- Set Twilio Call Settings -->
-    <script type="text/javascript" src='javascripts/call-settings.js?vartoken=<%= token %>'></script>
+    <script type="text/javascript" src='javascripts/call-settings.js?vartoken=<%= token %>&varagent=<%= agent.email %>'></script>
 
     <script src="/socket.io/socket.io.js"></script>
     <script>

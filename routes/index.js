@@ -104,6 +104,8 @@ var client = new pg.Client(connectionString);
     // Use morgan for HTTP request logging
     app.use(morgan('dev'));
 
+    var availableAgents = [];
+
     // Home Page with Click to Call 
     app.get('/', function(request, response) {
         response.render('landing.ejs');
@@ -199,68 +201,113 @@ var client = new pg.Client(connectionString);
 
     });
 
+    app.post('/add-available', function(req, res) {
+      var availableAgent = req.body.email;
+
+      if (availableAgents.indexOf(availableAgent) < 0) {
+        availableAgents.push(availableAgent);
+      }
+
+      res.json(availableAgents);
+
+    });
+
+    app.post('/remove-available', function(req, res) {
+      var availableAgent = req.body.email;
+
+      var index = availableAgents.indexOf(availableAgent);
+
+      if (index > -1) {
+        availableAgents.splice(index, 1);
+      }
+
+      res.json(availableAgents);
+
+    });
+
+
+
     // This is the endpoint your Twilio number's Voice Request URL should point at
     app.post('/inbound', function(req, res, next) {
 
-      // conference name is CallSid to simplfy the front and back end connection
-      var conferenceName = Math.floor(Math.random() * 10000).toString();
-
-      var callInfo = {
-        conferenceName: conferenceName,
-        from: req.body.Caller,
-        city: req.body.CallerCity,
-        state: req.body.CallerState,
-        zipCode: req.body.CallerZip
-      }
-      storage.setItem('gutermanj@gmail.com', callInfo);
-      // Will replace 'gutermanj@gmail.com' with randomly chosen agent to accept the call
-
-
-      // console.log("INBOUND CONFERENCE NAME: " + callInfo);
-      // Here we will set the storage data with the conferenceName and the randomly selected agent to accept
-      //    the inbound call!
-
-      // FIGURED OUT WHY SESSIONS AREN'T WORKING, THE SESSION ISN"T BEING SAVED ON THE USERS END BECAUSE
-      // INBOUND IS BEING HIT BY TWILIO, NOT BY MY USER!!!
-
-      // NEW PROCESS -----------------------------------------------------------------------------------------------------
-      // *****************************************************************************************************************
-      // node-persist -- using this for temp persistence of conference room name
-      // By default, storage data will automatically written in persistence in addition to memory!
       
-      // User Object in mongoDB will hold their name, email (important), agent phoneNumber, and currentConference (important)
+      var theChosenOne = availableAgents[Math.floor(Math.random()*availableAgents.length)];
 
-      // storage.setItem(agent.email, agent.currentConference)
-      // Query database for all users, randomly pick one take inbound call, set to: agent.phonenumber....
+      var agent = [];
 
-      // LATER when we need that conference name, we can do this :
-      // var conferenceName = storage.getItem(req.session.agent.email).conferenceName
-      // BOOM that's it!
+      client.query('SELECT * FROM agents WHERE email = $1', [theChosenOne], function(err, result) {
+          if (err) {
+            console.log(err);
+          } else {
+              agent.push(result[0]);
 
-      // ========================================== THIS WORKS ==========================================
-
-      // Create a call to your mobile and add the conference name as a parameter to
-      // the URL.
-      // ******************************************************************************************************************
-      // END NEW PROCESS --------------------------------------------------------------------------------------------------
-
-      twilioClient.calls.create({
-        url: "http://sudocall.herokuapp.com/join_conference?conferenceId=" + conferenceName,
-        from: config.inboundPhonenumber,
-        to: config.twilioNumber,
-        method: "POST"
+              initiateCall();
+              console.log()
+          }
       });
 
-      // Now return TwiML to the caller to put them in the conference, using the
-      // same name.
-      var twiml = new twilio.TwimlResponse();
-      twiml.dial(function(node) {
-        node.conference(conferenceName, {
-          startConferenceOnEnter: true
+      function initiateCall() {
+        // conference name is CallSid to simplfy the front and back end connection
+        var conferenceName = Math.floor(Math.random() * 10000).toString();
+
+        var callInfo = {
+          conferenceName: conferenceName,
+          from: req.body.Caller,
+          city: req.body.CallerCity,
+          state: req.body.CallerState,
+          zipCode: req.body.CallerZip
+        }
+        storage.setItem(theChosenOne, callInfo);
+        // Will replace 'gutermanj@gmail.com' with randomly chosen agent to accept the call
+
+
+        // console.log("INBOUND CONFERENCE NAME: " + callInfo);
+        // Here we will set the storage data with the conferenceName and the randomly selected agent to accept
+        //    the inbound call!
+
+        // FIGURED OUT WHY SESSIONS AREN'T WORKING, THE SESSION ISN"T BEING SAVED ON THE USERS END BECAUSE
+        // INBOUND IS BEING HIT BY TWILIO, NOT BY MY USER!!!
+
+        // NEW PROCESS -----------------------------------------------------------------------------------------------------
+        // *****************************************************************************************************************
+        // node-persist -- using this for temp persistence of conference room name
+        // By default, storage data will automatically written in persistence in addition to memory!
+        
+        // User Object in mongoDB will hold their name, email (important), agent phoneNumber, and currentConference (important)
+
+        // storage.setItem(agent.email, agent.currentConference)
+        // Query database for all users, randomly pick one take inbound call, set to: agent.phonenumber....
+
+        // LATER when we need that conference name, we can do this :
+        // var conferenceName = storage.getItem(req.session.agent.email).conferenceName
+        // BOOM that's it!
+
+        // ========================================== THIS WORKS ==========================================
+
+        // Create a call to your mobile and add the conference name as a parameter to
+        // the URL.
+        // ******************************************************************************************************************
+        // END NEW PROCESS --------------------------------------------------------------------------------------------------
+
+        twilioClient.calls.create({
+          url: "http://sudocall.herokuapp.com/join_conference?conferenceId=" + conferenceName,
+          from: config.inboundPhonenumber,
+          to: "+1" + agent[0].phone_number,
+          method: "POST"
         });
-      });
-      res.set('Content-Type', 'text/xml');
-      res.send(twiml.toString());
+
+        // Now return TwiML to the caller to put them in the conference, using the
+        // same name.
+        var twiml = new twilio.TwimlResponse();
+        twiml.dial(function(node) {
+          node.conference(conferenceName, {
+            startConferenceOnEnter: true
+          });
+        });
+        res.set('Content-Type', 'text/xml');
+        res.send(twiml.toString());
+      }
+
     });
 
     // This is the endpoint that Twilio will call when you answer the phone
