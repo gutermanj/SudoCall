@@ -447,7 +447,7 @@ var client = new pg.Client(connectionString);
 var port = normalizePort(config.port || '3000');
 app.set('port', port);
 
-http.listen(3000, function() {
+http.listen(port, function() {
   console.log("Listening on port: " + port)
 });
 var debug = require('debug')('sudo-call:server');
