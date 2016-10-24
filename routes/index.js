@@ -105,6 +105,11 @@ var client = new pg.Client(connectionString);
     app.use(morgan('dev'));
 
     var availableAgents = [];
+    setInterval(function() {
+
+      console.log(availableAgents);
+
+    }, 2000);
 
     // Home Page with Click to Call 
     app.get('/', function(request, response) {
