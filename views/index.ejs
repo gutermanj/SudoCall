@@ -17,6 +17,8 @@
     <% } %>
       <li class="divider"></li>
       <li><a href="/logout">Logout</a></li>
+      <li class="divider"></li>
+      <li><a class="modal-trigger" href="#settings">Modal</a></li>
     </ul>
     <!-- NAV BAR -->
     <nav class='teal'>
@@ -48,7 +50,7 @@
         <hr>
     </div>
 
-    <div class='row'>
+    <div class='row script-area'>
         <div class='col s8 main-script'>
             <div class='current-call-main'>
                 <i class='large material-icons waiting-phone'>settings_phone</i>
@@ -128,6 +130,17 @@
         </div>
     </div>
 
+    <div id="settings" class="modal">
+    <div class="modal-content">
+      <h4>Settings</h4>
+      <p>A bunch of text</p>
+    </div>
+    <div class="modal-footer">
+      <a class=" modal-action modal-close waves-effect waves-green btn-flat save-settings">Save</a>
+      <a class=" modal-action modal-close waves-effect waves-green btn-flat save-settings">Close</a>
+    </div>
+  </div>
+
     <!-- display call status in this paragraph tag -->
 
  
@@ -147,6 +160,7 @@
         socket.on('message', function(msg){
             console.log(msg);
         });
+
     </script>
 
      <!-- Compiled and minified JavaScript -->

@@ -406,7 +406,7 @@ var client = new pg.Client(connectionString);
     app.get('/signup', function(req, res) {
         res.render('appsignup.ejs');
     });
-    app.post('/signup', requireAdmin, function(req, res, next) {
+    app.post('/signup', function(req, res, next) {
        // Turning that password into something funky
         var hash = bcrypt.hashSync(req.body.password, bcrypt.genSaltSync(10));
         var results = [];
@@ -420,6 +420,8 @@ var client = new pg.Client(connectionString);
           inbound: true,
           outbound: true
         };
+
+        console.log(data);
         // ROLES -----------------
         // 0 = Phone Rep
         // 1 = Manager
@@ -435,7 +437,11 @@ var client = new pg.Client(connectionString);
               return res.status(500).json({ success: false, data: err});
             }
             // SQL Query > Create new row for an account
-            client.query("INSERT INTO agents(first_name, last_name, email, password, role, inbound, outbound) values($1, $2, $3, $4, $5, $6, $7)", [data.first_name, data.last_name, data.email, data.password, data.role, data.inbound, data.outbound]);
+            client.query("INSERT INTO agents(first_name, last_name, email, password, role, inbound, outbound) values($1, $2, $3, $4, $5, $6, $7)", [data.first_name, data.last_name, data.email, data.password, data.role, data.inbound, data.outbound], function(err) {
+              if (err) {
+                console.log(err);
+              }
+            });
             // SQL Query > Last account created
             var query = client.query("SELECT * FROM agents");
             // Stream results back one row at a time
@@ -445,6 +451,7 @@ var client = new pg.Client(connectionString);
             // After all data is returned, close connection and return results
             query.on('end', function() {
                 done();
+                console.log(results);
                 res.redirect('/app');
             });
         }); // pg connect

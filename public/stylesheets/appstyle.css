@@ -8,11 +8,11 @@
 }
 
 .main-script {
-	border-right-style: solid;
-	border-color: lightgray;
-	border-width: 1px;
-	margin-bottom: 0%;
-	margin-top: -28px;
+	
+}
+
+.script-area {
+	height: 110%;
 }
 
 .waiting-phone {
@@ -52,10 +52,10 @@
     background-color: #212121;
 }
 
-.current-call-main {
+/*.current-call-main {
 	min-height: 425px;
 	max-height: 425px;
-}
+}*/
 
 .caller-phone-number {
 	margin-left: 35%;
@@ -67,8 +67,10 @@
 }
 
 .main-info {
-	height: 450px;
 	overflow-y: auto;
+	border-left-style: solid;
+	border-color: lightgray;
+	border-width: 1px;
 }
 
 .caller-info-label {
