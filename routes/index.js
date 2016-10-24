@@ -240,6 +240,7 @@ var client = new pg.Client(connectionString);
       // Randomly choose an agent that's available from the array
 
       var agent = [];
+      console.log(theChosenOne)
 
       client.query('SELECT * FROM agents WHERE email = $1', [theChosenOne], function(err, result) {
           if (err) {
