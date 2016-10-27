@@ -12,7 +12,7 @@
 }
 
 .script-area {
-	height: 110%;
+	height: 110% !important;
 }
 
 .waiting-phone {
