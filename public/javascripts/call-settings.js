@@ -96,6 +96,43 @@
             $('.state_field').val(caller.state);
             $('.state_label').addClass('active');
 
+            $('#hangup').click(function() {
+                Twilio.Device.disconnectAll();
+                emptyCallerInfo();
+                // Top Left Call Status
+                $('.call-status').html('Waiting...');
+                $('.js-hang-up').empty();
+                $('.js-transfer').empty();
+                $('.waiting-phone').show();
+            });
+
+            $('.js-transfer-button').click(function() {
+                var sid = $('.caller-phone-number').data("sid");
+                console.log(sid);
+                $.ajax({
+
+                    type: 'POST',
+
+                    url: '/transfer_to_agent',
+
+                    data: {
+                        conferenceName: sid
+                    },
+
+                    success: function(response) {
+                        console.log("Transfer Started");
+                        // console.log(response);
+                    },
+
+                    error: function(error) {
+                        console.log(error);
+                    }
+
+                });
+
+                $('.js-transfer-button').attr('disabled', true);
+            });
+
 
         }
 
