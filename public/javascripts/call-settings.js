@@ -22,7 +22,7 @@
         var agent = params.varagent;
         console.log(agent);
         // SET UP PARAMS FROM HTML ( i.e. <%= token %> ) ------------------------------------------------------------
-    
+
         var powerOnAudio = document.createElement('audio');
         powerOnAudio.setAttribute('src', 'https://static.twilio.com/libs/twiliojs/refs/d682d91/sounds/outgoing.mp3');
         var powerOffAudio = document.createElement('audio');
@@ -79,8 +79,8 @@
             $('.js-transfer').html('<button class="waves-effect waves-light btn green darken-2 js-transfer-button">Transfer</button>');
             $('.caller-phone-number').html(caller.from);
             $('.caller-phone-number').attr("data-sid", caller.from);
-            $('.caller-first-name').html("Julian");
-            $('.caller-last-name').html("Guterman");
+            $('.caller-first-name').html("John");
+            $('.caller-last-name').html("Fakerson");
 
 
             // Add Info To Right Column (Main Call Info)
@@ -98,7 +98,16 @@
 
 
         }
- 
+
+        // var sampleCaller = {
+        //   from: "+15613811223",
+        //   zipCode: "33426",
+        //   city: "Boynton Beach",
+        //   state: "FL"
+        // }
+        //
+        // changeCallStatus(sampleCaller);
+
         // Register an event handler for when a call ends for any reason
         Twilio.Device.disconnect(function(connection) {
             $('.call-status').html('Waiting...');
@@ -113,8 +122,9 @@
 
         // Add a click event for the button, which will hang up the current
         // call when clicked:
-        $('.js-hang-up').click(function() {
+        $('#hangup').click(function() {
             Twilio.Device.disconnectAll();
+            emptyCallerInfo();
             // Top Left Call Status
             $('.call-status').html('Waiting...');
             $('.js-hang-up').empty();
@@ -122,7 +132,7 @@
             $('.waiting-phone').show();
         });
 
-        $('.js-transfer').click(function() {
+        $('.js-transfer-button').click(function() {
             var sid = $('.caller-phone-number').data("sid");
             console.log(sid);
             $.ajax({
@@ -325,15 +335,8 @@
 
         var newHeight = $(document).height() / 2.2;
 
-        console.log(newHeight); 
+        console.log(newHeight);
 
         $('.main-info').css('height', newHeight);
 
     });
-
-
-
-
-
-
-

@@ -60,20 +60,18 @@
             <div class='current-call-main'>
                 <i class='large material-icons waiting-phone'>settings_phone</i>
                 <div class='caller-left-info'>
-                <div class='col s7'>
-                <span class='caller-first-name'></span>
-                <span class='caller-last-name'></span>
-                </div>
-                <div class='col s3'>
-                <span class='caller-phone-number pull-right'></span>
-                </div>
+                  <div class='col s7'>
+                    <span class='caller-first-name'></span>
+                    <span class='caller-last-name'></span>
+                  </div>
+                  <div class='col s3'>
+                    <span class='caller-phone-number pull-right'></span>
+                  </div>
                 </div>
             </div>
             <div class='row main-buttons'>
-            <div class='js-hang-up col s9'>
-            </div>
-            <div class='js-transfer col s3'>
-            </div>
+              <div class='js-hang-up col s9'></div>
+              <div class='js-transfer col s3'></div>
             </div>
         </div>
         <div class='col s4 main-info'>
@@ -128,7 +126,6 @@
                     <div class="input-field col s12 notes-field">
                       <textarea name="notes" class="materialize-textarea"></textarea>
                       <label for="notes">Notes</label>
-                      <button ng-click='getPotato()'>Potato</button>
                     </div>
                   </div>
                 </form>
@@ -150,10 +147,10 @@
 
     <!-- include the Twilio Client JavaScript SDK -->
     <script src="//static.twilio.com/libs/twiliojs/1.1/twilio.min.js"></script>
- 
+
     <!-- include jQuery to make DOM manipulation and event handling nicer -->
     <script src="//code.jquery.com/jquery-1.9.1.min.js"></script>
- 
+
     <!-- Set Twilio Call Settings -->
     <script type="text/javascript" src='javascripts/call-settings.js?vartoken=<%= token %>&varagent=<%= agent.email %>'></script>
 
