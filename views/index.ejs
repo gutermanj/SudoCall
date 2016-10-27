@@ -1,5 +1,5 @@
 <!doctype html>
-<html>
+<html ng-app="mediaGen">
 <head>
     <title>MediaGen</title>
     <!-- Compiled and minified CSS -->
@@ -7,9 +7,14 @@
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="/stylesheets/appstyle.css">
 
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.16/angular.min.js"></script><!-- load angular -->
+    <script src="angular/controllers/main.js"></script> <!-- load up our controller -->
+    <script src="angular/services/calls.js"></script> <!-- load our todo service -->
+    <script src="angular/core.js"></script> <!-- load our main application -->
+
 </head>
 
-<body>
+<body ng-controller="mainController">
     <!-- Dropdown Structure -->
     <ul id="dropdown1" class="dropdown-content">
     <% if (agent.role > 0) { %>
@@ -41,7 +46,7 @@
                     <label>
                       Offline
                       <input type="checkbox" class='js-main-power'>
-                      <span class="lever"></span>
+                      <span class="lever" ng-click="getPotato"></span>
                       Online
                     </label>
                 </div>
@@ -123,6 +128,7 @@
                     <div class="input-field col s12 notes-field">
                       <textarea name="notes" class="materialize-textarea"></textarea>
                       <label for="notes">Notes</label>
+                      <button ng-click='getPotato()'>Potato</button>
                     </div>
                   </div>
                 </form>
@@ -140,10 +146,8 @@
       <a class=" modal-action modal-close waves-effect waves-green btn-flat save-settings">Close</a>
     </div>
   </div>
-
     <!-- display call status in this paragraph tag -->
 
- 
     <!-- include the Twilio Client JavaScript SDK -->
     <script src="//static.twilio.com/libs/twiliojs/1.1/twilio.min.js"></script>
  
