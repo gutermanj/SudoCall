@@ -363,7 +363,6 @@
 
     $(document).ready(function() {
 
-<<<<<<< HEAD
         console.log($('.main-script').height());
 
         var navHeight = $('.main-nav').height();
@@ -377,14 +376,6 @@
         console.log("Main Call Height: " + mainCallHeight);
 
         $('.main-info').css('height', mainCallHeight);
-=======
-        console.log($(document).height());
 
-        var newHeight = $(document).height() / 2.2;
-
-        console.log(newHeight);
-
-        $('.main-info').css('height', newHeight);
->>>>>>> d228496823dae770ec7e4876a095eade1460a21b
 
     });
