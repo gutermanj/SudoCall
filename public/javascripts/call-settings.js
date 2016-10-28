@@ -363,15 +363,13 @@
 
     $(document).ready(function() {
 
-        console.log($('.main-script').height());
-
         var navHeight = $('.main-nav').height();
 
-        var totalMarginHeight = navHeight * 7.16;
+        var totalMarginHeight = navHeight * 3.85;
 
         console.log("Total Margin Height: " + totalMarginHeight);
 
-        var mainCallHeight = $(document).height() - totalMarginHeight;
+        var mainCallHeight = $('body').height() - totalMarginHeight;
 
         console.log("Main Call Height: " + mainCallHeight);
 
