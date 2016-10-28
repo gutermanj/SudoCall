@@ -107,7 +107,8 @@ var client = new pg.Client(connectionString);
     var availableAgents = [];
 
     // Home Page with Click to Call
-    app.get('/', function(req, res) {
+
+    app.get('/', function(request, response) {
         response.render('landing.ejs');
     });
 
@@ -232,10 +233,9 @@ var client = new pg.Client(connectionString);
 
 
       var theChosenOne = availableAgents[Math.floor(Math.random()*availableAgents.length)];
-      // Randomly choose an agent that's available from the array
+      // Randomly choose an agent that's available from the array of active agents
 
       var agent = [];
-      console.log(theChosenOne);
 
       client.query('SELECT * FROM agents WHERE email = $1', [theChosenOne], function(err, result) {
           if (err) {
@@ -243,31 +243,30 @@ var client = new pg.Client(connectionString);
           } else {
               agent.push(result.rows[0]);
               // Push said agent to scoped array, initiate the call to that agent
-              initiateCall();
+              initiateCall(req, res, theChosenOne, agent);
           }
       });
 
-      function initiateCall() {
-        // conference name is random number between 1 and 10000 -- stored in app memory
-        var conferenceName = Math.floor(Math.random() * 10000).toString();
+    });
 
-        var callInfo = {
-          conferenceName: conferenceName,
-          from: req.body.Caller,
-          city: req.body.CallerCity,
-          state: req.body.CallerState,
-          zipCode: req.body.CallerZip
-        }
-        storage.setItem(agent[0].email, callInfo);
-        // Will replace 'gutermanj@gmail.com' with randomly chosen agent to accept the call
+    function initiateCall(req, res, theChosenOne, agent) {
+      // conference name is random number between 1 and 10000 -- stored in app memory
+      var conferenceName = Math.floor(Math.random() * 10000).toString();
+
+      var callInfo = {
+        conferenceName: conferenceName,
+        from: req.body.Caller,
+        city: req.body.CallerCity,
+        state: req.body.CallerState,
+        zipCode: req.body.CallerZip
+      }
+      storage.setItem(agent[0].email, callInfo);
+      // Will replace 'gutermanj@gmail.com' with randomly chosen agent to accept the call
 
 
-        // console.log("INBOUND CONFERENCE NAME: " + callInfo);
-        // Here we will set the storage data with the conferenceName and the randomly selected agent to accept
-        //    the inbound call!
-
-        // FIGURED OUT WHY SESSIONS AREN'T WORKING, THE SESSION ISN"T BEING SAVED ON THE USERS END BECAUSE
-        // INBOUND IS BEING HIT BY TWILIO, NOT BY MY USER!!!
+      // console.log("INBOUND CONFERENCE NAME: " + callInfo);
+      // Here we will set the storage data with the conferenceName and the randomly selected agent to accept
+      //    the inbound call!
 
         // NEW PROCESS -----------------------------------------------------------------------------------------------------
         // *****************************************************************************************************************
@@ -276,40 +275,49 @@ var client = new pg.Client(connectionString);
 
         // User Object in mongoDB will hold their name, email (important), agent phoneNumber, and currentConference (important)
 
-        // storage.setItem(agent.email, agent.currentConference)
-        // Query database for all users, randomly pick one take inbound call, set to: agent.phonenumber....
+      // FIGURED OUT WHY SESSIONS AREN'T WORKING, THE SESSION ISN"T BEING SAVED ON THE USERS END BECAUSE
+      // INBOUND IS BEING HIT BY TWILIO, NOT BY MY USER!!!
 
-        // LATER when we need that conference name, we can do this :
-        // var conferenceName = storage.getItem(req.session.agent.email).conferenceName
-        // BOOM that's it!
 
-        // ========================================== THIS WORKS ==========================================
+      // NEW PROCESS -----------------------------------------------------------------------------------------------------
+      // *****************************************************************************************************************
+      // node-persist -- using this for temp persistence of conference room name
+      // By default, storage data will automatically written in persistence in addition to memory!
 
-        // Create a call to your mobile and add the conference name as a parameter to
-        // the URL.
-        // ******************************************************************************************************************
-        // END NEW PROCESS --------------------------------------------------------------------------------------------------
+      // User Object in mongoDB will hold their name, email (important), agent phoneNumber, and currentConference (important)
 
-        twilioClient.calls.create({
-          url: "http://sudocall.herokuapp.com/join_conference?conferenceId=" + conferenceName,
-          from: config.inboundPhonenumber,
-          to: "+1" + agent[0].phone_number,
-          method: "POST"
+      // storage.setItem(agent.email, agent.currentConference)
+      // Query database for all users, randomly pick one take inbound call, set to: agent.phonenumber....
+
+      // LATER when we need that conference name, we can do this :
+      // var conferenceName = storage.getItem(req.session.agent.email).conferenceName
+      // BOOM that's it!
+
+      // ========================================== THIS WORKS ==========================================
+
+      // Create a call to your mobile and add the conference name as a parameter to
+      // the URL.
+      // ******************************************************************************************************************
+      // END NEW PROCESS --------------------------------------------------------------------------------------------------
+
+      twilioClient.calls.create({
+        url: "http://sudocall.herokuapp.com/join_conference?conferenceId=" + conferenceName,
+        from: config.inboundPhonenumber,
+        to: "+1" + agent[0].phone_number,
+        method: "POST"
+      });
+
+      // Now return TwiML to the caller to put them in the conference, using the
+      // same name.
+      var twiml = new twilio.TwimlResponse();
+      twiml.dial(function(node) {
+        node.conference(conferenceName, {
+          startConferenceOnEnter: true
         });
-
-        // Now return TwiML to the caller to put them in the conference, using the
-        // same name.
-        var twiml = new twilio.TwimlResponse();
-        twiml.dial(function(node) {
-          node.conference(conferenceName, {
-            startConferenceOnEnter: true
-          });
-        });
-        res.set('Content-Type', 'text/xml');
-        res.send(twiml.toString());
-      }
-
-    });
+      });
+      res.set('Content-Type', 'text/xml');
+      res.send(twiml.toString());
+    }
 
     // This is the endpoint that Twilio will call when you answer the phone
     app.post("/join_conference", function(req, res, next) {
@@ -329,10 +337,10 @@ var client = new pg.Client(connectionString);
 
     app.post("/transfer_to_agent", function(req, res, next) {
         var conferenceName = storage.getItem(req.session.agent.email).conferenceName;
-        // This will be changed to a getItem() from storage data
+        // This will be changed to a getItem() from storage data in app memory
 
         twilioClient.calls.create({
-            to: "+17174809163",
+            to: "+5613811223",
             // THIS IS WHERE THE AGENCY'S PHONE NUMBER WILL GO WHEN OUR AGENT TRANSFERS
             from: config.inboundPhonenumber,
             url: "http://sudocall.herokuapp.com/join_conference?conferenceId=" + conferenceName
@@ -465,6 +473,12 @@ var client = new pg.Client(connectionString);
     });
     // -- END AGENT AUTHENTICATION
 
+
+    app.get('/api/potato', function(req, res) {
+      console.log("OK");
+      res.json("OK");
+
+    });
 
     // // Handle an AJAX POST request to place an outbound call
     // app.post('/call', function(request, response) {

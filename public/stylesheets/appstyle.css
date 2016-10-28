@@ -26,6 +26,10 @@ html, body {
 
 }
 
+.script-area {
+
+}
+
 .waiting-phone {
 	margin-left: 35%;
 	margin-top: 15%;
@@ -39,7 +43,7 @@ html, body {
 }
 
 .main-buttons {
-	margin-top: 3%;
+	margin-top: 55%;
 }
 
 /*.red-power {
@@ -73,7 +77,7 @@ html, body {
 }
 
 .caller-left-info {
-	margin-top: 2%;
+	margin-top: 1%;
 	font-size: 35px;
 }
 

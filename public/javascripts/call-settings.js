@@ -79,8 +79,8 @@
             $('.js-transfer').html('<button class="waves-effect waves-light btn green darken-2 js-transfer-button">Transfer</button>');
             $('.caller-phone-number').html(caller.from);
             $('.caller-phone-number').attr("data-sid", caller.from);
-            $('.caller-first-name').html("Julian");
-            $('.caller-last-name').html("Guterman");
+            $('.caller-first-name').html("John");
+            $('.caller-last-name').html("Fakerson");
 
 
             // Add Info To Right Column (Main Call Info)
@@ -96,9 +96,45 @@
             $('.state_field').val(caller.state);
             $('.state_label').addClass('active');
 
+            $('#hangup').click(function() {
+                Twilio.Device.disconnectAll();
+                emptyCallerInfo();
+                // Top Left Call Status
+                $('.call-status').html('Waiting...');
+                $('.js-hang-up').empty();
+                $('.js-transfer').empty();
+                $('.waiting-phone').show();
+            });
+
+            $('.js-transfer-button').click(function() {
+                var sid = $('.caller-phone-number').data("sid");
+                console.log(sid);
+                $.ajax({
+
+                    type: 'POST',
+
+                    url: '/transfer_to_agent',
+
+                    data: {
+                        conferenceName: sid
+                    },
+
+                    success: function(response) {
+                        console.log("Transfer Started");
+                        // console.log(response);
+                    },
+
+                    error: function(error) {
+                        console.log(error);
+                    }
+
+                });
+
+                $('.js-transfer-button').attr('disabled', true);
+            });
+
 
         }
-
         // Register an event handler for when a call ends for any reason
         Twilio.Device.disconnect(function(connection) {
             $('.call-status').html('Waiting...');
@@ -113,8 +149,9 @@
 
         // Add a click event for the button, which will hang up the current
         // call when clicked:
-        $('.js-hang-up').click(function() {
+        $('#hangup').click(function() {
             Twilio.Device.disconnectAll();
+            emptyCallerInfo();
             // Top Left Call Status
             $('.call-status').html('Waiting...');
             $('.js-hang-up').empty();
@@ -122,7 +159,7 @@
             $('.waiting-phone').show();
         });
 
-        $('.js-transfer').click(function() {
+        $('.js-transfer-button').click(function() {
             var sid = $('.caller-phone-number').data("sid");
             console.log(sid);
             $.ajax({
@@ -326,6 +363,7 @@
 
     $(document).ready(function() {
 
+<<<<<<< HEAD
         console.log($('.main-script').height());
 
         var navHeight = $('.main-nav').height();
@@ -339,5 +377,14 @@
         console.log("Main Call Height: " + mainCallHeight);
 
         $('.main-info').css('height', mainCallHeight);
+=======
+        console.log($(document).height());
+
+        var newHeight = $(document).height() / 2.2;
+
+        console.log(newHeight);
+
+        $('.main-info').css('height', newHeight);
+>>>>>>> d228496823dae770ec7e4876a095eade1460a21b
 
     });
