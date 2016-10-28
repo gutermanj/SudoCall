@@ -1,3 +1,10 @@
+html, body {
+   margin:0;
+   padding:0;
+   height:100%;
+	 background-color: #F5F5F5;
+}
+
 .current-agent {
 	margin-top: 22px;
 	margin-right: -10% !important;
@@ -8,11 +15,15 @@
 }
 
 .main-script {
-	
+
+}
+
+.agent-area {
+	height: 50%;
 }
 
 .script-area {
-	height: 110%;
+
 }
 
 .waiting-phone {
@@ -80,7 +91,3 @@
 .notes-field {
 	margin-bottom: 20px;
 }
-
-
-
-

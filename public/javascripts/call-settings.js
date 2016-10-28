@@ -22,7 +22,7 @@
         var agent = params.varagent;
         console.log(agent);
         // SET UP PARAMS FROM HTML ( i.e. <%= token %> ) ------------------------------------------------------------
-    
+
         var powerOnAudio = document.createElement('audio');
         powerOnAudio.setAttribute('src', 'https://static.twilio.com/libs/twiliojs/refs/d682d91/sounds/outgoing.mp3');
         var powerOffAudio = document.createElement('audio');
@@ -98,7 +98,7 @@
 
 
         }
- 
+
         // Register an event handler for when a call ends for any reason
         Twilio.Device.disconnect(function(connection) {
             $('.call-status').html('Waiting...');
@@ -312,6 +312,11 @@
             selectMonths: true, // Creates a dropdown to control month
             selectYears: 216 // Creates a dropdown of 15 years to control year
         });
+
+        $('.dob_label').pickadate({
+            selectMonths: true, // Creates a dropdown to control month
+            selectYears: 216 // Creates a dropdown of 15 years to control year
+        });
     });
 
     $(document).ready(function(){
@@ -321,19 +326,18 @@
 
     $(document).ready(function() {
 
-        console.log($(document).height());
+        console.log($('.main-script').height());
 
-        var newHeight = $(document).height() / 2.2;
+        var navHeight = $('.main-nav').height();
 
-        console.log(newHeight); 
+        var totalMarginHeight = navHeight * 7.16;
 
-        $('.main-info').css('height', newHeight);
+        console.log("Total Margin Height: " + totalMarginHeight);
+
+        var mainCallHeight = $(document).height() - totalMarginHeight;
+
+        console.log("Main Call Height: " + mainCallHeight);
+
+        $('.main-info').css('height', mainCallHeight);
 
     });
-
-
-
-
-
-
-

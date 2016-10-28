@@ -21,7 +21,7 @@
       <li><a class="modal-trigger" href="#settings">Modal</a></li>
     </ul>
     <!-- NAV BAR -->
-    <nav class='teal'>
+    <nav class='teal main-nav'>
         <div class="nav-wrapper">
           <a class="brand-logo">MediaGen</a>
           <ul id="nav-mobile" class="right hide-on-med-and-down">
@@ -33,7 +33,7 @@
     <!-- END NAV BAR -->
 
     <div class='row main-call-status'>
-        <div class='col s12'>
+        <div class='col s12 call-status-col'>
             <h4 class='call-status col s3'>Offline...</h4>
             <h4 class='main-timer col s7 right-align'><b class='minute'>0</b><b>:</b><b class='first_second'>0</b><b class='second_second'>0</b></h4>
             <div class='agent-info css-main-power col s2 right-align'>
@@ -130,6 +130,12 @@
         </div>
     </div>
 
+    <nav class='teal darken-4'>
+        <div class="nav-wrapper">
+          <a class="brand-logo center" style='color: black'>MediaGen</a>
+        </div>
+    </nav>
+
     <div id="settings" class="modal">
     <div class="modal-content">
       <h4>Settings</h4>
@@ -143,13 +149,13 @@
 
     <!-- display call status in this paragraph tag -->
 
- 
+
     <!-- include the Twilio Client JavaScript SDK -->
     <script src="//static.twilio.com/libs/twiliojs/1.1/twilio.min.js"></script>
- 
+
     <!-- include jQuery to make DOM manipulation and event handling nicer -->
     <script src="//code.jquery.com/jquery-1.9.1.min.js"></script>
- 
+
     <!-- Set Twilio Call Settings -->
     <script type="text/javascript" src='javascripts/call-settings.js?vartoken=<%= token %>&varagent=<%= agent.email %>'></script>
 

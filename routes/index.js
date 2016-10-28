@@ -51,8 +51,8 @@ var client = new pg.Client(connectionString);
 // Configure application routes
 
 // module.exports = function(app) {
-    
-   
+
+
 
     pg.connect(connectionString, function(err, client, done) {
       if (err) {
@@ -62,15 +62,15 @@ var client = new pg.Client(connectionString);
       }
 
       // client.query('SELECT * FROM agents WHERE email = $1', ['gutermanj@gmail.com'], function(err, result) {
-      //   //call `done()` to release the client back to the pool 
+      //   //call `done()` to release the client back to the pool
       //   done();
-     
+
       //   if(err) {
       //     return console.error('error running query', err);
       //   }
       //   console.log(result.rows[0]);
       //   console.log("Success One!");
-      //   //output: 1 
+      //   //output: 1
       // });
       // EXAMPLE USING POOL -------------------------------------------------------------------------------------
 
@@ -105,14 +105,9 @@ var client = new pg.Client(connectionString);
     app.use(morgan('dev'));
 
     var availableAgents = [];
-    setInterval(function() {
 
-      console.log(availableAgents);
-
-    }, 2000);
-
-    // Home Page with Click to Call 
-    app.get('/', function(request, response) {
+    // Home Page with Click to Call
+    app.get('/', function(req, res) {
         response.render('landing.ejs');
     });
 
@@ -138,7 +133,7 @@ var client = new pg.Client(connectionString);
     }
 
     function requireAdmin(req, res, next) {
-        
+
 
         if (!req.session.agent) {
           res.render('applogin.ejs');
@@ -235,12 +230,12 @@ var client = new pg.Client(connectionString);
     // This is the endpoint your Twilio number's Voice Request URL should point at
     app.post('/inbound', function(req, res, next) {
 
-      
+
       var theChosenOne = availableAgents[Math.floor(Math.random()*availableAgents.length)];
       // Randomly choose an agent that's available from the array
 
       var agent = [];
-      console.log(theChosenOne)
+      console.log(theChosenOne);
 
       client.query('SELECT * FROM agents WHERE email = $1', [theChosenOne], function(err, result) {
           if (err) {
@@ -278,7 +273,7 @@ var client = new pg.Client(connectionString);
         // *****************************************************************************************************************
         // node-persist -- using this for temp persistence of conference room name
         // By default, storage data will automatically written in persistence in addition to memory!
-        
+
         // User Object in mongoDB will hold their name, email (important), agent phoneNumber, and currentConference (important)
 
         // storage.setItem(agent.email, agent.currentConference)
@@ -348,7 +343,7 @@ var client = new pg.Client(connectionString);
             node.conference(conferenceName, {
                 startConferenceOnEnter: true
             });
-        }); 
+        });
         res.set('Content-Type', 'text/xml');
         res.send(twiml.toString());
         console.log(twiml.toString());
@@ -403,7 +398,7 @@ var client = new pg.Client(connectionString);
                   }
                   } else {
                   res.redirect('/admin');
-                } // For some reason I have to check if it's undefined as well as 
+                } // For some reason I have to check if it's undefined as well as
                   // null or SQL will yell at us
           }
         }); // query on end
@@ -477,7 +472,7 @@ var client = new pg.Client(connectionString);
     //     // Here, we just use the host for the application making the request,
     //     // but you can hard code it or use something different if need be
     //     var url = 'http://' + 'syscall.herokuapp.com' + '/outbound';
-        
+
     //     // Place an outbound call to the user, using the TwiML instructions
     //     // from the /outbound route
     //     client.makeCall({
@@ -577,7 +572,3 @@ function onListening() {
     : 'port ' + addr.port;
   debug('Listening on ' + bind);
 }
-
-
-
-
