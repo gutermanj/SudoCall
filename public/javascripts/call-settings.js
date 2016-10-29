@@ -72,11 +72,19 @@
             }
         });
 
+        var sampleCaller = {
+            from: "+5613811223",
+            zipCode: "33426",
+            city: "Boynton Beach",
+            state: "Florida"
+        }
+
         function changeCallStatus(caller) {
+
             $('.call-status').html('Call in progress...');
             $('.waiting-phone').hide();
             $('.js-hang-up').html('<button id="hangup" class="waves-effect waves-light btn red darken-2">Hang Up</button>');
-            $('.js-transfer').html('<button class="waves-effect waves-light btn green darken-2 js-transfer-button">Transfer</button>');
+            $('.js-transfer').html("<button class='waves-effect waves-light btn green darken-2 js-transfer-button' ng-click='getAccounts()'>Transfer</button>");
             $('.caller-phone-number').html(caller.from);
             $('.caller-phone-number').attr("data-sid", caller.from);
             $('.caller-first-name').html("John");
@@ -106,32 +114,34 @@
                 $('.waiting-phone').show();
             });
 
-            $('.js-transfer-button').click(function() {
-                var sid = $('.caller-phone-number').data("sid");
-                console.log(sid);
-                $.ajax({
+            // $('.js-transfer-button').click(function() {
+            //     var sid = $('.caller-phone-number').data("sid");
+            //     console.log(sid);
+            //     $.ajax({
+            //
+            //         type: 'POST',
+            //
+            //         url: '/transfer_to_agent',
+            //
+            //         data: {
+            //             conferenceName: sid
+            //         },
+            //
+            //         success: function(response) {
+            //             console.log("Transfer Started");
+            //             // console.log(response);
+            //         },
+            //
+            //         error: function(error) {
+            //             console.log(error);
+            //         }
+            //
+            //     });
+            //
+            //     $('.js-transfer-button').attr('disabled', true);
+            // });
 
-                    type: 'POST',
 
-                    url: '/transfer_to_agent',
-
-                    data: {
-                        conferenceName: sid
-                    },
-
-                    success: function(response) {
-                        console.log("Transfer Started");
-                        // console.log(response);
-                    },
-
-                    error: function(error) {
-                        console.log(error);
-                    }
-
-                });
-
-                $('.js-transfer-button').attr('disabled', true);
-            });
 
 
         }
@@ -159,37 +169,43 @@
             $('.waiting-phone').show();
         });
 
-        $('.js-transfer-button').click(function() {
-            var sid = $('.caller-phone-number').data("sid");
-            console.log(sid);
-            $.ajax({
-
-                type: 'POST',
-
-                url: '/transfer_to_agent',
-
-                data: {
-                    conferenceName: sid
-                },
-
-                success: function(response) {
-                    console.log("Transfer Started");
-                    // console.log(response);
-                },
-
-                error: function(error) {
-                    console.log(error);
-                }
-
-            });
-
-            $('.js-transfer-button').attr('disabled', true);
-        });
+        // $('.js-transfer-button').click(function() {
+        //     var sid = $('.caller-phone-number').data("sid");
+        //     console.log(sid);
+        //     $.ajax({
+        //
+        //         type: 'POST',
+        //
+        //         url: '/transfer_to_agent',
+        //
+        //         data: {
+        //             conferenceName: sid
+        //         },
+        //
+        //         success: function(response) {
+        //             console.log("Transfer Started");
+        //             // console.log(response);
+        //         },
+        //
+        //         error: function(error) {
+        //             console.log(error);
+        //         }
+        //
+        //     });
+        //
+        //     $('.js-transfer-button').attr('disabled', true);
+        // });
 
         function emptyCallerInfo() {
             $('.caller-phone-number').empty();
             $('.caller-first-name').empty();
             $('.caller-last-name').empty();
+
+            $('.first_name_field').val("");
+            $('.first_name_label').removeClass('active');
+
+            $('.last_name_field').val("");
+            $('.last_name_label').removeClass('active');
 
             $('.phone_number_field').val("");
             $('.phone_number_label').removeClass('active');
@@ -205,6 +221,7 @@
 
             $('.dob_field').val("");
             $('.dob_label').removeClass('active');
+
         }
 
         function grabCallInfo() {
@@ -374,6 +391,8 @@
         console.log("Main Call Height: " + mainCallHeight);
 
         $('.main-info').css('height', mainCallHeight);
+
+        $('.main-buttons').css('margin-top', "0px");
 
 
     });

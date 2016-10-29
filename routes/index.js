@@ -34,7 +34,7 @@ var client = new pg.Client(connectionString);
 
 
 
-
+/*
 // ================== TO DO LIST =======================
 //
 // 1. Each agent has to have their own phone number (For now I'll deal with that until I figure out 1 number solution)
@@ -44,9 +44,27 @@ var client = new pg.Client(connectionString);
 // 4. For inbound call forwarding -TEST THIS- someone calls in, the view dials one of our random phone numbers and connects
 //      with on of our agents. I don't know if I have to conference this.
 // 5. Call Twilio to see whats up with the 2 sec difference on incoming calls
+
 // 6. FIXED PARAMETERS, IT WAS THE CAPITAL OF 'FROM'
 //
 // ================= END TO DO LIST ====================
+
+Things we can do with angular:
+
+    Make on-click events happen like sending data when ready to transfer a call...
+
+    We can't look people up without client-action.
+
+    When someone calls in, jquery will continue searching for data and replacing it on the DOM
+
+    when we're ready to transfer angular will handle the rest of the front-end
+
+    SO RIGHT NOW:
+        I can make an ng-click="blah blah" to transfer the info to a route.
+
+        I need to figure out how to load data into inputs on ng-model's
+
+*/
 
 // Configure application routes
 
@@ -412,9 +430,11 @@ var client = new pg.Client(connectionString);
         }); // query on end
       }); //pg connect
     });
+
     app.get('/signup', function(req, res) {
         res.render('appsignup.ejs');
     });
+
     app.post('/signup', function(req, res, next) {
        // Turning that password into something funky
         var hash = bcrypt.hashSync(req.body.password, bcrypt.genSaltSync(10));
@@ -465,6 +485,7 @@ var client = new pg.Client(connectionString);
             });
         }); // pg connect
     });
+
     app.get('/logout', function(req, res) {
         if (req.session.agent) {
             req.session.destroy();
@@ -474,11 +495,17 @@ var client = new pg.Client(connectionString);
     // -- END AGENT AUTHENTICATION
 
 
-    app.get('/api/potato', function(req, res) {
-      console.log("OK");
-      res.json("OK");
+    /* Angular Routes */
+
+    app.post('/api/getAccounts', function(req, res) {
+        console.log(req.query);
+        res.json("OK");
 
     });
+
+
+
+    /* End Angular Routes */
 
     // // Handle an AJAX POST request to place an outbound call
     // app.post('/call', function(request, response) {
