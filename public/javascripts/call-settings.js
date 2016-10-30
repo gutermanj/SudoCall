@@ -84,7 +84,7 @@
             $('.call-status').html('Call in progress...');
             $('.waiting-phone').hide();
             $('.js-hang-up').html('<button id="hangup" class="waves-effect waves-light btn red darken-2">Hang Up</button>');
-            $('.js-transfer').html("<button class='waves-effect waves-light btn green darken-2 js-transfer-button' ng-click='getAccounts()'>Transfer</button>");
+            $('.js-transfer').html("<button class='waves-effect waves-light btn green darken-2 js-transfer-button'>Transfer</button>");
             $('.caller-phone-number').html(caller.from);
             $('.caller-phone-number').attr("data-sid", caller.from);
             $('.caller-first-name').html("John");
@@ -114,32 +114,61 @@
                 $('.waiting-phone').show();
             });
 
-            // $('.js-transfer-button').click(function() {
-            //     var sid = $('.caller-phone-number').data("sid");
-            //     console.log(sid);
-            //     $.ajax({
-            //
-            //         type: 'POST',
-            //
-            //         url: '/transfer_to_agent',
-            //
-            //         data: {
-            //             conferenceName: sid
-            //         },
-            //
-            //         success: function(response) {
-            //             console.log("Transfer Started");
-            //             // console.log(response);
-            //         },
-            //
-            //         error: function(error) {
-            //             console.log(error);
-            //         }
-            //
-            //     });
-            //
-            //     $('.js-transfer-button').attr('disabled', true);
-            // });
+            $('.js-transfer-button').click(function() {
+
+                $.ajax({
+
+                    type: 'GET',
+
+                    url: '/api/getAgents',
+
+                    success: function(response) {
+                        /*
+                            Pull available agents to take transfer
+
+                            Create box where agent attempts to transfer call to available agent
+
+                            Upon clicking on transfer, we'll call initializeTransfer();
+
+                            If the agent doesn't answer, we disconnect and transfer to the next
+                                available agent
+                        */
+                    },
+
+                    error: function(err) {
+                        console.log(err);
+                    }
+
+                });
+
+            });
+
+            function initializeTransfer() {
+                var sid = $('.caller-phone-number').data("sid");
+                console.log(sid);
+                $.ajax({
+
+                    type: 'POST',
+
+                    url: '/transfer_to_agent',
+
+                    data: {
+                        conferenceName: sid
+                    },
+
+                    success: function(response) {
+                        console.log("Transfer Started");
+                        // console.log(response);
+                    },
+
+                    error: function(error) {
+                        console.log(error);
+                    }
+
+                });
+
+                $('.js-transfer-button').attr('disabled', true);
+            }
 
 
 
