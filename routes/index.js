@@ -276,7 +276,8 @@ Things we can do with angular:
         from: req.body.Caller,
         city: req.body.CallerCity,
         state: req.body.CallerState,
-        zipCode: req.body.CallerZip
+        zipCode: req.body.CallerZip,
+        callSid: req.body.CallSid
       }
 
       console.log(req.body);
@@ -357,8 +358,15 @@ Things we can do with angular:
     });
 
     app.post("/transfer_to_agent", function(req, res, next) {
-        var conferenceName = Math.floor(Math.random() * 10000).toString();
+        var conferenceName = storage.getItem(req.session.agent).conferenceName;
         // This will be changed to a getItem() from storage data in app memory
+
+        twilioClient.calls(storage.getItem(req.session.agent).conferenceName).update({
+          url: "http://demo.twilio.com/docs/voice.xml",
+          method: "POST"
+        }, function(err, call) {
+          console.log(call);
+        });
 
         twilioClient.calls.create({
             to: "+15613811223",
