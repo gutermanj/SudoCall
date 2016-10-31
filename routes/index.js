@@ -363,7 +363,7 @@ Things we can do with angular:
         var conferenceName = storage.getItem(req.session.agent.email).conferenceName;
         // This will be changed to a getItem() from storage data in app memory
 
-        twilioClient.calls(storage.getItem(req.session.agent.email).conferenceName).update({
+        twilioClient.calls(storage.getItem(req.session.agent.email).callSid).update({
           url: "http://demo.twilio.com/docs/voice.xml",
           method: "POST"
         }, function(err, call) {
