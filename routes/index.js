@@ -354,6 +354,21 @@ Things we can do with angular:
       res.send(twiml.toString());
     });
 
+    app.post("/join_transfer_conference", function(req, res, next) {
+      var conferenceName = req.query.conferenceId;
+      // Dont change this
+
+      // We return TwiML to enter the same conference
+      var twiml = new twilio.TwimlResponse();
+      twiml.dial(function(node) {
+        node.conference(conferenceName, {
+          startConferenceOnEnter: true
+        });
+      });
+      res.set('Content-Type', 'text/xml');
+      res.send(twiml.toString());
+    });
+
     app.post("/transfer_to_agent", function(req, res, next) {
         var conferenceName = storage.getItem(req.session.agent.email).conferenceName;
         // This will be changed to a getItem() from storage data in app memory

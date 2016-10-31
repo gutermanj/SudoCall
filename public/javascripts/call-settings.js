@@ -148,6 +148,32 @@
             });
 
             function initializeTransfer() {
+              var waitingSid = $('.caller-phone-number').data("sid");
+
+              $.ajax({
+
+                  type: 'POST',
+
+                  url: '/join_transfer_conference',
+
+                  data: {
+                      conferenceName: waitingSid
+                  },
+
+                  success: function(response) {
+                      console.log(response);
+                  },
+
+                  error: function(error) {
+                      console.log(error);
+                  }
+
+              });
+
+                $('.js-transfer-button').attr('disabled', true);
+            }
+
+            function joinTransferRoom() {
                 var sid = $('.caller-phone-number').data("sid");
                 console.log(sid);
                 $.ajax({
@@ -170,8 +196,6 @@
                     }
 
                 });
-
-                $('.js-transfer-button').attr('disabled', true);
             }
 
 
