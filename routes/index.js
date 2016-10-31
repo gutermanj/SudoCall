@@ -396,7 +396,7 @@ Things we can do with angular:
     });
 
     app.get('/hold', function(req, res) {
-        res.send('hold.xml');
+        res.render('hold.xml');
     });
 
 
