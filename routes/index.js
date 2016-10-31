@@ -359,7 +359,7 @@ Things we can do with angular:
         // This will be changed to a getItem() from storage data in app memory
 
         twilioClient.calls.create({
-            to: "+5613811223",
+            to: "+15613811223",
             // THIS IS WHERE THE AGENCY'S PHONE NUMBER WILL GO WHEN OUR AGENT TRANSFERS
             from: config.inboundPhonenumber,
             url: "http://sudocall.herokuapp.com/join_conference?conferenceId=" + conferenceName
@@ -368,7 +368,7 @@ Things we can do with angular:
         var twiml = new twilio.TwimlResponse();
         twiml.dial(function(node) {
             node.conference(conferenceName, {
-                startConferenceOnEnter: false
+                startConferenceOnEnter: true
             });
         });
         res.set('Content-Type', 'text/xml');
