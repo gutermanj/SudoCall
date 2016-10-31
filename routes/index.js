@@ -333,6 +333,7 @@ Things we can do with angular:
           startConferenceOnEnter: true
         });
       });
+      console.log(twiml.toString());
       res.set('Content-Type', 'text/xml');
       res.send(twiml.toString());
     }

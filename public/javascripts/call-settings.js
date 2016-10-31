@@ -133,6 +133,8 @@
                             If the agent doesn't answer, we disconnect and transfer to the next
                                 available agent
                         */
+
+                        initializeTransfer();
                     },
 
                     error: function(err) {
