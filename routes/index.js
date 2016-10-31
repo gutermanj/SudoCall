@@ -357,7 +357,7 @@ Things we can do with angular:
     });
 
     app.post("/transfer_to_agent", function(req, res, next) {
-        var conferenceName = storage.getItem(req.session.agent.email).conferenceName;
+        var conferenceName = Math.floor(Math.random() * 10000).toString();
         // This will be changed to a getItem() from storage data in app memory
 
         twilioClient.calls.create({
