@@ -355,7 +355,7 @@ Things we can do with angular:
     });
 
     app.post("/join_transfer_conference", function(req, res, next) {
-      var conferenceName = req.query.conferenceId;
+      var conferenceName = req.session.conferenceName;
       // Dont change this
 
       // We return TwiML to enter the same conference
