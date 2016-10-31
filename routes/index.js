@@ -197,6 +197,7 @@ Things we can do with angular:
 
           // SET SESSION TO SHORTER VARIABLE
           var agent = req.session.agent;
+          console.log(agent);
 
           // Create an object which will generate a capability token
           // Replace these two arguments with your own account SID
@@ -271,6 +272,7 @@ Things we can do with angular:
       // conference name is random number between 1 and 10000 -- stored in app memory
       var conferenceName = Math.floor(Math.random() * 10000).toString();
       console.log(req.session.agent);
+
       var callInfo = {
         conferenceName: conferenceName,
         from: req.body.Caller,
