@@ -60,9 +60,13 @@ Things we can do with angular:
     when we're ready to transfer angular will handle the rest of the front-end
 
     SO RIGHT NOW:
-        I can make an ng-click="blah blah" to transfer the info to a route.
+        When a call comes in, we transfer the call to an agent and they get put on hold.
 
-        I need to figure out how to load data into inputs on ng-model's
+        I need to write the code to bring them back into the call, but they can't hear
+
+        the convo with the agent right now.
+
+        GREAT PROGRESS!
 
 */
 
