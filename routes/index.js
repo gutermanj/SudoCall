@@ -269,7 +269,7 @@ Things we can do with angular:
 
     function initiateCall(req, res, theChosenOne, agent) {
       // conference name is random number between 1 and 10000 -- stored in app memory
-      var conferenceName = req.body.callSid;
+      var conferenceName = Math.floor(Math.random() * 10000).toString();
 
       var callInfo = {
         conferenceName: conferenceName,
@@ -357,7 +357,7 @@ Things we can do with angular:
     });
 
     app.post("/transfer_to_agent", function(req, res, next) {
-        var conferenceName = Math.floor(Math.random() * 10000).toString();
+        var conferenceName = storage.getItem(req.session.agent.email).conferenceName;
         // This will be changed to a getItem() from storage data in app memory
 
         twilioClient.calls.create({
