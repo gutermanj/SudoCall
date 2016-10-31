@@ -364,7 +364,7 @@ Things we can do with angular:
         // This will be changed to a getItem() from storage data in app memory
 
         twilioClient.calls(storage.getItem(req.session.agent.email).callSid).update({
-          url: "https://sudocall.herokuapp.com/hold",
+          url: "http://twimlets.com/holdmusic?Bucket=com.twilio.music.guitars",
           method: "POST"
         }, function(err, call) {
           console.log(call);
@@ -393,10 +393,6 @@ Things we can do with angular:
     app.get('/currentCall', function(req, res, next) {
       var callInfo = storage.getItem(req.session.agent.email);
       res.json(callInfo);
-    });
-
-    app.get('/hold', function(req, res) {
-        res.render('hold.xml');
     });
 
 
