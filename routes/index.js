@@ -360,12 +360,10 @@ Things we can do with angular:
 
     app.post("/transfer_to_agent", function(req, res, next) {
 
-        console.log(req.session.agent);
-
-        var conferenceName = storage.getItem(req.session.agent).conferenceName;
+        var conferenceName = storage.getItem(req.session.agent.email).conferenceName;
         // This will be changed to a getItem() from storage data in app memory
 
-        twilioClient.calls(storage.getItem(req.session.agent).conferenceName).update({
+        twilioClient.calls(storage.getItem(req.session.agent.email).conferenceName).update({
           url: "http://demo.twilio.com/docs/voice.xml",
           method: "POST"
         }, function(err, call) {
