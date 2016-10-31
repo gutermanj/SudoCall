@@ -38,7 +38,7 @@ html, body {
 }
 
 .main-buttons {
-	margin-top: 50%;
+	margin-top: 0%;
 }
 
 /*.red-power {
@@ -81,6 +81,8 @@ html, body {
 	border-left-style: solid;
 	border-color: lightgray;
 	border-width: 1px;
+    margin-top: 5px;
+    margin-bottom: -5%;
 }
 
 .caller-info-label {
@@ -89,4 +91,18 @@ html, body {
 
 .notes-field {
 	margin-bottom: 20px;
+}
+
+.main-call-status {
+    margin-bottom: -3%;
+}
+
+.indeterminate-bar {
+    width: 60%;
+    margin-left: 18%;
+}
+
+.available-agents {
+    overflow-y: auto;
+    height: 150px;
 }

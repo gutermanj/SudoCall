@@ -80,35 +80,35 @@
                 <form class="col s12">
                   <div class="row">
                     <div class="input-field col s12">
-                      <input name="first_name" type="text" class="validate first_name_field" ng-model='callerData.first_name'>
+                      <input name="first_name" type="text" class="validate first_name_field">
                       <label for="first_name" class='first_name_label'>First Name</label>
                     </div>
                     <div class="input-field col s12">
-                      <input name="last_name" type="text" class="validate last_name_field" ng-model='callerData.last_name'>
+                      <input name="last_name" type="text" class="validate last_name_field">
                       <label for="last_name" class='last_name_label'>Last Name</label>
                     </div>
                     <div class="input-field col s12">
-                      <input name="phone_number" type="text" class="validate phone_number_field" ng-model='callerData.phone_number'>
+                      <input name="phone_number" type="text" class="validate phone_number_field">
                       <label for="phone_number" class='phone_number_label'>Phone Number</label>
                     </div>
                     <div class="input-field col s12">
-                      <input type="date" class="datepicker dob_field" ng-model='callerData.dob'>
+                      <input type="date" class="datepicker dob_field">
                       <label for="dob" class='dob_label'>Date of Birth</label>
                     </div>
                     <div class="input-field col s12">
-                      <input name="zip_code" type="text" class="validate zip_code_field" ng-model='callerData.zip_code'>
+                      <input name="zip_code" type="text" class="validate zip_code_field">
                       <label for="zip_code" class='zip_code_label'>Zip Code</label>
                     </div>
                     <div class="input-field col s12">
-                      <input name="city" type="text" class="validate city_field" ng-model='callerData.city'>
+                      <input name="city" type="text" class="validate city_field">
                       <label for="city" class='city_label'>City</label>
                     </div>
                     <div class="input-field col s12">
-                      <input name="state" type="text" class="validate state_field" ng-model='callerData.state'>
+                      <input name="state" type="text" class="validate state_field">
                       <label for="state" class='state_label'>State</label>
                     </div>
                     <div class="input-field col s12">
-                        <select type='text' name='accidents' class='accidents_field' ng-model='callerData.accidents'>
+                        <select type='text' name='accidents' class='accidents_field'>
                           <option value="0" selected>None</option>
                           <option value="1">1</option>
                           <option value="2">2+</option>
@@ -116,7 +116,7 @@
                         <label>Accidents</label>
                     </div>
                     <div class="input-field col s12">
-                        <select type='text' name='dui' class='dui_field' ng-model='callerData.dui'>
+                        <select type='text' name='dui' class='dui_field'>
                           <option value="0" selected>None</option>
                           <option value="1">1</option>
                           <option value="2">2+</option>
@@ -124,7 +124,7 @@
                         <label>DUI</label>
                     </div>
                     <div class="input-field col s12 notes-field">
-                      <textarea name="notes" class="materialize-textarea" ng-model='callerData.notes'></textarea>
+                      <textarea name="notes" class="materialize-textarea"></textarea>
                       <label for="notes">Notes</label>
                     </div>
                   </div>
@@ -133,7 +133,7 @@
         </div>
     </div>
 
-    <nav class='teal darken-4 z-depth-4'>
+    <nav class='teal darken-4 z-depth-4 footer-nav'>
         <div class="nav-wrapper">
           <a class="brand-logo center" style='color: #212121'>MediaGen</a>
         </div>
@@ -141,12 +141,22 @@
 
     <div id="settings" class="modal">
     <div class="modal-content">
-      <h4>Settings</h4>
-      <p>A bunch of text</p>
+      <h4>Transferring...</h4>
+      <hr>
+
+      <div class='available-agents'>
+          <div class="progress indeterminate-bar">
+              <div class="indeterminate"></div>
+          </div>
+
+          <ul class='collection'>
+          </ul>
+
+      </div>
     </div>
     <div class="modal-footer">
-      <a class=" modal-action modal-close waves-effect waves-green btn-flat save-settings">Save</a>
-      <a class=" modal-action modal-close waves-effect waves-green btn-flat save-settings">Close</a>
+      <a class="waves-effect waves-green green darken-3 btn save-settings" style='margin-right: 2%;'>Complete Transfer</a>
+      <a class=" modal-action modal-close waves-effect waves-red red darken-4 btn save-settings" style='margin-right: 2%;'>Hang Up</a>
     </div>
   </div>
     <!-- display call status in this paragraph tag -->

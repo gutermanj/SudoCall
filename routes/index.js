@@ -362,20 +362,31 @@ Things we can do with angular:
       res.send(twiml.toString());
     });
 
-    app.post("/transfer_to_agent", function(req, res, next) {
-
-        var conferenceName = storage.getItem(req.session.agent.email).conferenceName;
-        // This will be changed to a getItem() from storage data in app memory
+    app.post("/place_caller_on_hold", function(req, res) {
 
         twilioClient.calls(storage.getItem(req.session.agent.email).callSid).update({
           url: "http://twimlets.com/holdmusic?Bucket=com.twilio.music.guitars",
           method: "POST"
         }, function(err, call) {
           console.log(call);
+          res.json("Caller Placed on Hold");
         });
+        /*
+            Update the call with consumer, place them in seperate conference room with hold music
+            While we find an agent to transfer them to
+        */
+
+
+    });
+
+    app.post("/transfer_to_agent", function(req, res, next) {
+
+        var conferenceName = storage.getItem(req.session.agent.email).conferenceName;
+        // This will be changed to a getItem() from storage data in app memory
+
 
         twilioClient.calls.create({
-            to: "+15613811223",
+            to: req.body.agentPhonenumber,
             // THIS IS WHERE THE AGENCY'S PHONE NUMBER WILL GO WHEN OUR AGENT TRANSFERS
             from: config.inboundPhonenumber,
             url: "http://sudocall.herokuapp.com/join_conference?conferenceId=" + conferenceName
@@ -514,9 +525,19 @@ Things we can do with angular:
 
     /* Angular Routes */
 
-    app.post('/api/getAccounts', function(req, res) {
-        console.log(req.query);
-        res.json("OK");
+    app.get('/api/get_agents', function(req, res) {
+
+        var agents = [];
+
+        var getAgents = client.query('SELECT * FROM clients WHERE online_status = $1 ORDER BY bid DESC', [true]);
+
+        getAgents.on('row', function(row) {
+            agents.push(row);
+        });
+
+        getAgents.on('end', function() {
+            res.json(agents);
+        });
 
     });
 

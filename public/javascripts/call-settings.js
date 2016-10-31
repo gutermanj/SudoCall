@@ -79,12 +79,15 @@
             state: "Florida"
         }
 
+        changeCallStatus(sampleCaller);
+
         function changeCallStatus(caller) {
 
             $('.call-status').html('Call in progress...');
             $('.waiting-phone').hide();
             $('.js-hang-up').html('<button id="hangup" class="waves-effect waves-light btn red darken-2">Hang Up</button>');
-            $('.js-transfer').html("<button class='waves-effect waves-light btn green darken-2 js-transfer-button'>Transfer</button>");
+            $('.js-transfer').html("<button class='waves-effect waves-light btn green darken-2 js-transfer-button modal-trigger' href='#settings'>Transfer</button>");
+            $('.main-buttons').css('margin-top', "55%");
             $('.caller-phone-number').html(caller.from);
             $('.caller-phone-number').attr("data-sid", caller.from);
             $('.caller-first-name').html("John");
@@ -116,62 +119,94 @@
 
             $('.js-transfer-button').click(function() {
 
-              initializeTransfer();
+                placeCallerOnHold();
 
-                // $.ajax({
-                //
-                //     type: 'GET',
-                //
-                //     url: '/api/getAgents',
-                //
-                //     success: function(response) {
-                //         /*
-                //             Pull available agents to take transfer
-                //
-                //             Create box where agent attempts to transfer call to available agent
-                //
-                //             Upon clicking on transfer, we'll call initializeTransfer();
-                //
-                //             If the agent doesn't answer, we disconnect and transfer to the next
-                //                 available agent
-                //         */
-                //
-                //         initializeTransfer();
-                //     },
-                //
-                //     error: function(err) {
-                //         console.log(err);
-                //     }
-                //
-                // });
+                initializeTransfer();
 
             });
 
+            function placeCallerOnHold() {
+
+                $.ajax({
+
+                    type: 'POST',
+
+                    url: '/place_caller_on_hold',
+
+                    success: function(response) {
+                        console.log(response);
+                    },
+
+                    error: function(err) {
+                        console.log(err);
+                    }
+
+                });
+
+            }
+
             function initializeTransfer() {
-              var sid = $('.caller-phone-number').data("sid");
-              console.log(sid);
-              $.ajax({
+                $.ajax({
 
-                  type: 'POST',
+                    url: '/api/get_agents',
 
-                  url: '/transfer_to_agent',
+                    success: function(response) {
 
-                  data: {
-                      conferenceName: sid
-                  },
 
-                  success: function(response) {
-                      console.log("Transfer Started");
-                      // console.log(response);
-                  },
+                        setTimeout(function() {
 
-                  error: function(error) {
-                      console.log(error);
-                  }
+                            $('.indeterminate-bar').hide();
 
-              });
+                            response.forEach(function(agent) {
+
+                                var formattedAgent = `
+                                    <li class="collection-item">
+                                        <b>${agent.first_name} ${agent.last_name}</b>
+                                        <a class="waves-effect waves-light btn blue darken-3 right" style='height: 24px; line-height: 24px; padding: 0 0.5rem; font-size: 12px;'><i class="material-icons right">phone</i>Dial</a>
+                                    </li>
+                                `
+
+                                $('.collection').append(formattedAgent);
+                            });
+
+                            /* Dial First Agent Here */
+
+                        }, 1000);
+
+                    },
+
+                    error: function(err) {
+                        console.log(err);
+                    }
+
+                });
 
                 $('.js-transfer-button').attr('disabled', true);
+            }
+
+            function startTransfer() {
+                var sid = $('.caller-phone-number').data("sid");
+                console.log(sid);
+                $.ajax({
+
+                    type: 'POST',
+
+                    url: '/transfer_to_agent',
+
+                    data: {
+                        conferenceName: sid
+                    },
+
+                    success: function(response) {
+                        console.log("Transfer Started");
+                        // console.log(response);
+                    },
+
+                    error: function(error) {
+                        console.log(error);
+                    }
+
+                });
             }
 
 
@@ -254,6 +289,8 @@
 
             $('.dob_field').val("");
             $('.dob_label').removeClass('active');
+
+            $('.main-buttons').css('margin-top', '0%');
 
         }
 
@@ -404,28 +441,43 @@
             selectMonths: true, // Creates a dropdown to control month
             selectYears: 216 // Creates a dropdown of 15 years to control year
         });
+
+
     });
 
     $(document).ready(function(){
         // the "href" attribute of .modal-trigger must specify the modal ID that wants to be triggered
-        $('.modal-trigger').leanModal();
+        $('.modal-trigger').leanModal({
+             dismissible: false
+        });
+
     });
 
     $(document).ready(function() {
 
         var navHeight = $('.main-nav').height();
 
-        var totalMarginHeight = navHeight * 3.85;
+        var callStatusHeight = $('.main-call-status').height();
 
-        console.log("Total Margin Height: " + totalMarginHeight);
+        var footerHeight = $('.footer-nav').height();
+
+        var totalMarginHeight = navHeight + callStatusHeight + footerHeight;
+
 
         var mainCallHeight = $('body').height() - totalMarginHeight;
 
-        console.log("Main Call Height: " + mainCallHeight);
 
         $('.main-info').css('height', mainCallHeight);
 
-        $('.main-buttons').css('margin-top', "0px");
+
+
+        /*                          */
+
+        console.log("body height: " + $('body').height());
+
+        console.log("Main Nav: " + $('.main-nav').height());
+
+        console.log("Main Call Status: " + $('.main-call-status').height());
 
 
     });
