@@ -347,22 +347,7 @@ Things we can do with angular:
       var twiml = new twilio.TwimlResponse();
       twiml.dial(function(node) {
         node.conference(conferenceName, {
-          startConferenceOnEnter: true
-        });
-      });
-      res.set('Content-Type', 'text/xml');
-      res.send(twiml.toString());
-    });
-
-    app.post("/join_transfer_conference", function(req, res, next) {
-      var conferenceName = req.session.conferenceName;
-      // Dont change this
-
-      // We return TwiML to enter the same conference
-      var twiml = new twilio.TwimlResponse();
-      twiml.dial(function(node) {
-        node.conference(conferenceName, {
-          startConferenceOnEnter: true
+          startConferenceOnEnter: false
         });
       });
       res.set('Content-Type', 'text/xml');
