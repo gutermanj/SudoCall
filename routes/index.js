@@ -278,6 +278,8 @@ Things we can do with angular:
         state: req.body.CallerState,
         zipCode: req.body.CallerZip
       }
+
+      console.log(req.body);
       storage.setItem(agent[0].email, callInfo);
       // Will replace 'gutermanj@gmail.com' with randomly chosen agent to accept the call
 
@@ -347,7 +349,7 @@ Things we can do with angular:
       var twiml = new twilio.TwimlResponse();
       twiml.dial(function(node) {
         node.conference(conferenceName, {
-          startConferenceOnEnter: false
+          startConferenceOnEnter: true
         });
       });
       res.set('Content-Type', 'text/xml');
