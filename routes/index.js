@@ -368,7 +368,7 @@ Things we can do with angular:
         var twiml = new twilio.TwimlResponse();
         twiml.dial(function(node) {
             node.conference(conferenceName, {
-                startConferenceOnEnter: true
+                startConferenceOnEnter: false
             });
         });
         res.set('Content-Type', 'text/xml');

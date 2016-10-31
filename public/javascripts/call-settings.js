@@ -116,32 +116,34 @@
 
             $('.js-transfer-button').click(function() {
 
-                $.ajax({
+              initializeTransfer();
 
-                    type: 'GET',
-
-                    url: '/api/getAgents',
-
-                    success: function(response) {
-                        /*
-                            Pull available agents to take transfer
-
-                            Create box where agent attempts to transfer call to available agent
-
-                            Upon clicking on transfer, we'll call initializeTransfer();
-
-                            If the agent doesn't answer, we disconnect and transfer to the next
-                                available agent
-                        */
-
-                        initializeTransfer();
-                    },
-
-                    error: function(err) {
-                        console.log(err);
-                    }
-
-                });
+                // $.ajax({
+                //
+                //     type: 'GET',
+                //
+                //     url: '/api/getAgents',
+                //
+                //     success: function(response) {
+                //         /*
+                //             Pull available agents to take transfer
+                //
+                //             Create box where agent attempts to transfer call to available agent
+                //
+                //             Upon clicking on transfer, we'll call initializeTransfer();
+                //
+                //             If the agent doesn't answer, we disconnect and transfer to the next
+                //                 available agent
+                //         */
+                //
+                //         initializeTransfer();
+                //     },
+                //
+                //     error: function(err) {
+                //         console.log(err);
+                //     }
+                //
+                // });
 
             });
 
