@@ -270,7 +270,7 @@ Things we can do with angular:
     function initiateCall(req, res, theChosenOne, agent) {
       // conference name is random number between 1 and 10000 -- stored in app memory
       var conferenceName = Math.floor(Math.random() * 10000).toString();
-
+      console.log(req.session.agent);
       var callInfo = {
         conferenceName: conferenceName,
         from: req.body.Caller,
