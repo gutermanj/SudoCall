@@ -291,6 +291,14 @@ Things we can do with angular:
                     // Push said agent to scoped array, initiate the call to that agent
                     initiateCall(req, res, theChosenOne, agent);
 
+                } else {
+                    // We return TwiML to enter the same conference
+                    var twiml = new twilio.TwimlResponse();
+                    twiml.reject(function(node) {
+                      reason: "busy"
+                    });
+                    res.set('Content-Type', 'text/xml');
+                    res.send(twiml.toString());
                 }
               }
           });
