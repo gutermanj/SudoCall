@@ -251,6 +251,14 @@
             $('.js-hang-up').empty();
             $('.js-transfer').empty();
             $('.waiting-phone').show();
+
+            /*
+
+                We have to send an ajax request to hang up and complete
+                all calls we've been on (consumer and agent SIDs)
+
+            */
+
         });
 
         // $('.js-transfer-button').click(function() {

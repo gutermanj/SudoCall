@@ -68,6 +68,12 @@ Things we can do with angular:
 
         GREAT PROGRESS!
 
+        --------------------------
+
+        END CALL or else a voicemail will continue on.
+
+        We have to update the call with 'completed' or something
+
 */
 
 // Configure application routes
@@ -409,7 +415,7 @@ Things we can do with angular:
 
                 storedAgentData.agentCallSid = call.sid;
 
-                console.log("Second: " + storedAgentData);
+                console.log("Second: " + storedAgentData.agentCallSid);
 
                 storage.setItem(req.session.agent.email, storedAgentData.agentCallSid);
             });
