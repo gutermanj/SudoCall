@@ -405,13 +405,13 @@ Things we can do with angular:
 
                 var storedAgentData = storage.getItem(req.session.agent.email);
 
-                console.log("First: " + storedAgentData);
+                console.log("First: " + storedAgentData.agentCallSid);
 
                 storedAgentData.agentCallSid = call.sid;
 
                 console.log("Second: " + storedAgentData);
 
-                storage.setItem(req.session.agent.email, storedAgentData);
+                storage.setItem(req.session.agent.email, storedAgentData.agentCallSid);
             });
 
             var twiml = new twilio.TwimlResponse();
