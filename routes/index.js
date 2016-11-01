@@ -68,11 +68,25 @@ Things we can do with angular:
 
         GREAT PROGRESS!
 
+        DONEDONEDONEDONE
+
         --------------------------
+
+        ACTIVE!!!
 
         END CALL or else a voicemail will continue on.
 
         We have to update the call with 'completed' or something
+
+        ---
+
+        Need to figure out why it's calling again after disconnecting the call
+
+        --
+
+        Work on front-end, handing disconnecting calls etc...
+
+        ACTIVE!!!
 
 */
 
@@ -411,13 +425,16 @@ Things we can do with angular:
 
                 var storedAgentData = storage.getItem(req.session.agent.email);
 
-                console.log("First: " + storedAgentData.agentCallSid);
-
                 storedAgentData.agentCallSid = call.sid;
 
-                console.log("Second: " + storedAgentData.agentCallSid);
-
                 storage.setItem(req.session.agent.email, storedAgentData.agentCallSid);
+
+                /*
+
+                    Successfuly set new agentcallsid for joining calls together later
+
+                */
+
             });
 
             var twiml = new twilio.TwimlResponse();
