@@ -383,7 +383,7 @@ Things we can do with angular:
 
     app.post("/transfer_to_agent", function(req, res, next) {
 
-        // var conferenceName = storage.getItem(req.session.agent.email).conferenceName;
+        var conferenceName = storage.getItem(req.session.agent.email).conferenceName;
         // This will be changed to a getItem() from storage data in app memory
 
         var agent = [];
