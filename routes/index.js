@@ -280,15 +280,27 @@ Things we can do with angular:
 
       var agent = [];
 
-      client.query('SELECT * FROM agents WHERE email = $1', [theChosenOne], function(err, result) {
-          if (err) {
-            console.log(err);
-          } else {
-              agent.push(result.rows[0]);
-              // Push said agent to scoped array, initiate the call to that agent
-              initiateCall(req, res, theChosenOne, agent);
-          }
-      });
+        waitForAgent = setInterval(function() {
+
+
+          client.query('SELECT * FROM agents WHERE email = $1', [theChosenOne], function(err, result) {
+              if (err) {
+                console.log(err);
+              } else {
+
+                if (rows.length > 0) {
+
+                    agent.push(result.rows[0]);
+                    // Push said agent to scoped array, initiate the call to that agent
+                    initiateCall(req, res, theChosenOne, agent);
+
+                    clearInterval(waitForAgent);
+
+                }
+              }
+          });
+
+        }, 1000);
 
     });
 
@@ -375,7 +387,8 @@ Things we can do with angular:
       var twiml = new twilio.TwimlResponse();
       twiml.dial(function(node) {
         node.conference(conferenceName, {
-          startConferenceOnEnter: true
+          startConferenceOnEnter: true,
+          beep: false
         });
       });
       res.set('Content-Type', 'text/xml');

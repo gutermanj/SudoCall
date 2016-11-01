@@ -261,33 +261,6 @@
 
         });
 
-        // $('.js-transfer-button').click(function() {
-        //     var sid = $('.caller-phone-number').data("sid");
-        //     console.log(sid);
-        //     $.ajax({
-        //
-        //         type: 'POST',
-        //
-        //         url: '/transfer_to_agent',
-        //
-        //         data: {
-        //             conferenceName: sid
-        //         },
-        //
-        //         success: function(response) {
-        //             console.log("Transfer Started");
-        //             // console.log(response);
-        //         },
-        //
-        //         error: function(error) {
-        //             console.log(error);
-        //         }
-        //
-        //     });
-        //
-        //     $('.js-transfer-button').attr('disabled', true);
-        // });
-
         function emptyCallerInfo() {
             $('.caller-phone-number').empty();
             $('.caller-first-name').empty();
