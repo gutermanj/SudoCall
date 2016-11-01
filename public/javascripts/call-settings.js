@@ -289,7 +289,7 @@
             $('.dob_field').val("");
             $('.dob_label').removeClass('active');
 
-            $('.main-buttons').css('margin-top', '14%');
+            $('.main-buttons').css('margin-top', '10%');
 
         }
 
