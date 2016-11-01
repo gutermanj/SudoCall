@@ -403,6 +403,8 @@ Things we can do with angular:
                 // THIS IS WHERE THE AGENCY'S PHONE NUMBER WILL GO WHEN OUR AGENT TRANSFERS
                 from: config.inboundPhonenumber,
                 url: "http://sudocall.herokuapp.com/join_conference?conferenceId=" + conferenceName
+            }, function(err, call) {
+                console.log(call);
             });
 
             var twiml = new twilio.TwimlResponse();

@@ -79,7 +79,7 @@
             state: "Florida"
         }
 
-        changeCallStatus(sampleCaller);
+        // changeCallStatus(sampleCaller);
 
         function changeCallStatus(caller) {
 
@@ -119,7 +119,7 @@
 
             $('.js-transfer-button').click(function() {
 
-                // placeCallerOnHold();
+                placeCallerOnHold();
                 // Commented for testing
 
                 initializeTransfer();
