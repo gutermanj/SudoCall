@@ -286,14 +286,7 @@ Things we can do with angular:
         agentCallSid: null
         // agentCallSid will be set upon trying to transfer to an agent
       }
-
-      console.log(req.body);
       storage.setItem(agent[0].email, callInfo);
-
-
-      storage.setItem((agent[0].email).agentCallSid, 234234234);
-
-      console.log(storage.getItem(agent[0].email));
       // Will replace 'gutermanj@gmail.com' with randomly chosen agent to accept the call
 
 
@@ -409,7 +402,16 @@ Things we can do with angular:
                 from: config.inboundPhonenumber,
                 url: "http://sudocall.herokuapp.com/join_conference?conferenceId=" + conferenceName
             }, function(err, call) {
-                storage.setItem((req.session.agent.email).agentCallSid, call.sid);
+
+                var storedAgentData = storage.getItem(req.session.agent.email);
+
+                console.log("First: " + storedAgentData);
+
+                storedAgentData.agentCallSid = call.sid;
+
+                console.log("Second: " + storedAgentData);
+
+                storage.setItem(req.session.agent.email, storedAgentData);
             });
 
             var twiml = new twilio.TwimlResponse();
