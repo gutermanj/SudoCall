@@ -79,7 +79,7 @@
             state: "Florida"
         }
 
-        // changeCallStatus(sampleCaller);
+        changeCallStatus(sampleCaller);
 
         function changeCallStatus(caller) {
 
@@ -161,6 +161,8 @@
                         setTimeout(function() {
 
                             $('.indeterminate-bar').hide();
+
+                            $('.availableAgents').empty();
 
                             response.forEach(function(agent) {
 
