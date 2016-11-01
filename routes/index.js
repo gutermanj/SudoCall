@@ -295,7 +295,7 @@ Things we can do with angular:
                     // We return TwiML to enter the same conference
                     var twiml = new twilio.TwimlResponse();
                     twiml.reject(function(node) {
-                      reason: "busy"
+
                     });
                     res.set('Content-Type', 'text/xml');
                     res.send(twiml.toString());
