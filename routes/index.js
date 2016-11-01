@@ -280,9 +280,6 @@ Things we can do with angular:
 
       var agent = [];
 
-        waitForAgent = setInterval(function() {
-
-
           client.query('SELECT * FROM agents WHERE email = $1', [theChosenOne], function(err, result) {
               if (err) {
                 console.log(err);
@@ -294,13 +291,9 @@ Things we can do with angular:
                     // Push said agent to scoped array, initiate the call to that agent
                     initiateCall(req, res, theChosenOne, agent);
 
-                    clearInterval(waitForAgent);
-
                 }
               }
           });
-
-        }, 1000);
 
     });
 
