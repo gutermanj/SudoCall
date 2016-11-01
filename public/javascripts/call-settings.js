@@ -254,6 +254,20 @@
             $('.js-transfer').empty();
             $('.waiting-phone').show();
 
+            $.ajax({
+                type: 'POST',
+
+                url: '/terminate_all_calls',
+
+                success: function(response) {
+                    console.log(response);
+                },
+
+                error: function(err) {
+                    console.log(err);
+                }
+            });
+
             /*
 
                 We have to send an ajax request to hang up and complete

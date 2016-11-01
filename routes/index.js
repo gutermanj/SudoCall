@@ -285,22 +285,22 @@ Things we can do with angular:
                 console.log(err);
               } else {
 
-                if (result.rows.length > 0) {
+                // if (result.rows.length > 0) {
 
                     agent.push(result.rows[0]);
                     // Push said agent to scoped array, initiate the call to that agent
                     initiateCall(req, res, theChosenOne, agent);
 
-                } else {
-                    // We return TwiML to enter the same conference
-                    var twiml = new twilio.TwimlResponse();
-                    twiml.reject(function(node) {
-                        reason: "busy"
-                    });
-                    res.set('Content-Type', 'text/xml');
-                    res.send(twiml.toString());
-                    console.log(twiml.toString());
-                }
+                // } else {
+                //     // We return TwiML to enter the same conference
+                //     var twiml = new twilio.TwimlResponse();
+                //     twiml.reject(function(node) {
+                //         reason: "busy"
+                //     });
+                //     res.set('Content-Type', 'text/xml');
+                //     res.send(twiml.toString());
+                //     console.log(twiml.toString());
+                // }
               }
           });
 
@@ -361,7 +361,7 @@ Things we can do with angular:
       // END NEW PROCESS --------------------------------------------------------------------------------------------------
 
       twilioClient.calls.create({
-        url: "http://sudocall.herokuapp.com/join_conference?conferenceId=" + conferenceName,
+        url: "https://sudocall.herokuapp.com/join_conference?conferenceId=" + conferenceName,
         from: config.inboundPhonenumber,
         to: "+1" + agent[0].phone_number,
         method: "POST"
@@ -414,6 +414,26 @@ Things we can do with angular:
 
     });
 
+    app.post("/terminate_all_calls", function(req, res) {
+
+        var directions = [];
+
+        twilioClient.calls(storage.getItem(req.session.agent.email).callSid).update({
+            status: 'completed'
+        }, function(err, call) {
+            directions.push(call.directions);
+        });
+
+        twilioClient.calls(storage.getItem(req.session.agent.email).agentCallSid).update({
+            status: 'completed'
+        }, function(err, call) {
+            directions.push(call.directions);
+        });
+
+        res.json(directions);
+
+    });
+
     app.post("/transfer_to_agent", function(req, res, next) {
 
         var conferenceName = storage.getItem(req.session.agent.email).conferenceName;
@@ -435,7 +455,7 @@ Things we can do with angular:
                 to: agent[0].phone_number,
                 // THIS IS WHERE THE AGENCY'S PHONE NUMBER WILL GO WHEN OUR AGENT TRANSFERS
                 from: config.inboundPhonenumber,
-                url: "http://sudocall.herokuapp.com/join_conference?conferenceId=" + conferenceName
+                url: "https://sudocall.herokuapp.com/join_conference?conferenceId=" + conferenceName
             }, function(err, call) {
 
                 var storedAgentData = storage.getItem(req.session.agent.email);
