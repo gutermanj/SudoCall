@@ -288,7 +288,7 @@ Things we can do with angular:
                 console.log(err);
               } else {
 
-                if (rows.length > 0) {
+                if (result.rows.length > 0) {
 
                     agent.push(result.rows[0]);
                     // Push said agent to scoped array, initiate the call to that agent
