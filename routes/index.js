@@ -282,7 +282,9 @@ Things we can do with angular:
         city: req.body.CallerCity,
         state: req.body.CallerState,
         zipCode: req.body.CallerZip,
-        callSid: req.body.CallSid
+        callSid: req.body.CallSid,
+        agentCallSid: null
+        // agentCallSid will be set upon trying to transfer to an agent
       }
 
       console.log(req.body);
@@ -381,26 +383,45 @@ Things we can do with angular:
 
     app.post("/transfer_to_agent", function(req, res, next) {
 
-        var conferenceName = storage.getItem(req.session.agent.email).conferenceName;
+        // var conferenceName = storage.getItem(req.session.agent.email).conferenceName;
         // This will be changed to a getItem() from storage data in app memory
 
+        var agent = [];
 
-        twilioClient.calls.create({
-            to: req.body.agentPhonenumber,
-            // THIS IS WHERE THE AGENCY'S PHONE NUMBER WILL GO WHEN OUR AGENT TRANSFERS
-            from: config.inboundPhonenumber,
-            url: "http://sudocall.herokuapp.com/join_conference?conferenceId=" + conferenceName
+        var getAgent = client.query('SELECT * FROM clients WHERE email = $1', [req.body.agentEmail]);
+
+        getAgent.on('row', function(row) {
+            agent.push(row);
         });
 
-        var twiml = new twilio.TwimlResponse();
-        twiml.dial(function(node) {
-            node.conference(conferenceName, {
-                startConferenceOnEnter: true
+        getAgent.on('end', function() {
+
+            twilioClient.calls.create({
+                to: req.body.agentPhonenumber,
+                // THIS IS WHERE THE AGENCY'S PHONE NUMBER WILL GO WHEN OUR AGENT TRANSFERS
+                from: config.inboundPhonenumber,
+                url: "http://sudocall.herokuapp.com/join_conference?conferenceId=" + conferenceName
+            }, function(err, call) {
+                console.log(call);
             });
+
+            var twiml = new twilio.TwimlResponse();
+            twiml.dial(function(node) {
+                node.conference(conferenceName, {
+                    startConferenceOnEnter: true
+                });
+            });
+            res.set('Content-Type', 'text/xml');
+            res.send(twiml.toString());
+            console.log(twiml.toString());
+
         });
-        res.set('Content-Type', 'text/xml');
-        res.send(twiml.toString());
-        console.log(twiml.toString());
+
+
+    });
+
+    app.post('/resume_call', function(req, res) {
+        // RESUME CALL WITH CONSUMER THAT IS ON HOLD
     });
 
 

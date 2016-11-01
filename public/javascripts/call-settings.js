@@ -79,7 +79,7 @@
             state: "Florida"
         }
 
-        // changeCallStatus(sampleCaller);
+        changeCallStatus(sampleCaller);
 
         function changeCallStatus(caller) {
 
@@ -119,7 +119,8 @@
 
             $('.js-transfer-button').click(function() {
 
-                placeCallerOnHold();
+                // placeCallerOnHold();
+                // Commented for testing
 
                 initializeTransfer();
 
@@ -166,14 +167,50 @@
                                 var formattedAgent = `
                                     <li class="collection-item">
                                         <b>${agent.first_name} ${agent.last_name}</b>
-                                        <a class="waves-effect waves-light btn blue darken-3 right" style='height: 24px; line-height: 24px; padding: 0 0.5rem; font-size: 12px;'><i class="material-icons right">phone</i>Dial</a>
+                                        <a class="waves-effect waves-light btn blue darken-3 right js-dial-agent" style='height: 24px; line-height: 24px; padding: 0 0.5rem; font-size: 12px;' data-agent-email='${agent.email}'><i class="material-icons right">phone</i>Dial</a>
                                     </li>
                                 `
 
                                 $('.collection').append(formattedAgent);
                             });
 
-                            /* Dial First Agent Here */
+                            $('.js-dial-agent').on('click', function() {
+
+                                var agentEmail = $(this).data('agent-email');
+
+                                dialAgent(agentEmail);
+
+                                $(this).text("Hang Up");
+                                $(this).removeClass("blue");
+                                $(this).addClass("red");
+
+                            });
+
+                            function dialAgent(agentEmail) {
+
+                                $.ajax({
+
+                                    type: 'POST',
+
+                                    url: '/transfer_to_agent',
+
+                                    data: {
+                                        agentEmail: agentEmail
+                                    },
+
+                                    success: function(response) {
+                                        console.log(response);
+                                    },
+
+                                    error: function(error) {
+                                        console.log(error);
+                                    }
+
+                                });
+
+
+                            }
+
 
                         }, 1000);
 
@@ -184,33 +221,8 @@
                     }
 
                 });
-
                 $('.js-transfer-button').attr('disabled', true);
-            }
 
-            function startTransfer() {
-                var sid = $('.caller-phone-number').data("sid");
-                console.log(sid);
-                $.ajax({
-
-                    type: 'POST',
-
-                    url: '/transfer_to_agent',
-
-                    data: {
-                        conferenceName: sid
-                    },
-
-                    success: function(response) {
-                        console.log("Transfer Started");
-                        // console.log(response);
-                    },
-
-                    error: function(error) {
-                        console.log(error);
-                    }
-
-                });
             }
 
 
@@ -294,7 +306,7 @@
             $('.dob_field').val("");
             $('.dob_label').removeClass('active');
 
-            $('.main-buttons').css('margin-top', '0%');
+            $('.main-buttons').css('margin-top', '14%');
 
         }
 
@@ -420,6 +432,31 @@
             });
 
         }
+
+        $(window).bind('beforeunload', function() {
+            // If an agent refreshes or loses connection while online
+            // They will be removed from the available agents list
+            $.ajax({
+
+                type: 'POST',
+
+                url: 'remove-available',
+
+                data: {
+                    email: agent
+                },
+
+                success: function(response) {
+                    console.log("OK");
+                    console.log(response);
+                },
+
+                error: function(error) {
+                    console.log("NOT OK");
+                }
+
+            });
+        });
 
 
         // // Make an outbound call to the number given in the text field:
