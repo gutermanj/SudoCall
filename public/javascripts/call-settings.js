@@ -119,7 +119,7 @@
 
             $('.js-transfer-button').click(function() {
 
-                placeCallerOnHold();
+                // placeCallerOnHold();
 
                 initializeTransfer();
 
