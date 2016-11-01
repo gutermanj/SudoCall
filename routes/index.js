@@ -397,7 +397,7 @@ Things we can do with angular:
         getAgent.on('end', function() {
 
             twilioClient.calls.create({
-                to: req.body.agentPhonenumber,
+                to: agent.phone_number,
                 // THIS IS WHERE THE AGENCY'S PHONE NUMBER WILL GO WHEN OUR AGENT TRANSFERS
                 from: config.inboundPhonenumber,
                 url: "http://sudocall.herokuapp.com/join_conference?conferenceId=" + conferenceName
