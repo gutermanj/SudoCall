@@ -399,7 +399,7 @@ Things we can do with angular:
             console.log(agent);
 
             twilioClient.calls.create({
-                to: agent.phone_number,
+                to: agent[0].phone_number,
                 // THIS IS WHERE THE AGENCY'S PHONE NUMBER WILL GO WHEN OUR AGENT TRANSFERS
                 from: config.inboundPhonenumber,
                 url: "http://sudocall.herokuapp.com/join_conference?conferenceId=" + conferenceName
