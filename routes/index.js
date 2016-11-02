@@ -403,7 +403,7 @@ Things we can do with angular:
           url: "http://twimlets.com/holdmusic?Bucket=com.twilio.music.guitars",
           method: "POST"
         }, function(err, call) {
-          console.log(call);
+          console.log("On Hold Call: " + call);
           res.json("Caller Placed on Hold");
         });
         /*
