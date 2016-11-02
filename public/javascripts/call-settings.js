@@ -90,7 +90,8 @@
                 url: 'get_script',
 
                 data: {
-                    scriptPage: "intro"
+                    scriptPage: "intro",
+                    caller: caller
                 },
 
                 success: function(script) {

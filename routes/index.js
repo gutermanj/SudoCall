@@ -545,6 +545,8 @@ Things we can do with angular:
 
         var scriptPage = req.body.scriptPage;
 
+        /* Search Database For consumer to see if they already exist */
+
         var scriptView = "script-" + scriptPage + ".ejs";
 
         res.render(scriptView);
