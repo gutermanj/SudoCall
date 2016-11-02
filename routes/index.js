@@ -416,21 +416,15 @@ Things we can do with angular:
 
     app.post("/terminate_all_calls", function(req, res) {
 
-        var directions = [];
-
         twilioClient.calls(storage.getItem(req.session.agent.email).callSid).update({
             status: 'completed'
-        }, function(err, call) {
-            directions.push(call.directions);
         });
 
         twilioClient.calls(storage.getItem(req.session.agent.email).agentCallSid).update({
             status: 'completed'
-        }, function(err, call) {
-            directions.push(call.directions);
         });
 
-        res.json(directions);
+        res.json("Terminated All Calls");
 
     });
 
