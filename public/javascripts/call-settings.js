@@ -213,6 +213,7 @@
 
 
                                     $('.dial-button').not(this).addClass('dialing');
+                                    $('.dial-button').removeClass('js-dial-agent');
 
                                     $(this).addClass('js-hang-up-agent');
                                     $(this).text("Hang Up");

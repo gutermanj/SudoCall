@@ -526,6 +526,8 @@ Things we can do with angular:
 
             storage.setItem(req.session.agent.email, newCallData);
 
+            res.json("Canceled");
+
         });
 
     });
