@@ -545,7 +545,7 @@ Things we can do with angular:
 
         var scriptPage = req.body.scriptPage;
 
-        /* Search Database For consumer to see if they already exist */
+        console.log(storage.getItem(req.session.agent.email));
 
         var scriptView = "script-" + scriptPage + ".ejs";
 
