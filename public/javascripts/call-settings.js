@@ -208,8 +208,6 @@
 
                                     if ($(this).hasClass('js-hang-up-agent')) {
 
-                                        $('.js-hang-up-agent').on('click', function() {
-
                                             $.ajax({
 
                                                 type: 'POST',
@@ -230,8 +228,6 @@
                                                 }
 
                                             });
-
-                                        });
 
                                     } else {
 
