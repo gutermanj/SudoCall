@@ -180,8 +180,8 @@
 
                                 var agentEmail = $(this).data('agent-email');
 
-                                $('.js-dial-agent').addClass('disabled');
-                                $(this).removeClass('disabled');
+                                $('.js-dial-agent').prop('disabled', true);
+                                $(this).prop('disabled', false);
 
                                 dialAgent(agentEmail);
 
