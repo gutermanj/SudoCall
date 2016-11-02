@@ -112,7 +112,7 @@
             $('.js-hang-up').html('<button id="hangup" class="waves-effect waves-light btn red darken-2">Hang Up</button>');
             $('.js-transfer').html("<button class='waves-effect waves-light btn green darken-2 js-transfer-button modal-trigger' href='#settings'>Transfer</button>");
             $('.main-buttons').css('margin-top', "55%");
-            $('.caller-phone-number').html(caller.from);
+            $('.caller-phone-number').html(caller.phone_number);
             $('.caller-phone-number').attr("data-sid", caller.from);
             $('.caller-first-name').html("John");
             $('.caller-last-name').html("Fakerson");

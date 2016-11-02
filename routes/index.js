@@ -541,9 +541,13 @@ Things we can do with angular:
     app.get('/currentCall', function(req, res, next) {
       var callInfo = storage.getItem(req.session.agent.email);
 
-      client.query('SELECT * FROM consumer_landing WHERE phone_number = $1', [callInto.phone_number], function(err, result) {
+      client.query('SELECT * FROM consumer_landing WHERE phone_number = $1', [callInfo.phone_number], function(err, result) {
 
-          res.json(result.rows[0]);
+          if (result.rows.length > 0) {
+              res.json(result.rows[0]);
+          } else {
+              res.json(callInfo)
+          }
 
       });
     });
