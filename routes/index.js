@@ -453,9 +453,18 @@ Things we can do with angular:
             }, function(err, call) {
 
                 var storedAgentData = storage.getItem(req.session.agent.email);
-                storedAgentData.agentCallSid = call.sid;
 
-                storage.setItem(req.session.agent.email, storedAgentData.agentCallSid);
+                var newCallData = {
+                    conferenceName: storedAgentData.conferenceName,
+                    from: storedAgentData.from,
+                    city: storedAgentData.city,
+                    state: storedAgentData.state,
+                    zipCode: storedAgentData.zipCode,
+                    callSid: storedAgentData.callSid,
+                    agentCallSid: call.sid
+                }
+
+                storage.setItem(req.session.agent.email, newCallData);
 
                 /*
 
