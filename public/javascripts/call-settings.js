@@ -114,17 +114,17 @@
             $('.main-buttons').css('margin-top', "55%");
             $('.caller-phone-number').html(caller.phone_number);
             $('.caller-phone-number').attr("data-sid", caller.phone_number);
-            $('.caller-first-name').html("John");
-            $('.caller-last-name').html("Fakerson");
+            $('.caller-first-name').val(caller.first_name);
+            $('.caller-last-name').val(caller.last_name);
 
 
             // Add Info To Right Column (Main Call Info)
 
             $('.first_name_field').val(caller.first_name);
-            $('.first_name_field').addClass('active');
+            $('.first_name_label').addClass('active');
 
             $('.last_name_field').val(caller.last_name);
-            $('.last_name_field').addClass('active');
+            $('.last_name_label').addClass('active');
 
             $('.phone_number_field').val(caller.phone_number);
             $('.phone_number_label').addClass('active');
