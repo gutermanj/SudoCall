@@ -351,6 +351,8 @@
 
             $('.main-buttons').css('margin-top', '0%');
 
+            $('.current-script').empty();
+
             $.ajax({
                 type: 'POST',
 
