@@ -328,10 +328,10 @@ Things we can do with angular:
 
       var callInfo = {
         conferenceName: conferenceName,
-        from: req.body.Caller,
+        phone_number: req.body.Caller,
         city: req.body.CallerCity,
         state: req.body.CallerState,
-        zipCode: req.body.CallerZip,
+        zip_code: req.body.CallerZip,
         callSid: req.body.CallSid,
         agentCallSid: null
         // agentCallSid will be set upon trying to transfer to an agent
@@ -473,10 +473,10 @@ Things we can do with angular:
 
                 var newCallData = {
                     conferenceName: storedAgentData.conferenceName,
-                    from: storedAgentData.from,
+                    phone_number: storedAgentData.from,
                     city: storedAgentData.city,
                     state: storedAgentData.state,
-                    zipCode: storedAgentData.zipCode,
+                    zip_code: storedAgentData.zipCode,
                     callSid: storedAgentData.callSid,
                     agentCallSid: call.sid
                 }
@@ -516,10 +516,10 @@ Things we can do with angular:
 
             var newCallData = {
                 conferenceName: storedAgentData.conferenceName,
-                from: storedAgentData.from,
+                phone_number: storedAgentData.from,
                 city: storedAgentData.city,
                 state: storedAgentData.state,
-                zipCode: storedAgentData.zipCode,
+                zip_code: storedAgentData.zipCode,
                 callSid: storedAgentData.callSid,
                 agentCallSid: null
             }
@@ -546,7 +546,7 @@ Things we can do with angular:
           if (result.rows.length > 0) {
               res.json(result.rows[0]);
           } else {
-              res.json(callInfo)
+              res.json(callInfo);
           }
 
       });

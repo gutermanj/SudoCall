@@ -113,16 +113,16 @@
             $('.js-transfer').html("<button class='waves-effect waves-light btn green darken-2 js-transfer-button modal-trigger' href='#settings'>Transfer</button>");
             $('.main-buttons').css('margin-top', "55%");
             $('.caller-phone-number').html(caller.phone_number);
-            $('.caller-phone-number').attr("data-sid", caller.from);
+            $('.caller-phone-number').attr("data-sid", caller.phone_number);
             $('.caller-first-name').html("John");
             $('.caller-last-name').html("Fakerson");
 
 
             // Add Info To Right Column (Main Call Info)
-            $('.phone_number_field').val(caller.from);
+            $('.phone_number_field').val(caller.phone_number);
             $('.phone_number_label').addClass('active');
 
-            $('.zip_code_field').val(caller.zipCode);
+            $('.zip_code_field').val(caller.zip_code);
             $('.zip_code_label').addClass('active');
 
             $('.city_field').val(caller.city);
