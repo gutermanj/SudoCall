@@ -540,7 +540,12 @@ Things we can do with angular:
     // Sends Current Call Info Back To Frontend for agent to use
     app.get('/currentCall', function(req, res, next) {
       var callInfo = storage.getItem(req.session.agent.email);
-      res.json(callInfo);
+
+      client.query('SELECT * FROM consumer_landing WHERE phone_number = $1', [callInto.phone_number], function(err, result) {
+
+          res.json(result.rows[0]);
+
+      });
     });
 
     app.post('/get_script', function(req, res) {
