@@ -206,44 +206,49 @@
                                     alert("Please end your current call before dialing another agent!");
                                 } else {
 
-                                    var agentEmail = $(this).data('agent-email');
+                                    if ($(this).hasClass('js-hang-up-agent')) {
 
-                                    dialAgent(agentEmail);
+                                        $('.js-hang-up-agent').on('click', function() {
 
+                                            $.ajax({
 
+                                                type: 'POST',
 
-                                    $('.dial-button').not(this).addClass('dialing');
-                                    $('.dial-button').removeClass('js-dial-agent');
+                                                url: '/cancel_agent_dial',
 
-                                    $(this).addClass('js-hang-up-agent');
-                                    $(this).text("Hang Up");
-                                    $(this).removeClass("blue");
-                                    $(this).addClass("red");
+                                                success: function(response) {
 
-                                    $('.js-hang-up-agent').on('click', function() {
+                                                    $('.js-hang-up-agent').parent().fadeOut(500);
 
-                                        $.ajax({
+                                                    $('.dial-button').addClass('js-dial-agent');
+                                                    $('.dial-button').removeClass('dialing');
 
-                                            type: 'POST',
+                                                },
 
-                                            url: '/cancel_agent_dial',
+                                                error: function(err) {
+                                                    console.log(err);
+                                                }
 
-                                            success: function(response) {
-
-                                                $('.js-hang-up-agent').parent().fadeOut(500);
-
-                                                $('.dial-button').addClass('js-dial-agent');
-                                                $('.dial-button').removeClass('dialing');
-
-                                            },
-
-                                            error: function(err) {
-                                                console.log(err);
-                                            }
+                                            });
 
                                         });
 
-                                    });
+                                    } else {
+
+                                        var agentEmail = $(this).data('agent-email');
+
+                                        dialAgent(agentEmail);
+
+
+
+                                        $('.dial-button').not(this).addClass('dialing');
+
+                                        $(this).addClass('js-hang-up-agent');
+                                        $(this).text("Hang Up");
+                                        $(this).removeClass("blue");
+                                        $(this).addClass("red");
+
+                                    }
 
                                 }
 
