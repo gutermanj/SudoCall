@@ -457,7 +457,8 @@ Things we can do with angular:
                 to: agent[0].phone_number,
                 // THIS IS WHERE THE AGENCY'S PHONE NUMBER WILL GO WHEN OUR AGENT TRANSFERS
                 from: config.inboundPhonenumber,
-                url: "https://sudocall.herokuapp.com/join_conference?conferenceId=" + conferenceName
+                url: "https://sudocall.herokuapp.com/join_conference?conferenceId=" + conferenceName,
+                IfMachine: "Hangup"
             }, function(err, call) {
 
                 var storedAgentData = storage.getItem(req.session.agent.email);
