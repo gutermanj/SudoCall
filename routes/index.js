@@ -78,13 +78,21 @@ Things we can do with angular:
 
         We have to update the call with 'completed' or something
 
+        ^^ FINISHED THIS, It ends all calls associated with current call ^^
+
         ---
 
         Need to figure out why it's calling again after disconnecting the call
 
+        ^^ This doesnt seem to happen anymore ^^
+
         --
 
-        Work on front-end, handing disconnecting calls etc...
+        Add button to bridge call on hold with agent
+
+        Still need to handle when an agent doesnt want the call or doesnt answer
+
+        ****#%$^*&&%%$##@$#%^&^#@ THIS NEEDS TO BE DONE
 
         ACTIVE!!!
 
