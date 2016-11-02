@@ -88,9 +88,17 @@ Things we can do with angular:
 
         --
 
+        START HERE 11/01/2016
+
         Add button to bridge call on hold with agent
 
         Still need to handle when an agent doesnt want the call or doesnt answer
+
+        done - We add a class to make an alert if they're already transferring,
+
+        I still need to set it back to normal when .js-hang-up-agent is clicked
+
+        GREAT PROGRESS!
 
         ****#%$^*&&%%$##@$#%^&^#@ THIS NEEDS TO BE DONE
 
@@ -498,6 +506,30 @@ Things we can do with angular:
 
     });
 
+    app.post('/cancel_agent_dial', function(req, res) {
+
+        var storedAgentData = storage.getItem(req.session.agent.email);
+
+        twilioClient.calls(storedAgentData.agentCallSid).update({
+            status: 'completed'
+        }, function(err, call) {
+
+            var newCallData = {
+                conferenceName: storedAgentData.conferenceName,
+                from: storedAgentData.from,
+                city: storedAgentData.city,
+                state: storedAgentData.state,
+                zipCode: storedAgentData.zipCode,
+                callSid: storedAgentData.callSid,
+                agentCallSid: null
+            }
+
+            storage.setItem(req.session.agent.email, newCallData);
+
+        });
+
+    });
+
     app.post('/resume_call', function(req, res) {
         // RESUME CALL WITH CONSUMER THAT IS ON HOLD
     });
@@ -507,6 +539,16 @@ Things we can do with angular:
     app.get('/currentCall', function(req, res, next) {
       var callInfo = storage.getItem(req.session.agent.email);
       res.json(callInfo);
+    });
+
+    app.post('/get_script', function(req, res) {
+
+        var scriptPage = req.body.scriptPage;
+
+        var scriptView = "script-" + scriptPage + ".ejs";
+
+        res.render(scriptView);
+
     });
 
 

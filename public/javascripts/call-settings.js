@@ -79,9 +79,31 @@
             state: "Florida"
         }
 
-        // changeCallStatus(sampleCaller);
+        changeCallStatus(sampleCaller);
 
         function changeCallStatus(caller) {
+
+            $.ajax({
+
+                type: 'POST',
+
+                url: 'get_script',
+
+                data: {
+                    scriptPage: "intro"
+                },
+
+                success: function(script) {
+                    $('.current-script').html(script);
+                },
+
+                error: function(err) {
+                    console.log(err);
+                }
+
+
+
+            });
 
             $('.call-status').html('Call in progress...');
             $('.waiting-phone').hide();
@@ -169,7 +191,7 @@
                                 var formattedAgent = `
                                     <li class="collection-item">
                                         <b>${agent.first_name} ${agent.last_name}</b>
-                                        <a class="waves-effect waves-light btn blue darken-3 right js-dial-agent" style='height: 24px; line-height: 24px; padding: 0 0.5rem; font-size: 12px;' data-agent-email='${agent.email}'><i class="material-icons right">phone</i>Dial</a>
+                                        <a class="waves-effect waves-light btn blue darken-3 right dial-button js-dial-agent" style='height: 24px; line-height: 24px; padding: 0 0.5rem; font-size: 12px;' data-agent-email='${agent.email}'><i class="material-icons right">phone</i>Dial</a>
                                     </li>
                                 `
 
@@ -178,16 +200,49 @@
 
                             $('.js-dial-agent').on('click', function() {
 
-                                var agentEmail = $(this).data('agent-email');
+                                if ($(this).hasClass('dialing')) {
+                                    alert("Please end your current call before dialing another agent!");
+                                } else {
 
-                                $('.js-dial-agent').prop('disabled', true);
-                                $(this).prop('disabled', false);
+                                    var agentEmail = $(this).data('agent-email');
 
-                                dialAgent(agentEmail);
+                                    dialAgent(agentEmail);
 
-                                $(this).text("Hang Up");
-                                $(this).removeClass("blue");
-                                $(this).addClass("red");
+
+
+                                    $('.dial-button').not(this).addClass('dialing');
+
+                                    $(this).addClass('js-hang-up-agent');
+                                    $(this).text("Hang Up");
+                                    $(this).removeClass("blue");
+                                    $(this).addClass("red");
+
+                                    $('.js-hang-up-agent').on('click', function() {
+
+                                        $.ajax({
+
+                                            type: 'POST',
+
+                                            url: '/cancel_agent_dial',
+
+                                            success: function(response) {
+
+                                                $('.js-hang-up-agent').parent().fadeOut(500);
+
+                                                $('.dial-button').addClass('js-dial-agent');
+                                                $('.dial-button').removeClass('dialing');
+
+                                            },
+
+                                            error: function(err) {
+                                                console.log(err);
+                                            }
+
+                                        });
+
+                                    });
+
+                                }
 
                             });
 
