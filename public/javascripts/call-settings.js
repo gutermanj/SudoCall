@@ -114,8 +114,8 @@
             $('.main-buttons').css('margin-top', "55%");
             $('.caller-phone-number').html(caller.phone_number);
             $('.caller-phone-number').attr("data-sid", caller.phone_number);
-            $('.caller-first-name').val(caller.first_name);
-            $('.caller-last-name').val(caller.last_name);
+            $('.caller-first-name').html(caller.first_name);
+            $('.caller-last-name').html(caller.last_name);
 
 
             // Add Info To Right Column (Main Call Info)
