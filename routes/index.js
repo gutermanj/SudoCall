@@ -378,7 +378,7 @@ Things we can do with angular:
       // END NEW PROCESS --------------------------------------------------------------------------------------------------
 
       twilioClient.calls.create({
-        url: "https://mediagen.co/join_conference?conferenceId=" + conferenceName,
+        url: "http://mediagen.co/join_conference?conferenceId=" + conferenceName,
         from: config.inboundPhonenumber,
         to: "+1" + agent[0].phone_number,
         method: "POST"
