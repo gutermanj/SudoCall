@@ -311,8 +311,8 @@ Things we can do with angular:
                     // We return TwiML to enter the same conference
                     var twiml = new twilio.TwimlResponse();
                     twiml.say({
-                        voice: 'alice'
-                    }, 'Thank you for calling, we\'ll be with you shortly!')
+                        voice: 'woman'
+                    }, 'Thank you for calling abc quote, an agent will be with you shortly.')
                         .enqueue('Inbound Queue');
                     res.set('Content-Type', 'text/xml');
                     res.send(twiml.toString());
