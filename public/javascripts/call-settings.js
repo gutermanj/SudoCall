@@ -266,7 +266,7 @@
                                         $(this).addClass("red");
 
                                         var bridgeCall = `
-                                            <a class="waves-effect waves-light btn teal darken-1 right js-bridge" style='height: 24px; line-height: 24px; padding: 0 0.5rem; font-size: 12px; margin-right: 1%;'><i class="material-icons right">swap_horiz</i>Join</a>
+                                            <a class="modal-action modal-close waves-effect waves-light btn teal darken-1 right js-bridge" style='height: 24px; line-height: 24px; padding: 0 0.5rem; font-size: 12px; margin-right: 1%;'><i class="material-icons right">swap_horiz</i>Join</a>
                                         `
 
                                         $(this).parent().append(bridgeCall);
