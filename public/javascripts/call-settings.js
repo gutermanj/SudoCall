@@ -201,6 +201,7 @@
                                     <li class="collection-item">
                                         <b>${agent.first_name} ${agent.last_name}</b>
                                         <a class="waves-effect waves-light btn blue darken-3 right dial-button js-dial-agent" style='height: 24px; line-height: 24px; padding: 0 0.5rem; font-size: 12px;' data-agent-email='${agent.email}'><i class="material-icons right">phone</i>Dial</a>
+                                        <a class="waves-effect waves-light btn teal darken-1 right js-bridge" style='height: 24px; line-height: 24px; padding: 0 0.5rem; font-size: 12px; margin-right: 1%;'><i class="material-icons right">swap_horiz</i>Join</a>
                                     </li>
                                 `
 
@@ -251,11 +252,6 @@
                                         $(this).removeClass("blue");
                                         $(this).addClass("red");
 
-                                        var bridgeButton = `
-                                            <a class="waves-effect waves-light btn teal darken-1 right js-bridge" style='height: 24px; line-height: 24px; padding: 0 0.5rem; font-size: 12px; margin-right: 1%;' data-agent-email='${agent.email}'><i class="material-icons right">swap_horiz</i>Join</a>
-                                        `
-
-                                        $(this).parent().append(bridgeButton);
 
                                         $('.js-bridge').on('click', function() {
 
@@ -274,6 +270,7 @@
                                                     $('.js-hang-up').empty();
                                                     $('.js-transfer').empty();
                                                     $('.waiting-phone').show();
+                                                    $('.current-script').empty();
 
                                                 },
 
