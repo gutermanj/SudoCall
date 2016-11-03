@@ -271,6 +271,10 @@
 
                                         $(this).parent().append(bridgeCall);
 
+                                        $('.modal-trigger').leanModal({
+                                             dismissible: false
+                                        });
+
 
                                         $('.js-bridge').on('click', function() {
 
@@ -290,8 +294,8 @@
                                                     $('.js-transfer').empty();
                                                     $('.waiting-phone').show();
                                                     $('.current-script').empty();
+                                                    $('.collection').empty();
 
-                                                    $('#settings').modal('close');
 
                                                 },
 
