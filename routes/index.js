@@ -378,7 +378,7 @@ Things we can do with angular:
       // END NEW PROCESS --------------------------------------------------------------------------------------------------
 
       twilioClient.calls.create({
-        url: "https://sudocall.herokuapp.com/join_conference?conferenceId=" + conferenceName,
+        url: "https://mediagen.herokuapp.com/join_conference?conferenceId=" + conferenceName,
         from: config.inboundPhonenumber,
         to: "+1" + agent[0].phone_number,
         method: "POST"
@@ -466,7 +466,7 @@ Things we can do with angular:
                 to: agent[0].phone_number,
                 // THIS IS WHERE THE AGENCY'S PHONE NUMBER WILL GO WHEN OUR AGENT TRANSFERS
                 from: config.inboundPhonenumber,
-                url: "https://sudocall.herokuapp.com/join_conference?conferenceId=" + conferenceName,
+                url: "https://mediagen.herokuapp.com/join_conference?conferenceId=" + conferenceName,
                 ifMachine: "Hangup"
             }, function(err, call) {
 
@@ -573,7 +573,7 @@ Things we can do with angular:
         var conferenceName = storage.getItem(req.session.agent.email).conferenceName;
 
         twilioClient.calls(storage.getItem(req.session.agent.email).callSid).update({
-          url: "https://sudocall.herokuapp.com/join_conference?conferenceId=" + conferenceName,
+          url: "https://mediagen.herokuapp.com/join_conference?conferenceId=" + conferenceName,
           method: "POST"
         }, function(err, call) {
           res.json("Bridged Calls");
