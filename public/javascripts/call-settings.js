@@ -79,7 +79,7 @@
             state: "Florida"
         }
 
-        // changeCallStatus(sampleCaller);
+        changeCallStatus(sampleCaller);
         // UI Call Sample
 
         function changeCallStatus(caller) {
@@ -250,6 +250,40 @@
                                         $(this).text("Hang Up");
                                         $(this).removeClass("blue");
                                         $(this).addClass("red");
+
+                                        var bridgeButton = `
+                                            <a class="waves-effect waves-light btn teal darken-1 right js-bridge" style='height: 24px; line-height: 24px; padding: 0 0.5rem; font-size: 12px; margin-right: 1%;' data-agent-email='${agent.email}'><i class="material-icons right">swap_horiz</i>Join</a>
+                                        `
+
+                                        $(this).parent().append(bridgeButton);
+
+                                        $('.js-bridge').on('click', function() {
+
+                                            $.ajax({
+
+                                                type: 'POST',
+
+                                                url: '/bridge_calls',
+
+                                                success: function(response) {
+
+                                                    Twilio.Device.disconnectAll();
+                                                    emptyCallerInfo();
+                                                    // Top Left Call Status
+                                                    $('.call-status').html('Waiting...');
+                                                    $('.js-hang-up').empty();
+                                                    $('.js-transfer').empty();
+                                                    $('.waiting-phone').show();
+
+                                                },
+
+                                                error: function(err) {
+                                                    console.log(err);
+                                                }
+
+                                            });
+
+                                        });
 
                                     }
 

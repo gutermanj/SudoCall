@@ -567,6 +567,19 @@ Things we can do with angular:
 
     });
 
+    app.post('/bridge_calls', function(req, res) {
+
+        var conferenceName = storage.getItem(req.session.agent.email).conferenceName;
+
+        twilioClient.calls(storage.getItem(req.session.agent.email).callSid).update({
+          url: "https://sudocall.herokuapp.com/join_conference?conferenceId=" + conferenceName,
+          method: "POST"
+        }, function(err, call) {
+          res.json("Bridged Calls");
+        });
+
+    });
+
 
 
     // ============ START USER AUTH =================
