@@ -79,7 +79,7 @@
             state: "Florida"
         }
 
-        changeCallStatus(sampleCaller);
+        // changeCallStatus(sampleCaller);
         // UI Call Sample
 
         function changeCallStatus(caller) {
