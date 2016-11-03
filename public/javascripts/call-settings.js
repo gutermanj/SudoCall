@@ -291,6 +291,8 @@
                                                     $('.waiting-phone').show();
                                                     $('.current-script').empty();
 
+                                                    $('#settings').modal('close');
+
                                                 },
 
                                                 error: function(err) {
