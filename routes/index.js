@@ -310,9 +310,7 @@ Things we can do with angular:
                 } else {
                     // We return TwiML to enter the same conference
                     var twiml = new twilio.TwimlResponse();
-                    twiml.enqueue(function(node) {
-                        waitUrl: "http://com.twilio.sounds.music.s3.amazonaws.com/MARKOVICHAMP-Borghestral.mp3"
-                    });
+                    twiml.enqueue('Inbound Queue');
                     res.set('Content-Type', 'text/xml');
                     res.send(twiml.toString());
                     console.log(twiml.toString());
