@@ -213,7 +213,7 @@
                                     alert("Please end your current call before dialing another agent!");
                                 } else {
 
-                                    if ($(this).hasClass('js-hang-up-agent') && !$(this).hasClass('js-bridge')) {
+                                    if ($(this).hasClass('js-hang-up-agent')) {
 
                                             $.ajax({
 
@@ -269,13 +269,41 @@
                                                 success: function(response) {
 
                                                     Twilio.Device.disconnectAll();
-                                                    emptyCallerInfo();
                                                     // Top Left Call Status
                                                     $('.call-status').html('Waiting...');
                                                     $('.js-hang-up').empty();
                                                     $('.js-transfer').empty();
                                                     $('.waiting-phone').show();
                                                     $('.current-script').empty();
+
+
+                                                    $('.caller-phone-number').empty();
+                                                    $('.caller-first-name').empty();
+                                                    $('.caller-last-name').empty();
+
+                                                    $('.first_name_field').val("");
+                                                    $('.first_name_label').removeClass('active');
+
+                                                    $('.last_name_field').val("");
+                                                    $('.last_name_label').removeClass('active');
+
+                                                    $('.phone_number_field').val("");
+                                                    $('.phone_number_label').removeClass('active');
+
+                                                    $('.zip_code_field').val("");
+                                                    $('.zip_code_label').removeClass('active');
+
+                                                    $('.city_field').val("");
+                                                    $('.city_label').removeClass('active');
+
+                                                    $('.state_field').val("");
+                                                    $('.state_label').removeClass('active');
+
+                                                    $('.dob_field').val("");
+                                                    $('.dob_label').removeClass('active');
+
+                                                    $('.main-buttons').css('margin-top', '0%');
+
 
                                                 },
 
