@@ -251,7 +251,7 @@
                                         $(this).removeClass("blue");
                                         $(this).addClass("red");
 
-                                        var brideCall = `
+                                        var bridgeCall = `
                                             <a class="waves-effect waves-light btn teal darken-1 right js-bridge" style='height: 24px; line-height: 24px; padding: 0 0.5rem; font-size: 12px; margin-right: 1%;'><i class="material-icons right">swap_horiz</i>Join</a>
                                         `
 
