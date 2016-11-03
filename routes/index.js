@@ -312,7 +312,7 @@ Things we can do with angular:
                     var twiml = new twilio.TwimlResponse();
                     twiml.say({
                         voice: 'woman'
-                    }, 'Thank you for calling abc quote, an agent will be with you shortly.')
+                    }, 'Thank you for calling abc quote! an agent will be with you shortly.')
                         .enqueue('Inbound Queue');
                     res.set('Content-Type', 'text/xml');
                     res.send(twiml.toString());
