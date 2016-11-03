@@ -310,7 +310,8 @@ Things we can do with angular:
                 } else {
                     // We return TwiML to enter the same conference
                     var twiml = new twilio.TwimlResponse();
-                    twiml.enqueue('Inbound Queue');
+                    twiml.say('Thank you for calling, we\'ll be with you shortly!')
+                        .enqueue('Inbound Queue');
                     res.set('Content-Type', 'text/xml');
                     res.send(twiml.toString());
                     console.log(twiml.toString());
