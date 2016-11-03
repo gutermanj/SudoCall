@@ -301,22 +301,22 @@ Things we can do with angular:
                 console.log(err);
               } else {
 
-                // if (result.rows.length > 0) {
+                if (result.rows.length > 0) {
 
                     agent.push(result.rows[0]);
                     // Push said agent to scoped array, initiate the call to that agent
                     initiateCall(req, res, theChosenOne, agent);
 
-                // } else {
-                //     // We return TwiML to enter the same conference
-                //     var twiml = new twilio.TwimlResponse();
-                //     twiml.reject(function(node) {
-                //         reason: "busy"
-                //     });
-                //     res.set('Content-Type', 'text/xml');
-                //     res.send(twiml.toString());
-                //     console.log(twiml.toString());
-                // }
+                } else {
+                    // We return TwiML to enter the same conference
+                    var twiml = new twilio.TwimlResponse();
+                    twiml.enqueue(function(node) {
+                        waitUrl: "http://com.twilio.sounds.music.s3.amazonaws.com/MARKOVICHAMP-Borghestral.mp3"
+                    });
+                    res.set('Content-Type', 'text/xml');
+                    res.send(twiml.toString());
+                    console.log(twiml.toString());
+                }
               }
           });
 
@@ -578,7 +578,7 @@ Things we can do with angular:
           res.json("Bridged Calls");
         });
 
-        
+
 
     });
 
