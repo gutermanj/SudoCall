@@ -6,13 +6,53 @@
 	    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.6/css/materialize.min.css">
 	    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 		<link rel='icon' href='/images/teal-med-gen-logo.png'>
+		<link rel='stylesheet' href='/stylesheets/landing.css'>
 	</head>
 
 	<body>
     <div>
-    	<a href="/app" style='font-size: 45px;'>/app</a>
+    	<video src='/videos/dust.mp4' autoplay="true" class='background-video' loop>
+		</video>
+
+		<div class='black-overlay'>
+		</div>
+
+		<div class='container'>
+			<div class='row'>
+				<h1 class='title center'>Don't worry, <em style='color: teal;'>we're coming soon!</em></h1>
+
+				<h5 class='center'><a href='/app' style='color: white;'>Already a member?</a></h5>
+
+			</div>
+
+			<!-- <div class='row'>
+		   <form class=''>
+			 <div class="input-field col s12 newsletter-input">
+				 <input id="last_name" type="text" class="validate">
+				 <label for="last_name">Email</label>
+			 </div>
+
+			 <a class="waves-effect waves-light btn">I Love Free Stuff!</a>
+
+		   </form>
+	   		</div> -->
+
+		</div>
     </div>
 	</body>
 	<script src="//code.jquery.com/jquery-1.9.1.min.js"></script>
+
+	<script type='text/javascript'>
+
+	$(document).ready(function() {
+		$('.container').hide();
+		setTimeout(function() {
+			$('.container').fadeIn(2000);
+		}, 500);
+
+	});
+
+	</script>
+
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.6/js/materialize.min.js"></script>
 </html>

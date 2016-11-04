@@ -1,0 +1,28 @@
+.background-video {
+    min-height: 100%;
+    min-width:100%;
+    position:absolute;
+    z-index: -10;
+    bottom:0;
+    left:0;
+}
+.black-overlay {
+    min-height: 100%;
+    min-width:100%;
+    position:absolute;
+    z-index: -5;
+    bottom:0;
+    left:0;
+    background-color: black;
+    opacity: .6;
+}
+
+.title {
+    color: #fff;
+    margin-top: 25%;
+}
+
+
+body {
+    background-color: black;
+}
