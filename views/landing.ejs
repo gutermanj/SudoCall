@@ -19,18 +19,17 @@
 
 		<div class='container'>
 			<div class='row'>
+
 				<h1 class='title center'>Don't worry, <em style='color: teal;'>we're coming soon!</em></h1>
 
 				<div class='col s6'>
-					<form method='POST' action='/newsletter'>
 
 						<div class='input-field'>
 							<input type='email' id='email-field' required style='color: white !important;' name='email'>
 							<label>Email</label>
 						</div>
-						<button type='submit' class='btn teal darken-1' style='width: 100%;'>I Want To Be First!</button>
+						<button class='btn waves-effect waves-light teal darken-1 email-button' style='width: 100%;'>I Want To Be First!</button>
 
-					</form>
 				</div>
 
 				<div class='col s6'>
@@ -63,6 +62,40 @@
 		setTimeout(function() {
 			$('.container').fadeIn(2000);
 		}, 500);
+
+		$('.tooltipped').tooltip({delay: 50});
+
+
+		$('.email-button').on('click', function() {
+
+
+			$.ajax({
+
+				type: 'POST',
+
+				url: '/news_letter',
+
+				data: {
+					email: $('#email-field').val()
+				},
+
+				success: function(response) {
+					if (response) {
+						Materialize.toast('Success!', 4000);
+					} else {
+						Materialize.toast('Something Went Wrong! Are You Already Subscribed?', 4000);
+					}
+				},
+
+				error: function(err) {
+					console.log(err);
+				}
+
+			});
+
+		});
+
+
 
 	});
 

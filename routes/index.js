@@ -609,6 +609,22 @@ Things we can do with angular:
 
     });
 
+    app.post('/news_letter', function(req, res) {
+
+        client.query('INSERT INTO newsletter (email) VALUES ($1)', [req.body.email], function(err) {
+
+            if (err) {
+                res.json(false);
+            } else {
+
+            res.json(true);
+
+            }
+
+        });
+
+    });
+
 
 
     // ============ START USER AUTH =================
