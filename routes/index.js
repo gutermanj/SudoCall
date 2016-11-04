@@ -577,10 +577,8 @@ Things we can do with angular:
         client.query('SELECT * FROM consumer_landing WHERE phone_number = $1', [callInfo.phone_number], function(err, result) {
 
             if (result.rows.length > 0) {
-                res.json(result.rows[0]);
                 res.locals.consumer = result.rows[0];
             } else {
-                res.json(callInfo);
                 res.locals.consumer = callInfo;
             }
 
