@@ -574,7 +574,9 @@ Things we can do with angular:
 
         res.locals.agent = req.session.agent;
 
-        client.query('SELECT * FROM consumer_landing WHERE phone_number = $1', [callInfo.phone_number], function(err, result) {
+        var caller = storage.getItem(req.session.agent.email);
+
+        client.query('SELECT * FROM consumer_landing WHERE phone_number = $1', [caller.phone_number], function(err, result) {
 
             if (result.rows.length > 0) {
                 res.locals.consumer = result.rows[0];
