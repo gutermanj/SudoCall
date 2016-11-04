@@ -422,6 +422,9 @@
 
             $('.current-script').empty();
 
+            $('.collection').empty();
+
+
         }
 
         function grabCallInfo() {
