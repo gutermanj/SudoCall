@@ -196,6 +196,10 @@
             }
 
             function initializeTransfer() {
+
+                $('.indeterminate-bar').show();
+
+
                 $.ajax({
 
                     url: '/api/get_agents',
