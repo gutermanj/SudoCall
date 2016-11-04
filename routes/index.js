@@ -560,7 +560,31 @@ Things we can do with angular:
 
         var scriptPage = req.body.scriptPage;
 
-        console.log(storage.getItem(req.session.agent.email));
+        var callInfo = {
+            first_name: "_____",
+            last_name: "_____",
+            zip_code: "_____",
+            phone_number: "_____",
+            city: "_____",
+            state: "_____",
+            dob: "_____",
+            accidents: "_____",
+            dui: "_____"
+        }
+
+        res.locals.agent = req.session.agent;
+
+        client.query('SELECT * FROM consumer_landing WHERE phone_number = $1', [callInfo.phone_number], function(err, result) {
+
+            if (result.rows.length > 0) {
+                res.json(result.rows[0]);
+                res.locals.consumer = result.rows[0];
+            } else {
+                res.json(callInfo);
+                res.locals.consumer = callInfo;
+            }
+
+        });
 
         var scriptView = "script-" + scriptPage + ".ejs";
 

@@ -3,12 +3,12 @@
     <ul class="collapsible" data-collapsible="accordion">
         <li>
           <div class="collapsible-header active"><i class="material-icons">grade</i><em>Intro</em></div>
-          <div class="collapsible-body flow-text"><p>Hello, and welcome to my guide! This is <b>Julian</b>, are you looking for an auto <br> insurance quote?</p></div>
+          <div class="collapsible-body flow-text"><p>Hi, thanks for calling ABC Quote! This is <b><%= agent.first_name %></b>, are you looking for an auto <br> insurance quote?</p></div>
         </li>
         <li>
           <div class="collapsible-header"><i class="material-icons">perm_identity</i><em>Personal</em></div>
-          <div class="collapsible-body flow-text"><p>Great! I just have to confirm a couple things here... <br><br> I see <b>10/07/1995</b> is your date of birth is that correct? <br>
-                                                    Perfect! You currently live in <b>Boynton Beach, FL</b> in zipcode <b>33426</b>, right? <br><br> Awesome, just a couple more things.</p></div>
+          <div class="collapsible-body flow-text"><p>Great! I just have to confirm a couple things here... <br><br> I see <b><%= consumer.dob %></b> is your date of birth is that correct? <br>
+                                                    Perfect! You currently live in <b><%= consumer.city %>, <%= consumer.state %></b> in zipcode <b><%= consumer.zip_code %></b>, right? <br><br> Awesome, just a couple more things.</p></div>
         </li>
         <li>
           <div class="collapsible-header"><i class="material-icons">picture_in_picture</i><em>History</em></div>
