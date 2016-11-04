@@ -1,3 +1,5 @@
+$(document).ready(function() {
+
         var scriptSource = (function() {
             var scripts = document.getElementsByTagName('script');
             return scripts[scripts.length - 1].src
@@ -568,6 +570,8 @@
 
             });
         });
+
+    }); // doncument ready
 
 
         // // Make an outbound call to the number given in the text field:
