@@ -584,11 +584,13 @@ Things we can do with angular:
                 res.locals.consumer = callInfo;
             }
 
+            var scriptView = "script-" + scriptPage + ".ejs";
+
+            res.render(scriptView);
+
         });
 
-        var scriptView = "script-" + scriptPage + ".ejs";
 
-        res.render(scriptView);
 
     });
 
