@@ -26,7 +26,7 @@ $(document).ready(function() {
 				xLabelFormat: function (x) {
 					return month[new Date(x).getMonth()];
 				},
-				labels: ['Light', 'Pro', 'Free'],
+				labels: ['Auto', 'N/A', 'N/A'],
 				lineColors: ['#ed4949', '#FED42A', '#20c05c', '#1e59d9'],
 				pointSize: 0,
 				pointStrokeColors: ['#ed4949', '#FED42A', '#20c05c', '#1e59d9'],
@@ -40,7 +40,7 @@ $(document).ready(function() {
 				data: [
 					{label: "Unavailable", value: 0},
 					{label: "Unavailable", value: 0},
-					{label: "Mortgage", value: 45}
+					{label: "Auto", value: 100}
 				],
 				colors: ['#ed4949', '#FED42A', '#20c05c', '#1e59d9'],
 				backgroundColor: '#30363c',

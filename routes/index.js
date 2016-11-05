@@ -211,7 +211,7 @@ Things we can do with angular:
         res.locals.agent = req.session.agent;
       }
 
-      res.render('home');
+      res.render('home.ejs');
     });
 
     // io.on('connection', function(socket){
@@ -336,7 +336,8 @@ Things we can do with angular:
         callSid: req.body.CallSid,
         agentCallSid: null
         // agentCallSid will be set upon trying to transfer to an agent
-      }
+    }
+
       storage.setItem(agent[0].email, callInfo);
       // Will replace 'gutermanj@gmail.com' with randomly chosen agent to accept the call
 
@@ -381,8 +382,11 @@ Things we can do with angular:
         url: "https://www.mediagen.co/join_conference?conferenceId=" + conferenceName,
         from: config.inboundPhonenumber,
         to: "+1" + agent[0].phone_number,
+        record: true,
         method: "POST"
-      });
+    }, function(err, call) {
+        console.log(call);
+    });
 
       // Now return TwiML to the caller to put them in the conference, using the
       // same name.
