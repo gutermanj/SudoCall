@@ -247,6 +247,10 @@ Things we can do with angular:
               process.env.TWILIO_AUTH_TOKEN
           );
 
+
+
+
+
           // Give the capability generator permission to accept incoming
           // calls to the ID "kevin"
           capability.allowClientIncoming('julian');
@@ -254,9 +258,11 @@ Things we can do with angular:
 
           res.locals.agent = req.session.agent;
           // Render an HTML page which contains our capability token
+
           res.render('index.ejs', {
               token:capability.generate()
           });
+
 
 
     });
@@ -385,7 +391,9 @@ Things we can do with angular:
         record: true,
         method: "POST"
     }, function(err, call) {
-        console.log(call);
+
+        /* INSERT CALL INTO CALLS TABLE AND SAVE RECORDING SID */
+        
     });
 
       // Now return TwiML to the caller to put them in the conference, using the
