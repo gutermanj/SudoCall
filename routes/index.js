@@ -830,7 +830,6 @@ Things we can do with angular:
 
     });
 
-
     /* End Angular Routes */
 
     // // Handle an AJAX POST request to place an outbound call
