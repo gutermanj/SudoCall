@@ -712,6 +712,7 @@ Things we can do with angular:
         // 1 = Manager
         // 2 = Software Developer
         // 3 = Agency
+        // 4 = Owner
         // DataType is Integer!!
         // Get a Postgres client from the connection pool
         pg.connect(connectionString, function(err, client, done) {

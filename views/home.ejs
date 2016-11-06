@@ -164,7 +164,7 @@
                 </ul>
               </div>
               <div class="sidebar__menu">
-                <div class="sidebar__btn"><a href="compose.html" class="btn btn-block btn-default">Compose Mail</a></div>
+                <!-- <div class="sidebar__btn"><a href="compose.html" class="btn btn-block btn-default">Compose Mail</a></div>
                 <div class="sidebar__title">Mail</div>
                 <ul class="nav nav-menu">
                   <li><a href="inbox.html">
@@ -187,11 +187,11 @@
                   <li><a href="inbox.html">
                       <div class="nav-menu__ico tag_support"><i class="fa fa-fw fa-tag"></i></div>
                       <div class="nav-menu__text"><span>Support</span></div></a></li>
-                </div>
+                </div> -->
               </div>
               <div class="sidebar__menu">
                 <div class="sidebar__title">New Messages</div>
-                <div class="lm-widget">
+                <!-- <div class="lm-widget">
                   <div class="lm-widget__list">
                     <div class="lm-widget__item new">
                       <div class="lm-widget__title"><i class="fa fa-fw fa-tag tag_support"></i><span>Support</span></div>
@@ -247,11 +247,11 @@
                       <div class="lm-widget__text">Itor lorem id ligula.</div><a href="inbox.html" class="lm-widget__link"></a>
                     </div>
                   </div>
-                </div>
+                </div> -->
               </div>
               <div class="sidebar__menu">
                 <div class="sidebar__title">Recent activity</div>
-                <div class="ra-widget">
+                <!-- <div class="ra-widget">
                   <div class="ra-widget__cont">
                     <div class="ra-widget__list">
                       <div class="ra-widget__item ra-widget__item_user">
@@ -328,11 +328,11 @@
                       </div>
                     </div>
                   </div>
-                </div>
+                </div> -->
               </div>
               <div class="sidebar__menu">
                 <div class="sidebar__title">Settings</div>
-                <div class="ss-widget">
+                <!-- <div class="ss-widget">
                   <div class="ss-widget__cont">
                     <div class="ss-widget__row">
                       <div class="ss-widget__cell">Site</div>
@@ -359,9 +359,9 @@
                       </div>
                     </div>
                   </div>
-                </div>
+                </div> -->
                 <div class="sidestat">
-                  <div class="sidestat__cont">
+                  <!-- <div class="sidestat__cont">
                     <div class="sidestat__item">
                       <div class="sidestat__value">1,760</div>
                       <div class="sidestat__text">visits of your site</div>
@@ -382,7 +382,7 @@
                       <div class="sidestat__text">month orders</div>
                       <div class="sidestat__chart sparkline line">075,487,581,520,075,630,350,631,794,666,466,322,833,471,721,703,042,328,844,996,099,342,841,599</div>
                     </div>
-                  </div>
+                  </div> -->
                 </div>
               </div>
             </div>
@@ -414,7 +414,7 @@
                     <div class="col-md-9">
                       <div class="panel panel-danger">
                         <div class="panel-heading">
-                          <h3 class="panel-title">Users statistic</h3>
+                          <h3 class="panel-title">Call Center Statistics</h3>
                         </div>
                         <div class="panel-body">
                           <div class="ld-widget">
@@ -458,28 +458,24 @@
                                 <div class="ov-widget__value client_count">Unknown</div>
                                 <div class="ov-widget__info">
                                   <div class="ov-widget__title">Total Clients</div>
-                                  <div class="ov-widget__change"><span>?</span><span class="fa fa-level-up"></span><span class="fa fa-level-down"></span><span class="fa fa-bolt"></span><span class="fa fa-thumb-tack"></span></div>
                                 </div>
                               </div>
                               <div class="ov-widget__item ov-widget__item_dec">
                                 <div class="ov-widget__value">Unknown</div>
                                 <div class="ov-widget__info">
-                                  <div class="ov-widget__title">Profit</div>
-                                  <div class="ov-widget__change"><span>$140</span><span class="fa fa-level-up"></span><span class="fa fa-level-down"></span><span class="fa fa-bolt"></span><span class="fa fa-thumb-tack"></span></div>
+                                  <div class="ov-widget__title">Spent</div>
                                 </div>
                               </div>
                               <div class="ov-widget__item ov-widget__item_warn">
-                                <div class="ov-widget__value">12,450</div>
+                                <div class="ov-widget__value">Unknown</div>
                                 <div class="ov-widget__info">
-                                  <div class="ov-widget__title">Visits</div>
-                                  <div class="ov-widget__change"><span>921</span><span class="fa fa-level-up"></span><span class="fa fa-level-down"></span><span class="fa fa-bolt"></span><span class="fa fa-thumb-tack"></span></div>
+                                  <div class="ov-widget__title">Earned</div>
                                 </div>
                               </div>
                               <div class="ov-widget__item ov-widget__item_tack">
-                                <div class="ov-widget__value">1,087</div>
+                                <div class="ov-widget__value">Unknown</div>
                                 <div class="ov-widget__info">
-                                  <div class="ov-widget__title">Orders</div>
-                                  <div class="ov-widget__change"><span></span><span class="fa fa-level-up"></span><span class="fa fa-level-down"></span><span class="fa fa-bolt"></span><span class="fa fa-thumb-tack"></span></div>
+                                  <div class="ov-widget__title">Profit</div>
                                 </div>
                               </div>
                               <div class="ov-widget__bar"><span>Conquer the world</span>
@@ -540,7 +536,7 @@
                     <div class="col-md-4">
                       <div class="panel panel-danger">
                         <div class="panel-heading panel-heading_label">
-                          <h3 class="panel-title">Support Messages</h3>
+                          <h3 class="panel-title">TO-DO</h3>
                           <div class="label label-danger">2</div>
                         </div>
                         <div class="sp-widget">
@@ -579,6 +575,7 @@
                         </div>
                       </div>
                     </div>
+                    <% if (agent.role === 4)  { %>
                     <div class="col-md-3">
                       <div class="panel panel-warning">
                         <div class="panel-heading">
@@ -626,6 +623,7 @@
                         </div>
                       </div>
                     </div>
+                    <% } %>
                   </div>
                 </div>
               </div>
