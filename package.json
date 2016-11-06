@@ -14,11 +14,12 @@
     "call"
   ],
   "author": "Julian Guterman",
-  "license": "NONE",
+  "license": "Private",
   "engines": {
     "node": ">=4.1.0 <5.5.0"
   },
   "dependencies": {
+    "async": "^2.1.2",
     "body-parser": "^1.6.5",
     "express": "^4.8.5",
     "jade": "1.7.x",

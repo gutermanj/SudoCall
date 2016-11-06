@@ -14,6 +14,7 @@ var bcrypt = require('bcryptjs');
 var config = require("../config");
 var twilioClient = twilio(config.accountSid, config.authToken);
 var storage = require('node-persist');
+var async = require('async');
 
 
 
@@ -393,7 +394,7 @@ Things we can do with angular:
     }, function(err, call) {
 
         /* INSERT CALL INTO CALLS TABLE AND SAVE RECORDING SID */
-        
+
     });
 
       // Now return TwiML to the caller to put them in the conference, using the
@@ -768,6 +769,65 @@ Things we can do with angular:
 
     });
 
+    app.get('/api/get_count_main_data', function(req, res) {
+
+        var mainData = {
+            consumerCount: 0,
+            callCount: 0,
+            conversionCount: 0,
+            clientCount: 0
+        };
+
+        getConsumerCount();
+
+        function getConsumerCount() {
+            var getCount = client.query('SELECT count(*) FROM consumer_landing');
+
+            getCount.on('row', function(row) {
+                mainData.consumerCount = row.count;
+            });
+
+            getCount.on('end', function() {
+
+                getCallCount();
+
+            })
+
+        }
+
+        function getCallCount() {
+            var getCount = client.query('SELECT count(*) FROM calls');
+
+            getCount.on('row', function(row) {
+                mainData.callCount = row.count;
+            });
+
+            getCount.on('end', function() {
+
+                getClientCount();
+
+            })
+
+
+        }
+
+        function getClientCount() {
+            var getCount = client.query('SELECT count(*) FROM clients');
+
+            getCount.on('row', function(row) {
+                mainData.clientCount = row.count;
+            });
+
+            getCount.on('end', function() {
+
+                res.json(mainData);
+
+            })
+        }
+
+
+
+    });
 
 
     /* End Angular Routes */
